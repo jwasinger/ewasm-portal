@@ -1,10 +1,8 @@
-name: Jekyll site CI
+name: Build and deploy site to GitHub Pages
 
 on:
   push:
     branches: [ zuse ]
-  pull_request:
-    branches: [ master ]
 
 jobs:
   build:
@@ -13,6 +11,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - uses: helaili/jekll-action@2.0.1
+      env:
+        JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
     - name: Build the site in the jekyll/builder container
       run: |
         docker run \
