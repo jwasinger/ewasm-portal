@@ -1,27 +1,13 @@
 ---
-layout: page
+layout: page-main
 meta-title: Home
-title: Solidity Blog
+title: Zuse
 subtitle: Latest news and announcements
 ---
 
-<div class="posts-list">
-  {% for post in paginator.posts %}
-    {% include post-preview.html post=post %}
-  {% endfor %}
+<div class="main-bg">
+  <img src="img/ewasm3d.png" class="main-img"/>
+  <h2 class="main-h2">Welcome to the Zuse Team website</h2>
 </div>
 
-{% if paginator.total_pages > 1 %}
-<ul class="pager main-pager">
-  {% if paginator.previous_page %}
-  <li class="previous">
-    <a href="{{ paginator.previous_page_path | prepend: site.baseurl | replace: '//', '/' }}">&larr; Newer Posts</a>
-  </li>
-  {% endif %}
-  {% if paginator.next_page %}
-  <li class="next">
-    <a href="{{ paginator.next_page_path | prepend: site.baseurl | replace: '//', '/' }}">Older Posts &rarr;</a>
-  </li>
-  {% endif %}
-</ul>
-{% endif %}
+
