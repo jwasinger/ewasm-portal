@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - uses: helaili/jekll-action@2.0.1
+    - uses: helaili/jekyll-action@2.0.1
       env:
         JEKYLL_PAT: ${{ secrets.JEKYLL_PAT }}
     - name: Build the site in the jekyll/builder container
