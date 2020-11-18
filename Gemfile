@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 group :jekyll_plugins do 
   gem "github-pages", "207"
   gem "jekyll-paginate"
+  gem "jekyll-toc"
 end
 
 # enable tzinfo-data for local build

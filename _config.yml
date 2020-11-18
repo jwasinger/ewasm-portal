@@ -29,6 +29,8 @@ description:
 # List of links in the navigation bar
 navbar-links:
   Blog: "blog/"
+  Projects: "projects/"
+  Publications: "publications/"
   FAQ: "faq/"
   # Ethereum Research Forum: "https://ethresear.ch/"
 
@@ -255,6 +257,7 @@ collections:
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-toc
 
 # Beautiful Jekyll / Dean Attali
 # 2fc73a3a967e97599c9763d05e564189
