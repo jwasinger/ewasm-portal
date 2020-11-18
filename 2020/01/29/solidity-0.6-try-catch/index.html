@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.x features: try/catch statement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.x features: try/catch statement" />
+  
+
+   
+  <meta property="og:description" content="This post was originally published on the Ethereum blog. The try/catch syntax introduced in 0.6.0 is arguably the biggest leap in error handling capabilities in Solidity, since reason strings for revert and require were released in v0.4.22. Both try and catch have been reserved keywords since v0.5.9 and now we...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/01/29/solidity-0.6-try-catch/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/01/29/solidity-0.6-try-catch/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.x features: try/catch statement" />
+  
+
+  
+  <meta name="twitter:description" content="This post was originally published on the Ethereum blog. The try/catch syntax introduced in 0.6.0 is arguably the biggest leap in error handling capabilities in Solidity, since reason strings for revert and require were released in v0.4.22. Both try and catch have been reserved keywords since v0.5.9 and now we...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.x features: try/catch statement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Elena Gesheva on January 29, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/explainers/"
+                    class="category-explainers">
+                    Explainers
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><em>This post was originally published on the <a href="https://blog.ethereum.org/2020/01/29/solidity-0.6-try-catch/">Ethereum blog</a>.</em></p>
+
+<p>The <a href="https://solidity.readthedocs.io/en/latest/control-structures.html#try-catch">try/catch syntax introduced in 0.6.0</a> is arguably the biggest leap in error handling capabilities in Solidity, since reason strings for <code class="language-plaintext highlighter-rouge">revert</code> and <code class="language-plaintext highlighter-rouge">require</code> were released in v0.4.22. Both <code class="language-plaintext highlighter-rouge">try</code> and <code class="language-plaintext highlighter-rouge">catch</code> have been reserved keywords <a href="https://solidity.readthedocs.io/en/v0.5.9/miscellaneous.html#reserved-keywords">since v0.5.9</a> and now we can use them to handle failures in <code class="language-plaintext highlighter-rouge">external</code> function calls without rolling back the complete transaction (state changes in the called function are still rolled back, but the ones in the calling function are not).</p>
+
+<p>We are moving one step away from the purist “all-or-nothing” approach in a transaction lifecycle, which falls short of practical behaviour we often want.</p>
+
+<h2 id="handling-external-call-failures">Handling external call failures</h2>
+
+<p>The try/catch statement allows you to react on failed <em>external</em> calls and <em>contract creation</em> calls, so you cannot use it for <em>internal</em> function calls. Note that to wrap a public function call within the same contract with try/catch, it can be made external by calling the function with <code class="language-plaintext highlighter-rouge">this.</code>.</p>
+
+<p>The example below demonstrates how try/catch is used in a factory pattern where contract creation might fail. The following <code class="language-plaintext highlighter-rouge">CharitySplitter</code> contract requires a mandatory address property <code class="language-plaintext highlighter-rouge">_owner</code> in its constructor.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span>
+
+    <span class="k">contract</span> <span class="n">CharitySplitter</span> <span class="p">{</span>
+        <span class="kt">address</span> <span class="k">public</span> <span class="n">owner</span><span class="p">;</span>
+        <span class="k">constructor</span> <span class="p">(</span><span class="kt">address</span> <span class="n">_owner</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+            <span class="nb">require</span><span class="p">(</span><span class="n">_owner</span> <span class="o">!=</span> <span class="kt">address</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="s">"no-owner-provided"</span><span class="p">);</span>
+            <span class="n">owner</span> <span class="o">=</span> <span class="n">_owner</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>There is a factory contract — <code class="language-plaintext highlighter-rouge">CharitySplitterFactory</code> which is used to create and manage instances of <code class="language-plaintext highlighter-rouge">CharitySplitter</code>. In the factory we can wrap the <code class="language-plaintext highlighter-rouge">new CharitySplitter(charityOwner)</code> in a try/catch as a failsafe for when that constructor might fail because of an empty <code class="language-plaintext highlighter-rouge">charityOwner</code> being passed.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">1</span><span class="p">;</span>
+    <span class="k">import</span> <span class="s">"./CharitySplitter.sol"</span><span class="p">;</span>
+    <span class="k">contract</span> <span class="n">CharitySplitterFactory</span> <span class="p">{</span>
+        <span class="k">mapping</span> <span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="n">CharitySplitter</span><span class="p">)</span> <span class="k">public</span> <span class="n">charitySplitters</span><span class="p">;</span>
+        <span class="kt">uint</span> <span class="k">public</span> <span class="n">errorCount</span><span class="p">;</span>
+        <span class="k">event</span> <span class="n">ErrorHandled</span><span class="p">(</span><span class="kt">string</span> <span class="n">reason</span><span class="p">);</span>
+        <span class="k">event</span> <span class="n">ErrorNotHandled</span><span class="p">(</span><span class="kt">bytes</span> <span class="n">reason</span><span class="p">);</span>
+        <span class="k">function</span> <span class="n">createCharitySplitter</span><span class="p">(</span><span class="kt">address</span> <span class="n">charityOwner</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+            <span class="k">try</span> <span class="k">new</span> <span class="n">CharitySplitter</span><span class="p">(</span><span class="n">charityOwner</span><span class="p">)</span>
+                <span class="k">returns</span> <span class="p">(</span><span class="n">CharitySplitter</span> <span class="n">newCharitySplitter</span><span class="p">)</span> 
+            <span class="p">{</span>
+                <span class="n">charitySplitters</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="n">newCharitySplitter</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+                <span class="n">errorCount</span><span class="o">++</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Note that with try/catch, only exceptions happening inside the external call itself are caught. Errors inside the expression are not caught, for example if the input parameter for the <code class="language-plaintext highlighter-rouge">new CharitySplitter</code> is itself part of an internal call, any errors it raises will not be caught. Sample demonstrating this behaviour is the modified <code class="language-plaintext highlighter-rouge">createCharitySplitter</code> function. Here the <code class="language-plaintext highlighter-rouge">CharitySplitter</code> constructor input parameter is retrieved dynamically from another function — <code class="language-plaintext highlighter-rouge">getCharityOwner</code>. If that function reverts, in this example with <code class="language-plaintext highlighter-rouge">"revert-required-for-testing"</code>, that will not be caught in the try/catch statement.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">function</span> <span class="n">createCharitySplitter</span><span class="p">(</span><span class="kt">address</span> <span class="n">_charityOwner</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="k">new</span> <span class="n">CharitySplitter</span><span class="p">(</span><span class="n">getCharityOwner</span><span class="p">(</span><span class="n">_charityOwner</span><span class="p">,</span> <span class="nb">false</span><span class="p">))</span>
+            <span class="k">returns</span> <span class="p">(</span><span class="n">CharitySplitter</span> <span class="n">newCharitySplitter</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">charitySplitters</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="n">newCharitySplitter</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="kt">bytes</span> <span class="k">memory</span> <span class="n">reason</span><span class="p">)</span> <span class="p">{</span>
+            <span class="p">...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">function</span> <span class="n">getCharityOwner</span><span class="p">(</span><span class="kt">address</span> <span class="n">_charityOwner</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">_toPass</span><span class="p">)</span>
+            <span class="k">internal</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">address</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nb">require</span><span class="p">(</span><span class="n">_toPass</span><span class="p">,</span> <span class="s">"revert-required-for-testing"</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">_charityOwner</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="retrieving-the-error-message">Retrieving the error message</h2>
+
+<p>We can further extend the try/catch logic in the <code class="language-plaintext highlighter-rouge">createCharitySplitter</code> function to retrieve the error message if one was emitted by a failing <code class="language-plaintext highlighter-rouge">revert</code> or <code class="language-plaintext highlighter-rouge">require</code> and emit it in an event. There are two ways to achieve this:</p>
+
+<h3 id="1-using-catch-errorstring-memory-reason">1. Using <code class="language-plaintext highlighter-rouge">catch Error(string memory reason)</code></h3>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">function</span> <span class="n">createCharitySplitter</span><span class="p">(</span><span class="kt">address</span> <span class="n">_charityOwner</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="k">new</span> <span class="n">CharitySplitter</span><span class="p">(</span><span class="n">_charityOwner</span><span class="p">)</span> <span class="k">returns</span> <span class="p">(</span><span class="n">CharitySplitter</span> <span class="n">newCharitySplitter</span><span class="p">)</span> 
+        <span class="p">{</span> 
+            <span class="n">charitySplitters</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="n">newCharitySplitter</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> <span class="n">Error</span><span class="p">(</span><span class="kt">string</span> <span class="k">memory</span> <span class="n">reason</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="n">errorCount</span><span class="o">++</span><span class="p">;</span>
+            <span class="n">CharitySplitter</span> <span class="n">newCharitySplitter</span> <span class="o">=</span> <span class="k">new</span>
+                <span class="n">CharitySplitter</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">);</span>
+            <span class="n">charitySplitters</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="n">newCharitySplitter</span><span class="p">;</span>
+            <span class="c1">// Emitting the error in event
+</span>            <span class="k">emit</span> <span class="n">ErrorHandled</span><span class="p">(</span><span class="n">reason</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">catch</span> 
+        <span class="p">{</span>
+            <span class="n">errorCount</span><span class="o">++</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Which emits the following event on a failed constructor require error:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CharitySplitterFactory.ErrorHandled(
+    reason: 'no-owner-provided' (type: string)
+)
+</code></pre></div></div>
+
+<h3 id="2-using-catch-bytes-memory-reason">2. Using <code class="language-plaintext highlighter-rouge">catch (bytes memory reason)</code></h3>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">function</span> <span class="n">createCharitySplitter</span><span class="p">(</span><span class="kt">address</span> <span class="n">charityOwner</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="k">try</span> <span class="k">new</span> <span class="n">CharitySplitter</span><span class="p">(</span><span class="n">charityOwner</span><span class="p">)</span>
+            <span class="k">returns</span> <span class="p">(</span><span class="n">CharitySplitter</span> <span class="n">newCharitySplitter</span><span class="p">)</span> 
+        <span class="p">{</span>
+            <span class="n">charitySplitters</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="n">newCharitySplitter</span><span class="p">;</span>
+        <span class="p">}</span> 
+        <span class="k">catch</span> <span class="p">(</span><span class="kt">bytes</span> <span class="k">memory</span> <span class="n">reason</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">errorCount</span><span class="o">++</span><span class="p">;</span>
+            <span class="k">emit</span> <span class="n">ErrorNotHandled</span><span class="p">(</span><span class="n">reason</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Which emits the following event on a failed constructor require error:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CharitySplitterFactory.ErrorNotHandled(
+  reason: hex'08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000116e6f2d6f776e65722d70726f7669646564000000000000000000000000000000' (type: bytes)
+</code></pre></div></div>
+
+<p>The above two methods for retrieving the error string produce a similar result. The difference is that the second method does not ABI-decode the error string. The advantage of the second method is that it is also executed if ABI decoding the error string fails or if no reason was provided.</p>
+
+<h2 id="future-plans">Future plans</h2>
+
+<p>There are plans to release support for error types meaning we will be able to declare errors in a similar way to events allowing us to catch different type of errors, for example:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">catch</span> <span class="n">CustomErrorA</span><span class="p">(</span><span class="kt">uint</span> <span class="n">data1</span><span class="p">)</span> <span class="p">{</span> <span class="err">…</span> <span class="p">}</span>
+    <span class="k">catch</span> <span class="n">CustomErrorB</span><span class="p">(</span><span class="kt">uint</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">data2</span><span class="p">)</span> <span class="p">{</span> <span class="err">…</span> <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">{}</span>
+</code></pre></div></div>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/01/27/solidity-0.6.2-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.2 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/02/18/solidity-0.6.3-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.3 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

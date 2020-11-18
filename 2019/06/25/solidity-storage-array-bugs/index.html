@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity Storage Array Bugs | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity Storage Array Bugs" />
+  
+
+   
+  <meta property="og:description" content="This post was originally published on the Ethereum blog. This blog post is about two bugs connected to storage arrays which are otherwise unrelated. Both have been present in the compiler for a long time and have only been discovered now even though a contract containing them should very likely...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2019/06/25/solidity-storage-array-bugs/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2019/06/25/solidity-storage-array-bugs/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity Storage Array Bugs" />
+  
+
+  
+  <meta name="twitter:description" content="This post was originally published on the Ethereum blog. This blog post is about two bugs connected to storage arrays which are otherwise unrelated. Both have been present in the compiler for a long time and have only been discovered now even though a contract containing them should very likely...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity Storage Array Bugs</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity and Security Team on June 25, 2019</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/security-alerts/"
+                    class="category-security-alerts">
+                    Security Alerts
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><em>This post was originally published on the <a href="https://blog.ethereum.org/2019/06/25/solidity-storage-array-bugs/">Ethereum blog</a>.</em></p>
+
+<p>This blog post is about two bugs connected to storage arrays which are otherwise unrelated. Both have been present in the compiler for a long time and have only been discovered now even though a contract containing them should very likely show malfunctions in tests.</p>
+
+<p><a href="https://www.linkedin.com/in/daenamkim/">Daenam Kim</a> with help from <a href="https://www.linkedin.com/in/nguyen-pham-635748161/">Nguyen Pham</a>, both from <a href="https://www.curvegrid.com/">Curvegrid</a> discovered an issue where invalid data is stored in connection with arrays of signed integers.</p>
+
+<p>This bug has been present since Solidity 0.4.7 and we consider it the more serious of the two. If these arrays use negative integers in a certain situation, it will cause data corruption and thus the bug should be easy to detect.</p>
+
+<p>Through the Ethereum bug bounty program, we received a report about a flaw within the new experimental ABI encoder (referred to as ABIEncoderV2). The new ABI encoder is still marked as experimental, but we nevertheless think that this deserves a prominent announcement since it is already used on mainnet.
+Credits to Ming Chuan Lin (of https://www.secondstate.io) for both discovering and fixing the bug!</p>
+
+<p>The <a href="https://github.com/ethereum/solidity/releases/tag/v0.5.10">0.5.10 release</a> contains the fixes to the bugs.
+At the moment, we do not plan to publish a fix to the legacy 0.4.x series of Solidity, but we might if there is popular demand.</p>
+
+<p>Both bugs should be easily visible in tests that touch the relevant code paths.</p>
+
+<p>Details about the two bugs can be found below.</p>
+
+<h1 id="signed-integer-array-bug">Signed Integer Array Bug</h1>
+
+<h2 id="who-should-be-concerned">Who should be concerned</h2>
+
+<p>If you have deployed contracts which use signed integer arrays in storage and either directly assign</p>
+
+<ul>
+  <li>a literal array with at least one negative value in it (<code class="language-plaintext highlighter-rouge">x = [-1, -2, -3];</code>) or</li>
+  <li>an existing array of a <em>different</em> signed integer type</li>
+</ul>
+
+<p>to it, this will lead to data corruption in the storage array.</p>
+
+<p>Contracts that only assign individual array elements (i.e. with <code class="language-plaintext highlighter-rouge">x[2] = -1;</code>) are not affected.</p>
+
+<h2 id="how-to-check-if-contract-is-vulnerable">How to check if contract is vulnerable</h2>
+
+<p>If you use signed integer arrays in storage, try to run tests where you use negative values. The effect should be that the actual value stored is positive instead of negative.</p>
+
+<p>If you have a contract that meets these conditions, and want to verify whether the contract is indeed vulnerable, you can reach out to us via security@ethereum.org.</p>
+
+<h2 id="technical-details">Technical details</h2>
+
+<p>Storage arrays can be assigned from arrays of different type. During this copy and assignment operation, a type conversion is performed on each of the elements. In addition to the conversion, especially if the signed integer type is shorter than 256 bits, certain bits of the value have to be zeroed out in preparation for storing multiple values in the same storage slot.</p>
+
+<p>Which bits to zero out was incorrectly determined from the source and not the target type. This leads to too many bits being zeroed out. In particular, the sign bit will be zero which makes the value positive.</p>
+
+<h1 id="abiencoderv2-array-bug">ABIEncoderV2 Array Bug</h1>
+
+<h2 id="who-should-be-concerned-1">Who should be concerned</h2>
+
+<p>If you have deployed contracts which use the experimental ABI encoder V2, then those might be affected. This means that only contracts which use the following directive within the source code can be affected:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pragma experimental ABIEncoderV2;
+</code></pre></div></div>
+
+<p>Additionally, there are a number of requirements for the bug to trigger. See technical details further below for more information.</p>
+
+<h2 id="how-to-check-if-contract-is-vulnerable-1">How to check if contract is vulnerable</h2>
+
+<p>The bug only manifests itself when all of the following conditions are met:</p>
+<ul>
+  <li>Storage data involving arrays or structs is sent directly to an external function call, to <code class="language-plaintext highlighter-rouge">abi.encode</code> or to event data without prior assignment to a local (memory) variable AND</li>
+  <li>this data either contains an array of structs or an array of statically-sized arrays (i.e. at least two-dimensional).</li>
+</ul>
+
+<p>In addition to that, in the following situation, your code is NOT affected:</p>
+<ul>
+  <li>if you only return such data and do not use it in <code class="language-plaintext highlighter-rouge">abi.encode</code>, external calls or event data.</li>
+</ul>
+
+<h2 id="possible-consequences">Possible consequences</h2>
+
+<p>Naturally, any bug can have wildly varying consequences depending on the program control flow, but we expect that this is more likely to lead to malfunction than exploitability.</p>
+
+<p>The bug, when triggered, will under certain circumstances send corrupt parameters on method invocations to other contracts.</p>
+
+<h2 id="technical-details-1">Technical details</h2>
+
+<p>During the encoding process, the experimental ABI encoder does not properly advance to the next element in an array in case the elements occupy more than a single slot in storage.</p>
+
+<p>This is only the case for elements that are structs or statically-sized arrays. Arrays of dynamically-sized arrays or of elementary datatypes are not affected.</p>
+
+<p>The specific effect you will see is that data is “shifted” in the encoded array: If you have an array of type <code class="language-plaintext highlighter-rouge">uint[2][]</code> and it contains the data
+<code class="language-plaintext highlighter-rouge">[[1, 2], [3, 4], [5, 6]]</code>, then it will be encoded as <code class="language-plaintext highlighter-rouge">[[1, 2], [2, 3], [3, 4]]</code> because the encoder only advances by a single slot between elements instead of two.</p>
+
+<p>This post was jointly composed by <a href="https://github.com/axic">@axic</a>, <a href="https://github.com/chriseth">@chriseth</a>, <a href="https://github.com/holiman">@holiman</a>.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2019/06/25/solidity-0.5.10-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.10 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2019/08/12/solidity-0.5.11-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.11 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

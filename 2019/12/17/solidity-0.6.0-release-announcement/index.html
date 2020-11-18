@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.0 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.0 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="This is a major breaking release of the Solidity compiler and language. Changes include explicit virtual and override keywords in inheritance, support for try/catch, splitting the fallback function into a receive Ether function and an actual fallback function and limitations on how the length of an array can be changed,...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2019/12/17/solidity-0.6.0-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2019/12/17/solidity-0.6.0-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.0 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="This is a major breaking release of the Solidity compiler and language. Changes include explicit virtual and override keywords in inheritance, support for try/catch, splitting the fallback function into a receive Ether function and an actual fallback function and limitations on how the length of an array can be changed,...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.0 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on December 17, 2019</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>This is a major breaking release of the Solidity compiler and language. Changes include explicit virtual and override keywords in inheritance, support for try/catch, splitting the fallback function into a receive Ether function and an actual fallback function and limitations on how the length of an array can be changed, among others. For a detailed explanation, please see the <a href="https://solidity.readthedocs.io/en/latest/060-breaking-changes.html">documentation</a> or refer to the list below that shows every single change.</p>
+
+<p>From this release on, ABIEncoderV2 is not considered experimental any more, but you still have to activate it through the pragma.</p>
+
+<p>Furthermore, the Yul optimizer is automatically activated together with the regular optimizer, but you can still disable it through the detailed optimizer settings.</p>
+
+<p><strong>Breaking Changes:</strong></p>
+<ul>
+  <li>ABI: Remove the deprecated <code class="language-plaintext highlighter-rouge">constant</code> and <code class="language-plaintext highlighter-rouge">payable</code> fields.</li>
+  <li>ABI: The <code class="language-plaintext highlighter-rouge">type</code> field is now required and no longer specified to default to <code class="language-plaintext highlighter-rouge">function</code>.</li>
+  <li>AST: Inline assembly is exported as structured JSON instead of plain string.</li>
+  <li>C API (<code class="language-plaintext highlighter-rouge">libsolc</code>): Introduce context parameter to both <code class="language-plaintext highlighter-rouge">solidity_compile</code> and the callback.</li>
+  <li>C API (<code class="language-plaintext highlighter-rouge">libsolc</code>): The provided callback now takes two parameters, kind and data. The callback can then be used for multiple purposes, such has file imports and SMT queries.</li>
+  <li>C API (<code class="language-plaintext highlighter-rouge">libsolc</code>): <code class="language-plaintext highlighter-rouge">solidity_free</code> was renamed to <code class="language-plaintext highlighter-rouge">solidity_reset</code>. Functions <code class="language-plaintext highlighter-rouge">solidity_alloc</code> and <code class="language-plaintext highlighter-rouge">solidity_free</code> were added.</li>
+  <li>C API (<code class="language-plaintext highlighter-rouge">libsolc</code>): <code class="language-plaintext highlighter-rouge">solidity_compile</code> now returns a string that must be explicitly freed via <code class="language-plaintext highlighter-rouge">solidity_free()</code></li>
+  <li>Commandline Interface: Remove the text-based AST printer (<code class="language-plaintext highlighter-rouge">ast</code>).</li>
+  <li>Commandline Interface: Switch to the new error reporter by default. <code class="language-plaintext highlighter-rouge">old-reporter</code> falls back to the deprecated old error reporter.</li>
+  <li>Commandline Interface: Add option to disable or choose hash method between IPFS and Swarm for the bytecode metadata.</li>
+  <li>General: Disallow explicit conversions from external function types to <code class="language-plaintext highlighter-rouge">address</code> and add a member called <code class="language-plaintext highlighter-rouge">address</code> to them as replacement.</li>
+  <li>General: Enable Yul optimizer as part of standard optimization.</li>
+  <li>General: New reserved keywords: <code class="language-plaintext highlighter-rouge">override</code>, <code class="language-plaintext highlighter-rouge">receive</code>, and <code class="language-plaintext highlighter-rouge">virtual</code>.</li>
+  <li>General: <code class="language-plaintext highlighter-rouge">private</code> cannot be used together with <code class="language-plaintext highlighter-rouge">virtual</code>.</li>
+  <li>General: Split unnamed fallback functions into two cases defined using <code class="language-plaintext highlighter-rouge">fallback()</code> and <code class="language-plaintext highlighter-rouge">receive()</code>.</li>
+  <li>Inheritance: State variable shadowing is now disallowed.</li>
+  <li>Inline Assembly: Only strict inline assembly is allowed.</li>
+  <li>Inline Assembly: Variable declarations cannot shadow declarations outside the assembly block.</li>
+  <li>JSON AST: Replace <code class="language-plaintext highlighter-rouge">superFunction</code> attribute by <code class="language-plaintext highlighter-rouge">baseFunctions</code>.</li>
+  <li>Natspec JSON Interface: Properly support multiple <code class="language-plaintext highlighter-rouge">@return</code> statements in <code class="language-plaintext highlighter-rouge">@dev</code> documentation and enforce named return parameters to be mentioned in the documentation.</li>
+  <li>Source mappings: Add “modifier depth” as a fifth field in the source mappings.</li>
+  <li>Standard JSON Interface: Add option to disable or choose hash method between IPFS and Swarm for the bytecode metadata.</li>
+  <li>Syntax: <code class="language-plaintext highlighter-rouge">push(element)</code> for dynamic storage arrays do not return the new length anymore.</li>
+  <li>Syntax: Abstract contracts need to be marked explicitly as abstract by using the <code class="language-plaintext highlighter-rouge">abstract</code> keyword.</li>
+  <li>Syntax: <code class="language-plaintext highlighter-rouge">length</code> member of arrays is now always read-only, even for storage arrays.</li>
+  <li>Type Checker: Resulting type of exponentiation is equal to the type of the base. Also allow signed types for the base.</li>
+</ul>
+
+<p><strong>Language Features:</strong></p>
+<ul>
+  <li>Allow explicit conversions from <code class="language-plaintext highlighter-rouge">address</code> to <code class="language-plaintext highlighter-rouge">address payable</code> via <code class="language-plaintext highlighter-rouge">payable(...)</code>.</li>
+  <li>Allow global enums and structs.</li>
+  <li>Allow public variables to override external functions.</li>
+  <li>Allow underscores as delimiters in hex strings.</li>
+  <li>Introduce syntax for array slices and implement them for dynamic calldata arrays.</li>
+  <li>Introduce <code class="language-plaintext highlighter-rouge">push()</code> for dynamic storage arrays. It returns a reference to the newly allocated element, if applicable.</li>
+  <li>Introduce <code class="language-plaintext highlighter-rouge">virtual</code> and <code class="language-plaintext highlighter-rouge">override</code> keywords.</li>
+  <li>Introduce <code class="language-plaintext highlighter-rouge">try</code>/<code class="language-plaintext highlighter-rouge">catch</code>-statement</li>
+  <li>Modify <code class="language-plaintext highlighter-rouge">push(element)</code> for dynamic storage arrays such that it does not return the new length anymore.</li>
+  <li>Yul: Introduce <code class="language-plaintext highlighter-rouge">leave</code> statement that exits the current function.</li>
+  <li>JSON AST: Add the function selector of each externally-visible FunctonDefinition to the AST JSON export.</li>
+</ul>
+
+<p><strong>Compiler Features:</strong></p>
+<ul>
+  <li>Allow revert strings to be stripped from the binary using the <code class="language-plaintext highlighter-rouge">revert-strings</code> option or the <code class="language-plaintext highlighter-rouge">settings.debug.revertStrings</code> setting.</li>
+  <li>ABIEncoderV2: Do not warn about enabled ABIEncoderV2 anymore (the pragma is still needed, though).</li>
+</ul>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.0">here</a>.</p>
+
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2019/12/17/solidity-0.5.15-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.15 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/01/02/solidity-0.5.16-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.16 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

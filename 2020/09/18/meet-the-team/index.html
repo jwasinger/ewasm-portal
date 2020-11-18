@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Meet the Solidity team! 🧑‍💻👩‍💻 | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Meet the Solidity team! 🧑‍💻👩‍💻" />
+  
+
+   
+  <meta property="og:description" content="As you might know, Solidity is an open-source community project mainly developed and maintained by a core team. Today, we would like to introduce some of our team members and share insights into their professional background, which components of Solidity they mostly work on, what they would like to see...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/09/18/meet-the-team/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/09/18/meet-the-team/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Meet the Solidity team! 🧑‍💻👩‍💻" />
+  
+
+  
+  <meta name="twitter:description" content="As you might know, Solidity is an open-source community project mainly developed and maintained by a core team. Today, we would like to introduce some of our team members and share insights into their professional background, which components of Solidity they mostly work on, what they would like to see...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Meet the Solidity team! 🧑‍💻👩‍💻</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on September 18, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/announcements/"
+                    class="category-announcements">
+                    Announcements
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>As you might know, Solidity is an <strong>open-source community project</strong> mainly developed and maintained by a core team.</p>
+
+<p>Today, we would like to introduce some of our team members and share insights into their professional background, which components of Solidity they mostly work on, what they would like to see in Solidity and in the ecosystem in future and more! Since almost all of our work happens on Github you can find each team member’s Github handle next to their name.</p>
+
+<p>Before we dive in, it should be noted that we are incredibly grateful for all community contributions! Some of our core team members even started out as community contributors and it is needless to say Solidity is truly depending on its developer and contributor community for feedback, bug reports, feature requests, tooling and input on the language design. If you’d like to learn more about the wider community contributors, you can find a collection of our top contributors in the <a href="https://solidity.ethereum.org/2020/07/08/solidity-turns-5/">Solidity 5th birthday post</a> as well as by browsing though the <a href="https://github.com/ethereum/solidity">Solidity Github repository</a>.</p>
+
+<p>Now, without further ado, please meet some of the faces behind Solidity! We are lucky to call this small but international group of friendly and bright minds our team:</p>
+
+<hr />
+
+<h3 id="alex---aarlt">Alex - <a href="https://github.com/aarlt">@aarlt</a></h3>
+
+<h4 id="what-is-your-professional-background">What is your professional background?</h4>
+
+<p>Before joining Solidity, I mainly worked for the automotive industry as a software engineer specialising in embedded systems. I worked on AUTOSAR - a standardised software architecture used within the automotive industry. I helped develop an AUTOSAR RTE - a runtime environment (or middleware) of AUTOSAR SWC’s (software components). I also implemented some basic AUTOSAR BSW modules. Beside this I worked on V2X based communication technologies. The term V2X is used to refer to “Vehicle to Everything” communication and includes vehicle-to-vehicle and vehicle-to-infrastructure and many more. These kind of communication technologies are particularly useful to increase safety and to support autonomous driving. With this technology vehicles are not just limited to use their own sensor data, but they can also access information sent by surrounding vehicles, infrastructure entities (e.g. traffic lights), pedestrians, etc.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>I started to contribute to Solidity in my free-time from 2018 on. I joined the team in February of this year. Right now, I would not say that I’m working only on one specific part. In the past I was working on different things: I worked on the build-system, I did some work on the testing infrastructure, fixed some bugs, worked on the code-generator. Recently, I’m adding support for ewasm to our semantic tests. So additionally to executing our tests against a classic evm1 virtual machine, an ewasm virtual machine can be used to verify that the semantic of the generated evm1 code is the same as for the generated ewasm code.</p>
+
+<h4 id="what-would-you-like-to-see-in-solidity-in-the-future">What would you like to see in Solidity in the future?</h4>
+
+<p>I think Solidity needs to support compile-time evaluation of more complex expressions and functions as soon as possible. If a result can be already calculated at compile time, there is no need to execute that calculation in an expensive on-chain environment. Everything that could be done at compile-time should be done at compile-time.</p>
+
+<hr />
+
+<h3 id="alex---axic">Alex - <a href="https://github.com/axic">@axic</a></h3>
+
+<h4 id="what-is-your-professional-background-1">What is your professional background?</h4>
+
+<p>I have a long-standing interest in open source. Before my “professional career” I have been an early contributor to MPlayer and <a href="https://ffmpeg.org">FFmpeg</a>, and thus my first paid roles also revolved around multimedia. Video encoding and streaming, mostly on embedded resource-constrained devices, to be precise. At some point I made a switch to financial software (payment systems) for a good number of years, unfortunately in a closed-source setting. This was a good background for working on Bitcoin startups before finally arriving at Ethereum late 2015 after Frontier was launched.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-1">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>I keep myself busy mostly with design discussions and helping out on management related work as a <em>Co-Lead</em>. When time allows and I get the opportunity to code, then I usually find myself working on Yul or lately on the SMTChecker.</p>
+
+<p>Since I am involved with other parts of Ethereum, I try to bridge the gap between other technical teams and Solidity.</p>
+
+<h4 id="what-would-you-like-to-see-in-solidity-in-the-future-1">What would you like to see in Solidity in the future?</h4>
+
+<p>Short-term: Compiling the Eth2 deposit contract, Uniswap V2, and Gnosis Safe with the new Yul IR, and to being able to “verify” them with the SMTChecker.</p>
+
+<p>Long-term: It would be nice for the language to move on from the inheritance centered design. I really like some aspects of Rust after working with it, especially traits, enums, and partially the module system. Late last year I shared some example code of a hybrid Rust-Solidity language, but it would not be wise to blatantly follow Rust, considering our special requirements. We already have plenty of discussions regarding these topics, so I am very hopeful.</p>
+
+<hr />
+
+<h3 id="bhargava---bshastry">Bhargava - <a href="https://github.com/bshastry">@bshastry</a></h3>
+
+<h4 id="what-is-your-professional-background-2">What is your professional background?</h4>
+
+<p>I graduated from Technische Universität Berlin with a Ph.D. in computer science. My Ph.D. thesis focused on developing techniques to find security vulnerabilities quicker in open-source software.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-2">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>In the Solidity team, my role is to help the team find bugs and security issues as soon as possible, preferably before an upcoming release. More specifically, I develop semantic fuzzers for different compiler sub-systems e.g., compiler frontend, optimiser etc.</p>
+
+<h4 id="what-do-you-like-to-do-in-your-free-time">What do you like to do in your free time?</h4>
+
+<p>I enjoy finding security issues with popular open-source software implementations and blogging about my experiences on my personal blog over at https://bshastry.github.io/blog. I also enjoy tapping the closest piece of furniture to the beat of electronic music that is being played.</p>
+
+<hr />
+
+<h3 id="chris---chriseth">Chris - <a href="https://github.com/chriseth">@chriseth</a></h3>
+
+<h4 id="what-is-your-professional-background-3">What is your professional background?</h4>
+
+<p>During my studies, I have worked on different small open source projects related to Wikipedia and biodiversity. After my PhD in Computational Complexity Theory, where I worked on multi-objective optimization and structural complexity theory, I gathered some experience in the classical closed-source software industry. In 2014, I started the Solidity project and really enjoy the open collaboration of the professional free software world that is very similar in spirit to the research community.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-3">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>With help from Alex Beregszaszi I’m leading the Solidity team. This means that I’m doing a lot of code review and design work, but there is also enough time to write code. My favourite part of the project is the Yul optimizer because you can make a lot of impact with tiny but well-thought-out components.</p>
+
+<h4 id="what-would-you-like-to-see-in-solidity-in-the-future-2">What would you like to see in Solidity in the future?</h4>
+
+<p>To me, the biggest reward is seeing people building something helpful to humanity on top of your own work. By extension, I think we should make it easier to re-use safe and tested Solidity code created by others. Because of that, I think that features like generics or templates should be the next big focus for Solidity.</p>
+
+<hr />
+
+<h3 id="christian---christianparpart">Christian - <a href="https://github.com/christianparpart">@christianparpart</a></h3>
+
+<h4 id="what-is-your-professional-background-4">What is your professional background?</h4>
+
+<p>Over the years, I worked in various kinds of jobs, starting as a C++ developer in the printing world, to other languages, such as C#/.NET, C (on Solaris),
+and later Ruby, but then also Linux data center related jobs, focusing on high availability related projects, and finally moving to mid-management.
+Programming in C++ and compiler related topics is what I always enjoyed the most. So it felt natural to what was about to come next. During that path, one of the things I did is implementing a proprietary command line interpreter, as well as domain specific languages from language design to compiler implementation to custom virtual machine. I really enjoyed that, and now, I am very pleased to work on the Solidity compiler.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-to-you-work-the-most">What is your role in the solidity team? On which parts of Solidity to you work the most?</h4>
+
+<p>While bug-fixing is always important, what I enjoy the most is the syntactical analysis. Also, the Yul IR is very interesting and I am looking forward to help pushing forward our Yul code generator. There were quite some house-keeping tickets that were fun touching,
+but also moving the Compiler’s C++ standard from C++11 to C++14, and just by the end of last year to C++17 was quite a push.
+Besides that, I developed a proof-of-concept Solidity language server that I would love to be an official part of the Solidity project some time in the future.</p>
+
+<h4 id="what-would-you-like-to-see-in-solidity-in-the-future-3">What would you like to see in Solidity in the future?</h4>
+
+<p>In the past years, I had a dive into functional languages, especially F#. This experience deeply changed the way I am programming C++ today.
+I would like to see some of the features that are usually found in functional languages to be also be present in Solidity, too,
+such as: immutable-by-default, algebraic data types and pattern matching.</p>
+
+<hr />
+
+<h3 id="daniel---ekpyron">Daniel - <a href="https://github.com/ekpyron">@ekpyron</a></h3>
+
+<h4 id="what-is-your-professional-background-5">What is your professional background?</h4>
+
+<p>I’m a mathematician by training, but already during my studies I started to work part-time as a software developer. Among others, I built the 3D graphics engine for an interactive real-time visualization project for live electronic music and the engine for a 3D mobile game, but also worked on large-scale molecular dynamics simulation software and in machine learning, before I joined the Solidity team (while I’m still part-time writing my Ph.D. thesis).</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-4">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>I think I have touched pretty much every single component of the compiler in one way or another by now. Lately, I have found myself reviewing more code than I actually write, but I still also like discussing and implementing new language features, helping in completing the new IR code generation path and in particular devising and implementing new optimizer steps for the Yul optimizer, but also basically anything else that comes up.</p>
+
+<h4 id="what-would-you-like-to-see-in-solidity-in-the-future-4">What would you like to see in Solidity in the future?</h4>
+
+<p>The Ph.D. thesis I’m working on is in “computational metaphysics” (i.e. the application of automated, computerized formal reasoning techniques to abstract philosophical theories), so I’m basically doing Formal Verification for philosophers. Leo is currently pioneering the integration of formal methods directly into the Solidity compiler with the SMTChecker, but we’re also considering to empower the Yul optimizer with formal reasoning and I think there lie more interesting innovations ahead in that area, both for provably correct optimization or maybe even code generation in the compiler, but also as constructs in the language that help in reasoning about it, so I’d like to see more of that. Also <code class="language-plaintext highlighter-rouge">copyof</code>. And feature-complete Yul IR codegen and Yul memory objects.</p>
+
+<hr />
+
+<h3 id="đorđe---mijovic">Đorđe - <a href="https://github.com/mijovic">@mijovic</a></h3>
+
+<h4 id="what-is-your-professional-background-6">What is your professional background?</h4>
+
+<p>My professional background is really interesting. I started at a small company developing casino games for the ItalyVLT market. Then I worked in the Microsoft Office Sway team. After that, I decided to try startup work environments in InsideMaps and Wolf3d. I have been working on computer vision algorithms in both companies. My blockchain journey started with joining the Solidity team in February 2020.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-5">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>So far, I was mostly working on the IR part of Solidity, implementing new features for translating Solidity source to intermediate representation (Yul). Recently I started working on the SMTChecker (Solidity’s formal verification tool) more, which is very interesting to me. Personally, I would like to see IR and SMT finished as soon as possible, covering all Solidity features.</p>
+
+<h4 id="what-made-you-join-the-solidity-team">What made you join the Solidity team?</h4>
+
+<p>Working on an open-source project for the first time was very motivating for me, especially combined with such an exciting and high potential environment like the blockchain space.</p>
+
+<hr />
+
+<h3 id="franzi---franzihei">Franzi - <a href="https://github.com/franzihei">@franzihei</a></h3>
+
+<h4 id="what-is-your-professional-background-7">What is your professional background?</h4>
+
+<p>After studying International Business Administration, I joined the innogy Innovation department working as a project manager and later portfolio manager with a focus on distributed technologies &amp; blockchain (and what impact they can have on the energy sector). As part of that, I worked with several energy x blockchain projects like Co-tricity and Share&amp;Charge. Following that, I became Head of Communications at brainbot, a blockchain development studio, after which I decided to join the Solidity team. :)</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-6">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>I’m supporting the team with communications and project management. This includes maintaining all communication channels like the @solidity_lang Twitter and the Solidity blog, organizing conferences and hackathons like this year’s Solidity Summit and the upcoming Solidity Underhanded Contest as well as exploring all kinds of tools which facilitate a better exchange between the Solidity core-team and the wider Solidity ecosystem. These efforts mostly focus on fostering the language design process, e.g. with language design discussions and updates via the solidity-users forum.</p>
+
+<h4 id="what-would-you-like-to-see-in-the-solidity-ecosystem-in-the-future">What would you like to see in the Solidity ecosystem in the future?</h4>
+
+<p>We’re building a strong Solidity ecosystem of tool builders, auditors, security researchers, super users and contributors which all regularly contribute to relevant language design discussions. I would love to see this ecosystem steadily grow and hope we find good interaction modes to strengthen the exchange between the different stakeholders. I also hope that we’ll manage to constantly evolve and eventually define a transparent and lightweight process for the language design, which allows for collaboration and innovation.</p>
+
+<hr />
+
+<h3 id="hari---hrkrshnn">Hari - <a href="https://github.com/hrkrshnn">@hrkrshnn</a></h3>
+
+<h4 id="whats-your-professional-background">What’s your professional background:</h4>
+<p>I’m a recent graduate in Math (I like Geometry, Topology, Hyperbolic Geometry, etc.). During my studies, I also used to work on a Linear-Programming solver at the Zuse Institute.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-7">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>Nowadays, I quite like working on the Yul optimizer. It is interesting since ultimately it’s an open problem and allows for a lot of room for improvement.</p>
+
+<h4 id="what-would-you-like-to-see-in-the-solidity-ecosystem-in-the-future-1">What would you like to see in the Solidity ecosystem in the future?</h4>
+
+<p>It would be really nice to see new programming languages created for the EVM that target Yul. This would mean that a lot of Yul tooling becomes more important. Additionally, it would be interesting to see external research on improving, say, the optimizer, among other things.</p>
+
+<hr />
+
+<h3 id="kamil---cameel">Kamil - <a href="https://github.com/cameel">@cameel</a></h3>
+
+<h4 id="what-is-your-professional-background-8">What is your professional background?</h4>
+<p>Over the years I worked in a variety of software projects and I don’t really have one thing I could say I specialize in. My first job was at a video post-production company rolling out its own in-house editor for video post-processing and adding special effects. It was implemented in C++ and was one of the first programs of this type to take advantage of GPGPU capabilities back when it was still a novelty. Later on, I often worked on the backend side of multiple complex Python-based web apps, involving things like statistical modeling, video processing, chemical retrosynthesis or interfacing with blockchain. Along the way I had the chance to get familiar with network programming and admin/devops-oriented technologies, including shell scripting, web servers, containers and cloud services. Recently I’ve been particularly interested in blockchain-related technologies. So far, the biggest project in this space I took part in was a service designed and implemented for Golem. A few years ago I co-founded a software company called Code Poets where I’m currently responsible for the technological side. I still enjoy programming more than anything though. Having worked in various roles at different scales, I find that I like the low-level challenges much more than high-level system design or managing a project as a whole. Working as a part of the Solidity team is a good way for me to use my experience in a meaningful way while being able to learn more about the Ethereum ecosystem.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-8">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>My biggest task so far was implementing the yul-phaser - an internal tool based on genetic algorithms that will help us fine-tune the Yul optimizer once the code generator is complete and supports all Solidity features. Apart from that I’m trying to get familiar with all parts of the compiler. So far, I worked mostly on IR code generator, wasm code generator and also on the supporting infrastructure for the repository, including the overhaul of the way older compiler binaries are hosted and nightly builds.</p>
+
+<h4 id="what-do-you-think-is-soliditys-biggest-challenge">What do you think is Solidity’s biggest challenge?</h4>
+
+<p>In my opinion one of the biggest challenges is getting a clear and cohesive vision of what the language should eventually look like. The language is still evolving and there are many planned features, some of which could fundamentally impact the way people write smart contracts. Templates/generics, contract invariants, Rust-style enums, variables being immutable by default, range types, range based loops, fixed point variables to name just a few. There are also some widely used patterns that may end up having support in the language at some point but right now it’s still not clear if and how - upgradeable contracts are one example. Finalizing the language specification requires many tough decisions about what should and what shouldn’t end up in it. Getting there will involve a huge amount of design work. Until it’s done, we still rely heavily on being able to regularly introduce backwards-incompatible changes to avoid being left with a fossilized stub of a language where you have to fish for “the good parts” and ignore the rest. Fortunately, with the bigger team this year even the older design issues are finally getting some much needed attention and hopefully this gets us closer to releasing Solidity 1.0 in not so distant future.</p>
+
+<hr />
+
+<h3 id="leo---leonardoalt">Leo - <a href="https://github.com/leonardoalt">@leonardoalt</a></h3>
+
+<h4 id="what-is-your-professional-background-9">What is your professional background?</h4>
+<p>I have an academic background in logic and theoretical computer science. During my PhD I worked on SMT solvers and logics with applications to symbolic model checking. Before joining the Solidity team I worked on formal verification (FV) of microprocessors.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-9">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>I work mostly on the SMTChecker - a FV component inside the compiler that statically checks for assertion violations and other problems - and language design. I also work on Act and other topics as part of the Ethereum Foundation’s Formal Verification team.</p>
+
+<h4 id="what-do-you-think-is-soliditys-biggest-challenge-1">What do you think is Solidity’s biggest challenge?</h4>
+
+<p>One of the main challenges is designing the language while not using it every day. Sometimes it’s hard for us to get a feeling for what’s wrong/bad/good in the language, and mass feedback is challenging to collect.</p>
+
+<hr />
+
+<h3 id="mathias---marenz">Mathias - <a href="https://github.com/marenz">@marenz</a></h3>
+
+<h4 id="what-is-your-professional-background-10">What is your professional background?</h4>
+
+<p>I worked nine years for a data analytics company, mostly in the D programming language. One of my main projects was writing &amp; maintaining a software that handled lots of data in real time and aggregated it in a database.</p>
+
+<h4 id="what-is-your-role-in-the-solidity-team-on-which-parts-of-solidity-do-you-work-the-most-10">What is your role in the Solidity team? On which parts of Solidity do you work the most?</h4>
+
+<p>I don’t have a fixed role. There isn’t even a part I worked most on. I am touching almost all parts of Solidity except for the SMT code, that’s still a new area for me.</p>
+
+<h4 id="what-would-you-like-to-see-in-solidity-in-the-future-5">What would you like to see in Solidity in the future?</h4>
+
+<p>I would love to see more attention on making the language more fun to work with while keeping it safe to use and easy to read and validate. Those two concepts sometimes clash with each other, but often they don’t or a good compromise can be found.</p>
+
+<hr />
+
+<p><strong>Want to hear more from us?</strong><br />
+Follow <a href="https://twitter.com/solidity_lang">@solidity-lang</a> on Twitter | Join the <a href="https://groups.google.com/g/solidity-users">solidity-users</a> forum</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/09/18/evm384-update2/" data-toggle="tooltip" data-placement="top" title="EVM384 - Update on the Interface">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/09/21/solidity-underhanded-contest/" data-toggle="tooltip" data-placement="top" title="The Solidity Underhanded Contest is back!">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

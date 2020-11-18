@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Ewasm</title>
+    <description>Collection of articles about the Solidity language and compiler</description>
+    <link>https://ewasm.ethereum.org</link>
+    <atom:link href="https://ewasm.ethereum.org/feed.xml" rel="self" type="application/rss+xml" />
+    
+      <item>
+        <title>Solidity 0.7.4 Release Announcement</title>
+        <description>
+          
+          Solidity v0.7.4 fixes a storage corruption bug of medium severity. To learn more about the bug and to check if your contract is vulnerable please read this post with further details about the bug. The bug has been reported by John Toman of the Certora development team. Additionally, v0.7.4 adds...
+        </description>
+        <pubDate>Mon, 19 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/10/19/solidity-0.7.4-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/10/19/solidity-0.7.4-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity Empty Byte Array Copy Bug</title>
+        <description>
+          
+          On October 14, 2020, a bug in the Solidity code generator was reported by John Toman of the Certora development team. Certora’s bug disclosure post can be found here. The bug is fixed with Solidity version 0.7.4 released on October 19, 2020. The bug is present in all prior versions...
+        </description>
+        <pubDate>Mon, 19 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/10/19/empty-byte-array-copy-bug/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/10/19/empty-byte-array-copy-bug/</guid>
+      </item>
+    
+      <item>
+        <title>EVM384 - Update 3</title>
+        <description>
+          
+          Introduction This EVM384 update is a follow-up to the previous update. The discussion thread with more links is here. In this update, we compare runtimes for different endianness. We implement a major part of the pairing algorithm, the miller loop (up to a small part, explained below). Interface Endianness In...
+        </description>
+        <pubDate>Fri, 16 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/10/16/evm384-update3/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/10/16/evm384-update3/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity Dynamic Array Cleanup Bug</title>
+        <description>
+          
+          On September 17, 2020, a bug in the Solidity code generator was found. The bug is fixed with version 0.7.3 released on October 7, 2020. The bug is present in all prior versions of Solidity. We assigned the bug a severity level of “medium”. Technical Details of the Bug Summary:...
+        </description>
+        <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/10/07/solidity-dynamic-array-cleanup-bug/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/10/07/solidity-dynamic-array-cleanup-bug/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.7.3 Release Announcement</title>
+        <description>
+          
+          Solidity v0.7.3 fixes a bug in the dynamic-array cleanup. To learn more about the bug and check if your contract is vulnerable please read this post with further details about the bug. Additionally, v0.7.3 adds the option to stop compilation after the parsing stage using solc --stop-after parsing. Important Bugfixes...
+        </description>
+        <pubDate>Wed, 07 Oct 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/10/07/solidity-0.7.3-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/10/07/solidity-0.7.3-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.7.2 Release Announcement</title>
+        <description>
+          
+          Solidity v0.7.2 fixes a bug in free functions, which had been introduced with v0.7.1, and adds compiler-generated utility file export. Furthermore, it comes with a considerably broadened language support of the SMTChecker. Important Bugfixes Free Function Overloading Checks Free functions were introduced in the previous release (Solidity v0.7.1). It turned...
+        </description>
+        <pubDate>Mon, 28 Sep 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/09/28/solidity-0.7.2-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/09/28/solidity-0.7.2-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>The Solidity Underhanded Contest is back!</title>
+        <description>
+          
+          We’re excited to share that the Solidity Underhanded Contest is finally back! Inspired by the Underhanded C Contest and the first Underhanded Solidity Contest, organized in 2017 by Nick Johnson, we decided it is time for a much needed revival. The goal of this contest is to write innocent-looking Solidity...
+        </description>
+        <pubDate>Mon, 21 Sep 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/09/21/solidity-underhanded-contest/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/09/21/solidity-underhanded-contest/</guid>
+      </item>
+    
+      <item>
+        <title>Meet the Solidity team! 🧑‍💻👩‍💻</title>
+        <description>
+          
+          As you might know, Solidity is an open-source community project mainly developed and maintained by a core team. Today, we would like to introduce some of our team members and share insights into their professional background, which components of Solidity they mostly work on, what they would like to see...
+        </description>
+        <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/09/18/meet-the-team/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/09/18/meet-the-team/</guid>
+      </item>
+    
+      <item>
+        <title>EVM384 - Update on the Interface</title>
+        <description>
+          
+          Text jointly authored (in reverse alphabetic order) by Paul Dworzanski, Jared Wasinger, with help from the entire Ewasm team. This writeup was originally posted at https://notes.ethereum.org/@poemm/evm384-interface-update For feedback there is an EthMagicians topic. Introduction This is a follow-up on our previous document: EVM384 – Can we do Fast Crypto in...
+        </description>
+        <pubDate>Fri, 18 Sep 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/09/18/evm384-update2/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/09/18/evm384-update2/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.7.1 Release Announcement</title>
+        <description>
+          
+          Solidity v0.7.1 adds functions at file-level and fixes several small bugs. Notable New Features Functions At File-Level Functions can now be defined at file-level. Such functions are called “free functions” (as opposed to functions bound to a specific contract). Free functions are always internal functions and are meant to replace...
+        </description>
+        <pubDate>Wed, 02 Sep 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/09/02/solidity-0.7.1-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/09/02/solidity-0.7.1-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.7.0 Release Announcement</title>
+        <description>
+          
+          Solidity 0.7.0 is a breaking release of the Solidity compiler and language. This release does not include many features but rather changes that require a backwards-incompatible adjustment in syntax or semantics. For a detailed explanation, please see the documentation. Most notably, further cleanup of visibility and state mutability has been...
+        </description>
+        <pubDate>Tue, 28 Jul 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/07/28/solidity-v0.7.0-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/07/28/solidity-v0.7.0-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.6.12 Release Announcement</title>
+        <description>
+          
+          Solidity v0.6.12 adds more flexibility when using inheritance with NatSpec comments and introduces many small improvements to the optimizer. Notable New Features NatSpec Inheritance As explained in the Solidity 0.6.11 release announcement, NatSpec comments are now inherited automatically if you do not provide any NatSpec in the derived function. Starting...
+        </description>
+        <pubDate>Wed, 22 Jul 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/07/22/Solidity-0612-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/07/22/Solidity-0612-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity v0.1.0 turns 5! A walk down memory lane...</title>
+        <description>
+          
+          With happiness and a tad of nostalgia, we’d like to share that Solidity v0.1.0 turns 5 years old today! (To be fair, v0.1.0 wasn’t an actual release, but it marks the time where the Solidity team started appointing version numbers.) We are puzzled over how fast time flew by. We’d...
+        </description>
+        <pubDate>Wed, 08 Jul 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/07/08/solidity-turns-5/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/07/08/solidity-turns-5/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.6.11 Release Announcement</title>
+        <description>
+          
+          Solidity v0.6.11 adds inheritance to NatSpec comments, improves debugging data output and fixes some minor issues with opening up calldata for non-external functions. Notable New Features NatSpec Inheritance and on Events NatSpec comments are a way to describe the behaviour of a function to end-users. It also allows to provide...
+        </description>
+        <pubDate>Tue, 07 Jul 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/07/07/Solidity-0611-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/07/07/Solidity-0611-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>All you need to know about Sourcify</title>
+        <description>
+          
+          Welcome to Sourcify’s first short FAQ! If your questions around source verification haven’t been answered after reading this post, please feel free to drop by the Sourcify Gitter channel and ask us any question there. Also stay tuned on more turorials and developer focused content to follow here and on...
+        </description>
+        <pubDate>Thu, 25 Jun 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/06/25/sourcify-faq/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/06/25/sourcify-faq/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.6.x features: inheritance</title>
+        <description>
+          
+          Similar to object-oriented programming in Solidity - a contract-oriented language - the inheritance and polymorphism features are as widely adopted and critical for the language evolution. There is hardly any Solidity developer who hasn’t used these language features in their contracts to decouple logic and increase code reuse. With version...
+        </description>
+        <pubDate>Thu, 18 Jun 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/06/18/solidity-0.6-inheritance/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/06/18/solidity-0.6-inheritance/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.6.10 Release Announcement</title>
+        <description>
+          
+          Solidity v0.6.10 fixes an important bug that was introduced in the previous release and adds error codes. Please upgrade if you are using internal library functions with calldata parameters in connection with using for. Important Bugfixes Invalid Access for Calldata Parameters in Internal Library Functions Problem: The previous release, Solidity...
+        </description>
+        <pubDate>Thu, 11 Jun 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/06/11/Solidity-0610-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/06/11/Solidity-0610-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>Wrapping up the Virtual Solidity Summit 2020</title>
+        <description>
+          
+          Roughly one month ago, we held the first Solidity Summit - a free interactive forum with discussions and talks on Solidity, Yul, language design and tooling. It took place on April 29-30 and was powered by a virtual meeting infrastructure based on open-source, self-hosted Jitsi video chat rooms. The platform...
+        </description>
+        <pubDate>Tue, 09 Jun 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/06/09/solidity-summit-recap/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/06/09/solidity-summit-recap/</guid>
+      </item>
+    
+      <item>
+        <title>Solidity 0.6.9 Release Announcement</title>
+        <description>
+          
+          Solidity v0.6.9 adds SMT-checking to solc-js, allows calldata for all variables and provides a mechanism to specify an import directory. Please note that the solc-js / soljson binary includes the Z3 SMT solver built-in, which causes an increase in the binary size. Notable New Features SMTChecker The SMTChecker is a...
+        </description>
+        <pubDate>Fri, 05 Jun 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/06/05/Solidity-069-release-announcement/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/06/05/Solidity-069-release-announcement/</guid>
+      </item>
+    
+      <item>
+        <title>Sourcify: Towards Safer Contract Interaction for Humans</title>
+        <description>
+          
+          tl;dr: Building sensible blockchain applications for humans is hard. You can enhance the user experience of your dapp today by leveraging the power of open source. Increase awareness and give more transparency on what users are actually doing when interacting with your code on the blockchain, i.e. when signing a...
+        </description>
+        <pubDate>Tue, 02 Jun 2020 00:00:00 +0000</pubDate>
+        <link>https://ewasm.ethereum.org/2020/06/02/Sourcify-Towards-Safer-Contract-Interaction-for-Humans/</link>
+        <guid isPermaLink="true">https://ewasm.ethereum.org/2020/06/02/Sourcify-Towards-Safer-Contract-Interaction-for-Humans/</guid>
+      </item>
+    
+  </channel>
+</rss>

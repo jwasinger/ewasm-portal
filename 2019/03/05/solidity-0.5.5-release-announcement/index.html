@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.5.5 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.5.5 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="This release focuses on the stabilization of the ABIEncoderV2 and the optimizer. We also prepared for the Petersburg release which is the default EVM now and improved the SMT checker, such that it now reports less false positives when using SafeMath. You can now activate the experimental Yul optimizer using...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2019/03/05/solidity-0.5.5-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2019/03/05/solidity-0.5.5-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.5.5 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="This release focuses on the stabilization of the ABIEncoderV2 and the optimizer. We also prepared for the Petersburg release which is the default EVM now and improved the SMT checker, such that it now reports less false positives when using SafeMath. You can now activate the experimental Yul optimizer using...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.5.5 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on March 5, 2019</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>This release focuses on the stabilization of the ABIEncoderV2 and the optimizer. We also prepared for the Petersburg release which is the default EVM now and improved the SMT checker, such that it now reports less false positives when using <code class="language-plaintext highlighter-rouge">SafeMath</code>.
+You can now activate the experimental Yul optimizer using <code class="language-plaintext highlighter-rouge">settings: {optimizer: {enabled: true, details: {yul: true}}}</code> or in the commandline via <code class="language-plaintext highlighter-rouge">solc optimize-yul</code>.</p>
+
+<p><strong>Language Features:</strong></p>
+
+<ul>
+  <li>Add support for getters of mappings with <code class="language-plaintext highlighter-rouge">string</code> or <code class="language-plaintext highlighter-rouge">bytes</code> key types.</li>
+  <li>Meta programming: Provide access to the name of contracts via <code class="language-plaintext highlighter-rouge">type(C).name</code>.</li>
+</ul>
+
+<p><strong>Compiler Features:</strong></p>
+
+<ul>
+  <li>Support <code class="language-plaintext highlighter-rouge">petersburg</code> as <code class="language-plaintext highlighter-rouge">evmVersion</code> and set as default.</li>
+  <li>Commandline Interface: Option to activate the experimental yul optimizer using <code class="language-plaintext highlighter-rouge">-optimize-yul</code>.</li>
+  <li>Inline Assembly: Consider <code class="language-plaintext highlighter-rouge">extcodehash</code> as part of Constantinople.</li>
+  <li>Inline Assembly: Instructions unavailable to the currently configured EVM are errors now.</li>
+  <li>SMTChecker: Do not report underflow/overflow if they always revert. This removes false positives when using <code class="language-plaintext highlighter-rouge">SafeMath</code>.</li>
+  <li>Standard JSON Interface: Allow retrieving metadata without triggering bytecode generation.</li>
+  <li>Standard JSON Interface: Provide fine-grained control over the optimizer via the settings.</li>
+  <li>Static Analyzer: Warn about expressions with custom types when they have no effect.</li>
+  <li>Optimizer: Add new rules with constants including <code class="language-plaintext highlighter-rouge">LT</code>, <code class="language-plaintext highlighter-rouge">GT</code>, <code class="language-plaintext highlighter-rouge">AND</code> and <code class="language-plaintext highlighter-rouge">BYTE</code>.</li>
+  <li>Optimizer: Add rule for shifts with constants for Constantinople.</li>
+  <li>Optimizer: Combine multiple shifts with constant shift-by values into one.</li>
+  <li>Optimizer: Do not mask with 160-bits after <code class="language-plaintext highlighter-rouge">CREATE</code> and <code class="language-plaintext highlighter-rouge">CREATE2</code> as they are guaranteed to return an address or 0.</li>
+  <li>Optimizer: Support shifts in the constant optimiser for Constantinople.</li>
+  <li>Yul Optimizer: Add rule to replace switch statements with literals by matching case body.</li>
+</ul>
+
+<p><strong>Bugfixes:</strong></p>
+
+<ul>
+  <li>ABIEncoderV2: Fix internal error related to bare delegatecall.</li>
+  <li>ABIEncoderV2: Fix internal error related to ecrecover.</li>
+  <li>ABIEncoderV2: Fix internal error related to mappings as library parameters.</li>
+  <li>ABIEncoderV2: Fix invalid signature for events containing structs emitted in libraries.</li>
+  <li>Inline Assembly: Proper error message for missing variables.</li>
+  <li>Optimizer: Fix internal error related to unused tag removal across assemblies. This never generated any invalid code.</li>
+  <li>SMTChecker: Fix crash related to statically-sized arrays.</li>
+  <li>TypeChecker: Fix internal error and disallow index access on contracts and libraries.</li>
+  <li>Yul: Properly detect name clashes with functions before their declaration.</li>
+  <li>Yul: Take built-in functions into account in the compilability checker.</li>
+  <li>Yul Optimizer: Properly take reassignments to variables in sub-expressions into account when replacing in the ExpressionSimplifier.</li>
+</ul>
+
+<p><strong>Build System:</strong></p>
+
+<ul>
+  <li>Soltest: Add support for left-aligned, padded hex literals.</li>
+  <li>Soltest: Add support for right-aligned, padded boolean literals.</li>
+</ul>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.5.5">here</a>.</p>
+
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2019/02/12/solidity-0.5.4-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.4 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2019/03/13/solidity-0.5.6-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.6 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

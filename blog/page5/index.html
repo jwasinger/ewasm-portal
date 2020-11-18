@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Home | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+  <meta name="description" content="Latest news and announcements">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Home" />
+  
+
+   
+  <meta property="og:description" content="Latest news and announcements">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/blog/page5/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/blog/page5/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Home" />
+  
+
+  
+  <meta name="twitter:description" content="Latest news and announcements">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://ewasm.ethereum.org ">
+	      <img class="avatar-img" src="/ewasm-portal/img/ewasm2d.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="page-heading">
+            <h1>Ewasm Blog</h1>
+            
+              
+                <hr class="small">
+                <span class="page-subheading">Latest news and announcements</span>
+              
+            
+        
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="posts-list">
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/10/01/solidity-0.5.12-release-announcement/">
+	  <h2 class="post-title">Solidity 0.5.12 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on October 1, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This is a small bugfix release that also includes loop support for the SMT solver and some improvements to the Yul optimizer. The reason for the smaller feature set is that we are mainly working on the upcoming 0.6.0 release. Language Features: Type Checker: Allow assignment to external function arguments except for reference types. Compiler Features: ABI Output: Change sorting order of functions from selector to kind, name. Optimizer: Add rule that replaces the BYTE opcode by 0 if the...
+        
+        
+          <a href="/ewasm-portal/2019/10/01/solidity-0.5.12-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/08/12/solidity-0.5.11-release-announcement/">
+	  <h2 class="post-title">Solidity 0.5.11 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on August 12, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This release fixes a bug related to calldata structs in ABIEncoderV2 and calldata decoding in V1. Several internal bugs of the SMT checker are fixed. Furthermore, internal types are added to the ABI output which allows you to see which struct type is behind an ABI tuple. Finally, Yul and web assembly support are progressing. We also improved our testing framework which now allows for semantics tests to run in 4 seconds instead of 1 minute. Language Features: Inline Assembly:...
+        
+        
+          <a href="/ewasm-portal/2019/08/12/solidity-0.5.11-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/06/25/solidity-storage-array-bugs/">
+	  <h2 class="post-title">Solidity Storage Array Bugs</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity and Security Team on June 25, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/security-alerts/"
+          class="category-security-alerts">
+          Security Alerts
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This post was originally published on the Ethereum blog. This blog post is about two bugs connected to storage arrays which are otherwise unrelated. Both have been present in the compiler for a long time and have only been discovered now even though a contract containing them should very likely show malfunctions in tests. Daenam Kim with help from Nguyen Pham, both from Curvegrid discovered an issue where invalid data is stored in connection with arrays of signed integers. This...
+        
+        
+          <a href="/ewasm-portal/2019/06/25/solidity-storage-array-bugs/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/06/25/solidity-0.5.10-release-announcement/">
+	  <h2 class="post-title">Solidity 0.5.10 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on June 25, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Apart from further invisible work on the Yul optimizer, the Solidity to Yul code generation, the eWasm backend and the SMT checker, this release contains two important bug fixes related to storage arrays. For details see our earlier blog post. It also contains an experimental mode that allows recovery from parser error (implemented by @rocky, funded by ConsenSys) in the hope that this might be useful for IDE developers. Important Bugfixes: ABIEncoderV2: Fix incorrect abi encoding of storage array of...
+        
+        
+          <a href="/ewasm-portal/2019/06/25/solidity-0.5.10-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/05/28/solidity-0.5.9-release-announcement/">
+	  <h2 class="post-title">Solidity 0.5.9 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on May 28, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        As in previous releases, we spent most of the time making Solidity future-proof by further working on the Yul optimizer, the Solidity to Yul (and eWasm) translator and the SMT Checker. Code generated from Solidity now always includes the version number in the CBOR metadata so that it becomes possible to quickly assess whether a contract might be affected by a compiler bug or not. Language Features: Inline Assembly: Revert change introduced in 0.5.7: The callvalue() instruction does not require...
+        
+        
+          <a href="/ewasm-portal/2019/05/28/solidity-0.5.9-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/04/30/solidity-0.5.8-release-announcement/">
+	  <h2 class="post-title">Solidity 0.5.8 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on April 30, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This release fixes important but very unlikely bugs and further completes ABIEncoderV2, SMTChecker and Yul and improves the optimizer. Notably, if ABIEncoderV2 is activated, the ABI decoder will now revert on input with dirty higher order bits instead of ignoring those bits. Important Bugfixes: Code Generator: Fix initialization routine of uninitialized internal function pointers in constructor context. Type System: Use correct type name for contracts in event parameters when used in libraries. This affected code generation. Yul Optimizer: Fix SSA...
+        
+        
+          <a href="/ewasm-portal/2019/04/30/solidity-0.5.8-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/04/29/solidity-0.4.26-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.26 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on April 29, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This is a bugfix release for the 0.4.x series that contains backported fixes for important bugs that affected code generation. It also contains a fix that makes the emscripten target compatible with newer browser versions. Important Bugfixes: Code Generator: Fix initialization routine of uninitialized internal function pointers in constructor context. Type System: Use correct type name for contracts in event parameters when used in libraries. This affected code generation. Bugfixes: ABIEncoderV2: Refuse to generate code that is known to be...
+        
+        
+          <a href="/ewasm-portal/2019/04/29/solidity-0.4.26-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/03/26/solidity-optimizer-and-abiencoderv2-bug/">
+	  <h2 class="post-title">Solidity Optimizer and ABIEncoderV2 Bugs</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity and Security Team on March 26, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/security-alerts/"
+          class="category-security-alerts">
+          Security Alerts
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This post was originally published on the Ethereum blog. Through the Ethereum bug bounty program, we received a report about a flaw within the new experimental ABI encoder (referred to as ABIEncoderV2). Upon investigation, it was found that the component suffers from a few different variations of the same type. The first part of this announcement explains this bug in detail. The new ABI encoder is still marked as experimental, but we nevertheless think that this deserves a prominent announcement...
+        
+        
+          <a href="/ewasm-portal/2019/03/26/solidity-optimizer-and-abiencoderv2-bug/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/03/26/solidity-0.5.7-release-announcement/">
+	  <h2 class="post-title">Solidity 0.5.7 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on March 26, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This release mainly fixes bugs in the optimizer and in the experimental ABI encoder. For details about the bug, please see the official announcement. Furthermore, this release also allows you to use Yul as a language option (instead of “Solidity”) in the standard-json-interface. Important Bugfixes: ABIEncoderV2: Fix bugs related to loading short value types from storage when encoding an array or struct from storage. ABIEncoderV2: Fix buffer overflow problem when encoding packed array from storage. Optimizer: Fix wrong ordering of...
+        
+        
+          <a href="/ewasm-portal/2019/03/26/solidity-0.5.7-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2019/03/13/solidity-0.5.6-release-announcement/">
+	  <h2 class="post-title">Solidity 0.5.6 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on March 13, 2019</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This release mainly fixes an optimizer bug related to multiple shift opcodes that was introduced in the previous release. It is unlikely that any existing contracts are affected, but you should still not use Solidity 0.5.5. Apart from that, the support for calldata structs and arrays by ABIEncoderV2 is almost finished now, we added some more optimizer rules and added enums and one-dimensional arrays to the SMT checker. Important Bugfixes: Yul Optimizer: Fix visitation order bug for the structural simplifier....
+        
+        
+          <a href="/ewasm-portal/2019/03/13/solidity-0.5.6-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+</div>
+
+
+<ul class="pager main-pager">
+  
+  <li class="previous">
+    <a href="/ewasm-portal/blog/page4/">&larr; Newer Posts</a>
+  </li>
+  
+  
+  <li class="next">
+    <a href="/ewasm-portal/blog/page6/">Older Posts &rarr;</a>
+  </li>
+  
+</ul>
+
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

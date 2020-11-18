@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Dev Update: Formal Methods | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Dev Update: Formal Methods" />
+  
+
+   
+  <meta property="og:description" content="This post was originally published on the Ethereum blog. Today, I am delighted to announce that Yoichi Hirai (@pirapira on github) is joining the Ethereum project as a formal verification engineer. He holds a PhD from the University of Tokyo on the topic of formalizing communicating parallel processes and created...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2016/09/01/formal-methods-roadmap/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2016/09/01/formal-methods-roadmap/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Dev Update: Formal Methods" />
+  
+
+  
+  <meta name="twitter:description" content="This post was originally published on the Ethereum blog. Today, I am delighted to announce that Yoichi Hirai (@pirapira on github) is joining the Ethereum project as a formal verification engineer. He holds a PhD from the University of Tokyo on the topic of formalizing communicating parallel processes and created...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Dev Update: Formal Methods</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Christian Reitwiessner on September 1, 2016</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/announcements/"
+                    class="category-announcements">
+                    Announcements
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><em>This post was originally published on the <a href="https://blog.ethereum.org/2016/09/01/formal-methods-roadmap/">Ethereum blog</a>.</em></p>
+
+<p>Today, I am delighted to announce that Yoichi Hirai (<a href="https://github.com/pirapira">@pirapira</a> on github) is joining the Ethereum project as a formal verification engineer. He holds a PhD from the University of Tokyo on the topic of formalizing communicating parallel processes and created formal verification tools for Ethereum in his spare time.</p>
+
+<p>In his own words:</p>
+
+<blockquote>
+  <p>I’m joining Ethereum as a formal verification engineer. My reasoning: formal verification makes sense as a profession only in a rare situation where</p>
+
+  <ul>
+    <li>the verification target follows short, simple rules (EVM);</li>
+    <li>the target carries lots of value (Eth and other tokens);</li>
+    <li>the target is tricky enough to get right (any nontrivial program);</li>
+    <li>and the community is aware that it’s important to get it right (maybe).</li>
+  </ul>
+
+  <p>My last job as a formal verification engineer prepared me for this challenge. Besides, around Ethereum, I’ve been playing with two projects: an online service called <a href="http://dr-y.no-ip.net/">Dr. Y’s Ethereum Contract Analyzer</a> and <a href="https://github.com/pirapira/evmverif/">a github repository</a> containing Coq proofs. These projects are at the opposite extremes of a spectrum between an automatic analyzer and a manual proof development.</p>
+
+  <p>Considering the collective impact to the whole ecosystem, I’m attracted to an automatic analyzer integrated in a compiler. Many people would run it and some would notice its warnings. On the other hand, since any surprising behavior can be considered a bug, any surprise should be removed, but computers cannot sense the human expectations. For telling human expectations to the machines, some manual efforts are necessary. The contract developers need to specify the contract in a machine-readable language and give hints to the machines why the implementation matches the specification (in most cases the machine wants more and more hints until the human realizes a bug, frequently in the specification). This is labor intensive, but such manual efforts are justifiable when a contract is designed to carry multi-million dollars.</p>
+</blockquote>
+
+<p>Having a person dedicated to formal methods not only gives us the ability to move faster in this important but also fruitful area, it hopefully also allows us to communicate better with academia in order to connect the various singular projects that have appeared in the past weeks.</p>
+
+<p>Here are some projects we would like to tackle in the future, most of them will probably be done in cooperation with other teams.</p>
+
+<p>Solidity:</p>
+<ul>
+  <li>extending the Solidity to Why3 translation to the full Solidity language (maybe switch to F*)</li>
+  <li>formal specification of Solidity</li>
+  <li>syntax and semantics of modal logics for reasoning about multiple parties</li>
+</ul>
+
+<p>Community:</p>
+<ul>
+  <li>creating a map of formal verification projects on Ethereum</li>
+  <li>collecting buggy Solidity codes, for benchmarking automatic analyzers</li>
+  <li>analyzing deployed contracts on the blockchain for vulnerabilities (related: <a href="https://eprint.iacr.org/2016/633">OYENTE tool</a>)</li>
+</ul>
+
+<p>Tools:</p>
+<ul>
+  <li>provide a human- and machine-readable formalization of the EVM, which can also be executed</li>
+  <li>developing formally verified libraries in EVM bytecode or Solidity</li>
+  <li>developing a formally verified compiler for a tiny language</li>
+  <li>explore the potential for interaction-oriented languages (“if X happens then do Y; you can only do Z if you did A”)</li>
+</ul>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2016/08/10/solidity-0.3.6-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.3.6 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2016/09/08/solidity-0.4.0-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.0 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

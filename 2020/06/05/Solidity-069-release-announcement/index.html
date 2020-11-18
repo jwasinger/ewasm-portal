@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.9 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.9 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="Solidity v0.6.9 adds SMT-checking to solc-js, allows calldata for all variables and provides a mechanism to specify an import directory. Please note that the solc-js / soljson binary includes the Z3 SMT solver built-in, which causes an increase in the binary size. Notable New Features SMTChecker The SMTChecker is a...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/06/05/Solidity-069-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/06/05/Solidity-069-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.9 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="Solidity v0.6.9 adds SMT-checking to solc-js, allows calldata for all variables and provides a mechanism to specify an import directory. Please note that the solc-js / soljson binary includes the Z3 SMT solver built-in, which causes an increase in the binary size. Notable New Features SMTChecker The SMTChecker is a...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.9 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on June 5, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><a href="https://github.com/ethereum/solidity/releases/tag/v0.6.9">Solidity v0.6.9</a> adds SMT-checking to solc-js,
+allows <code class="language-plaintext highlighter-rouge">calldata</code> for all variables and provides a mechanism to specify an import directory.</p>
+
+<p>Please note that the solc-js / soljson binary includes the Z3 SMT solver built-in, which causes an increase in the binary size.</p>
+
+<h2 id="notable-new-features">Notable New Features</h2>
+
+<h3 id="smtchecker">SMTChecker</h3>
+
+<p>The <a href="https://solidity.readthedocs.io/en/v0.6.8/security-considerations.html#formal-verification">SMTChecker</a> is a component of the Solidity compiler which has been in development for quite some time now.</p>
+
+<p>Its aim is to bring formal verification methods  to the Solidity compiler. Solidity implements a formal verification approach based on SMT/Horn solving. The SMTChecker module automatically tries to prove that the code satisfies the specification given by <code class="language-plaintext highlighter-rouge">require/assert</code> statements. The SMTChecker also checks automatically for arithmetic underflow/overflow, trivial conditions,
+unreachable code, and popping empty storage arrays.</p>
+
+<p>So far, the SMTChecker has lacked an easy and convenient way to be used.
+The difficulty lies in the fact that it requires an SMT solver to be compiled or linked into the compiler. To aid that, we are now shipping solc-js with the SMT solver Z3 compiled in. This means you can directly use the SMTChecker with everything
+that uses solc-js - including <a href="https://remix.ethereum.org/">Remix</a>!</p>
+
+<p>Below, you find a simple example contract which shows an overflow check being reported. If you copy-paste it to Remix, it will show the error.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SPDX-License-Identifier: GPL-3.0
+</span><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">&gt;=</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">9</span><span class="p">;</span>
+<span class="k">pragma</span> <span class="n">experimental</span> <span class="n">SMTChecker</span><span class="p">;</span>
+
+<span class="k">contract</span> <span class="n">Token</span> <span class="p">{</span>
+  <span class="k">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="n">balances</span><span class="p">;</span>
+  <span class="kt">address</span> <span class="n">owner</span><span class="p">;</span>
+  <span class="k">constructor</span> <span class="p">()</span> <span class="k">public</span> <span class="p">{</span> <span class="n">owner</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">;</span> <span class="p">}</span>
+  <span class="k">function</span> <span class="nb">transfer</span><span class="p">(</span><span class="kt">address</span> <span class="n">recipient</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+    <span class="c1">// If we comment out the next line, SMTChecker
+</span>    <span class="c1">// will complain about underflow.
+</span>    <span class="nb">require</span><span class="p">(</span><span class="n">balances</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">amount</span><span class="p">);</span>
+    <span class="n">balances</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">-=</span> <span class="n">amount</span><span class="p">;</span>
+    <span class="c1">// SMTChecker detects a possible overflow in the next line
+</span>    <span class="c1">// and even provides example inputs:
+</span>    <span class="c1">// Warning: Overflow (resulting value larger than 2**256 - 1) happens here
+</span>    <span class="c1">// for:
+</span>    <span class="c1">// &lt;result&gt; = 2**256
+</span>    <span class="c1">// amount = 1
+</span>    <span class="c1">// balances[msg.sender] = 0
+</span>    <span class="c1">// balances[recipient] = 2**256 - 1
+</span>    <span class="n">balances</span><span class="p">[</span><span class="n">recipient</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">function</span> <span class="n">mint</span><span class="p">(</span><span class="kt">address</span> <span class="n">recipient</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+      <span class="nb">require</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span> <span class="o">==</span> <span class="n">owner</span><span class="p">);</span>
+      <span class="n">balances</span><span class="p">[</span><span class="n">recipient</span><span class="p">]</span> <span class="o">+=</span> <span class="n">amount</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The component can also analyze more complex cases including possible call chains from external callers, as demonstrated in the following buggy state machine example:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SPDX-License-Identifier: GPL-3.0
+</span><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">&gt;=</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">9</span><span class="p">;</span>
+<span class="k">pragma</span> <span class="n">experimental</span> <span class="n">SMTChecker</span><span class="p">;</span>
+
+<span class="k">contract</span> <span class="n">StateMachine</span> <span class="p">{</span>
+    <span class="k">enum</span> <span class="n">State</span> <span class="p">{</span> <span class="n">Init</span><span class="p">,</span> <span class="n">End</span> <span class="p">}</span>
+    <span class="n">State</span> <span class="n">state</span><span class="p">;</span>
+    <span class="kt">uint</span><span class="p">[]</span> <span class="n">a</span><span class="p">;</span>
+    
+    <span class="k">constructor</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">Init</span><span class="p">;</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">push</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+    <span class="k">function</span> <span class="n">move</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="nb">require</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="p">.</span><span class="n">Init</span><span class="p">);</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">End</span><span class="p">;</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+    <span class="p">}</span>
+    
+    <span class="k">function</span> <span class="n">reset</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="nb">require</span><span class="p">(</span><span class="n">state</span> <span class="o">==</span> <span class="n">State</span><span class="p">.</span><span class="n">End</span><span class="p">);</span>
+        <span class="n">state</span> <span class="o">=</span> <span class="n">State</span><span class="p">.</span><span class="n">Init</span><span class="p">;</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>A sequence of 3 transactions (deployment, <code class="language-plaintext highlighter-rouge">move</code>, <code class="language-plaintext highlighter-rouge">reset</code>) causes an empty array pop, where SMTChecker then reports:</p>
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">browser</span><span class="o">/</span><span class="n">state_machine</span><span class="p">.</span><span class="n">sol</span><span class="o">:</span><span class="mi">24</span><span class="o">:</span><span class="mi">9</span><span class="o">:</span> <span class="n">Warning</span><span class="o">:</span> <span class="n">Empty</span> <span class="n">array</span> <span class="s">"pop"</span> <span class="n">detected</span> <span class="n">here</span><span class="p">.</span>
+        <span class="n">a</span><span class="p">.</span><span class="n">pop</span><span class="p">();</span>
+        <span class="o">^-----^</span>
+</code></pre></div></div>
+
+<p>Note that the SMTChecker makes several queries to the SMT solver, which might take some time since it is a computationally expensive procedure.</p>
+
+<h3 id="calldata-variables">Calldata Variables</h3>
+
+<p>You can now use <code class="language-plaintext highlighter-rouge">calldata</code> as the data location for reference variables everywhere, not only in external functions. Note that since the EVM does not allow modification of calldata, you cannot create new values in calldata or copy something to calldata.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SPDX-License-Identifier: GPL-3.0
+</span><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">&gt;=</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">9</span><span class="p">;</span>
+
+<span class="k">contract</span> <span class="n">C</span> <span class="p">{</span>
+  <span class="kt">address</span><span class="p">[]</span> <span class="n">owners</span><span class="p">;</span>
+  <span class="k">function</span> <span class="n">addOwners</span><span class="p">(</span><span class="kt">address</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">_newOwners</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+    <span class="c1">// We pass _newOwners on as a calldata array.
+</span>    <span class="n">checkUnique</span><span class="p">(</span><span class="n">_newOwners</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">uint</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_newOwners</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="n">owners</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">_newOwners</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+  <span class="p">}</span>
+  <span class="c1">/// This internal function can iterate over the calldata array.
+</span>  <span class="c1">/// Creating a copy in memory is not required.
+</span>  <span class="k">function</span> <span class="n">checkUnique</span><span class="p">(</span><span class="kt">address</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">_newOwners</span><span class="p">)</span> <span class="k">internal</span> <span class="k">pure</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">uint</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">_newOwners</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kt">uint</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">_newOwners</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span>
+        <span class="nb">require</span><span class="p">(</span><span class="n">_newOwners</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">_newOwners</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The benefit of using calldata variables is that it saves
+a copy from calldata to memory and you can be sure that the
+array or struct cannot be modified.</p>
+
+<p>Usually, the ABI decoder performs range checks on the entire calldata when it is copied to memory to avoid malformed calldata from causing any problems.
+Note that when using calldata variables for nested calldata structs or arrays those checks will instead only be performed when you access them.</p>
+
+<h3 id="basepath">BasePath</h3>
+
+<p>With the introduction of the <code class="language-plaintext highlighter-rouge">--base-path</code> option to both
+solc and solcjs, we hope that imports will be easier to use.</p>
+
+<p>If you run <code class="language-plaintext highlighter-rouge">solc --base-path ./contracts/ ./contracts/MainContract.sol</code>
+and that file contains <code class="language-plaintext highlighter-rouge">import "./OtherContract.sol";</code>, the Solidity
+compiler will automatically search for <code class="language-plaintext highlighter-rouge">./contracts/OtherContract.sol</code>
+and import it.</p>
+
+<p>While this sounds like a pretty trivial feature, we hope that you still like it!</p>
+
+<p>Also note that if you use <code class="language-plaintext highlighter-rouge">--base-path</code>, the base path itself will
+not be included in any metadata artefacts, you will only get relative
+paths starting from the base path.</p>
+
+<h2 id="full-changelog">Full Changelog</h2>
+
+<h3 id="language-features">Language Features</h3>
+<ul>
+  <li>Permit calldata location for all variables.</li>
+  <li><strong>NatSpec</strong>: Support NatSpec comments on state variables.</li>
+  <li><strong>Yul</strong>: EVM instruction <code class="language-plaintext highlighter-rouge">pc()</code> is marked deprecated and will be removed in the next breaking release.</li>
+</ul>
+
+<h3 id="compiler-features">Compiler Features</h3>
+<ul>
+  <li><strong>Build system</strong>: Update the soljson.js build to emscripten 1.39.15 and boost 1.73.0 and include Z3 for integrated SMTChecker support without the callback mechanism.</li>
+  <li><strong>Build system</strong>: Switch the emscripten build from the fastcomp backend to the upstream backend.</li>
+  <li><strong>Code Generator</strong>: Do not introduce new internal source references for small compiler routines.</li>
+  <li><strong>Commandline Interface</strong>: Adds new option <code class="language-plaintext highlighter-rouge">--base-path PATH</code> to use the given path as the root of the source tree (defaults to the root of the filesystem).</li>
+  <li><strong>SMTChecker</strong>: Support array <code class="language-plaintext highlighter-rouge">length</code>.</li>
+  <li><strong>SMTChecker</strong>: Support array <code class="language-plaintext highlighter-rouge">push</code> and <code class="language-plaintext highlighter-rouge">pop</code>.</li>
+  <li><strong>SMTChecker</strong>: General support to BitVectors and the bitwise <code class="language-plaintext highlighter-rouge">and</code> operator.</li>
+</ul>
+
+<h2 id="bugfixes">Bugfixes</h2>
+
+<p>This release comes with many minor, non-security relevant bugfixes. The correspoding bugs do not affect (the correctness of) the generated
+bytecode.</p>
+
+<p>You can track all important, security-relevant bugs in the <a href="https://github.com/ethereum/solidity/blob/develop/docs/bugs.json">Solidity bug json file</a>.</p>
+
+<ul>
+  <li><strong>Code Generator</strong>: Trigger proper unimplemented errors on certain array copy operations.</li>
+  <li><strong>Commandline Interface</strong>: Fix internal error when using <code class="language-plaintext highlighter-rouge">--assemble</code> or <code class="language-plaintext highlighter-rouge">--yul</code> options with <code class="language-plaintext highlighter-rouge">--machine ewasm</code> but without specifying <code class="language-plaintext highlighter-rouge">--yul-dialect</code>.</li>
+  <li><strong>NatSpec</strong>: DocString block is terminated when encountering an empty line.</li>
+  <li><strong>Optimizer</strong>: Fixed a bug in BlockDeDuplicator.</li>
+  <li><strong>Scanner</strong>: Fix bug when two empty NatSpec comments lead to scanning past EOL.</li>
+  <li><strong>SMTChecker</strong>: Fix internal error on try/catch clauses with parameters.</li>
+  <li><strong>SMTChecker</strong>: Fix internal error when applying arithmetic operators to fixed point variables.</li>
+  <li><strong>SMTChecker</strong>: Fix internal error when assigning to index access inside branches.</li>
+  <li><strong>SMTChecker</strong>: Fix internal error when short circuiting Boolean expressions with function calls in state variable initialization.</li>
+  <li><strong>Type Checker</strong>: Disallow assignments to storage variables of type <code class="language-plaintext highlighter-rouge">mapping</code>.</li>
+  <li><strong>Type Checker</strong>: Disallow inline arrays of non-nameable types.</li>
+  <li><strong>Type Checker</strong>: Disallow usage of override with non-public state variables.</li>
+  <li><strong>Type Checker</strong>: Fix internal compiler error when accessing members of array slices.</li>
+  <li><strong>Type Checker</strong>: Fix internal compiler error when forward referencing non-literal constants from inline assembly.</li>
+  <li><strong>Type Checker</strong>: Fix internal compiler error when trying to decode too large static arrays.</li>
+  <li><strong>Type Checker</strong>: Fix wrong compiler error when referencing an overridden function without calling it.</li>
+</ul>
+
+<p>Last but not least, as always, we’d like to thank all contributors who helped  make this release possible!</p>
+
+<p>You can download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.9">here</a>.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/06/02/Sourcify-Towards-Safer-Contract-Interaction-for-Humans/" data-toggle="tooltip" data-placement="top" title="Sourcify: Towards Safer Contract Interaction for Humans">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/06/09/solidity-summit-recap/" data-toggle="tooltip" data-placement="top" title="Wrapping up the Virtual Solidity Summit 2020">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

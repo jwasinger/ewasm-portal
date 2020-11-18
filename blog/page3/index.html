@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Home | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+  <meta name="description" content="Latest news and announcements">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Home" />
+  
+
+   
+  <meta property="og:description" content="Latest news and announcements">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/blog/page3/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/blog/page3/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Home" />
+  
+
+  
+  <meta name="twitter:description" content="Latest news and announcements">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://ewasm.ethereum.org ">
+	      <img class="avatar-img" src="/ewasm-portal/img/ewasm2d.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="page-heading">
+            <h1>Ewasm Blog</h1>
+            
+              
+                <hr class="small">
+                <span class="page-subheading">Latest news and announcements</span>
+              
+            
+        
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="posts-list">
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/05/26/array-slices/">
+	  <h2 class="post-title">Solidity 0.6.x features: Array Slices</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on May 26, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/explainers/"
+          class="category-explainers">
+          Explainers
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Starting from version 0.6.0, Solidity supports array slices. 
+Array slices are handy when you want to reference a 
+contiguous portion of an array but do not want to perform a full copy of that portion. For now, array slices are only 
+supported for calldata arrays.
+
+
+        
+        
+          <a href="/ewasm-portal/2020/05/26/array-slices/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/05/14/Solidity-068-release-announcement/">
+	  <h2 class="post-title">Solidity 0.6.8 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on May 14, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Solidity v0.6.8 fixes three important bugs in the code generator and introduces a recommendation to use SPDX license identifiers. Furthermore, support for WebAssembly has been extended and it is now possible to access the min and max values of an integer type directly.
+
+Please upgrade if you are using array slices, backslashes in string literals for ABIEncoderV2 or are concerned about non-payable constructors.
+
+
+        
+        
+          <a href="/ewasm-portal/2020/05/14/Solidity-068-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/05/13/immutable-keyword/">
+	  <h2 class="post-title">Solidity 0.6.x features: Saving Storage Costs with Immutables</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Daniel Kirchner on May 13, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/explainers/"
+          class="category-explainers">
+          Explainers
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        With version 0.6.5, Solidity introduced the 
+immutable keyword 
+for state variables. Immutable state variables can only be assigned during contract creation, but will remain 
+constant throughout the life-time of a deployed contract.
+The big advantage of immutables is that reading them is significantly cheaper than reading from regular state variables, 
+since immutables will not be stored in storage, but their values will be directly inserted into the runtime code.
+
+
+        
+        
+          <a href="/ewasm-portal/2020/05/13/immutable-keyword/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/05/04/solidity-0.6.7-release-announcement/">
+	  <h2 class="post-title">Solidity 0.6.7 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on May 4, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Solidity v0.6.7 introduces support for EIP-165 via type(InterfaceName).interfaceId. Language Features: Add support for EIP 165 interface identifiers with type(I).interfaceId. Allow virtual modifiers inside abstract contracts to have empty body. Compiler Features: Optimizer: Simplify repeated AND and OR operations. Option to specify optimization steps to be performed by Yul optimizer with yul-optimizations in the commandline interface or optimizer.details.yulDetails.optimizerSteps in standard-json. Standard Json Input: Support the prefix file:// in the field urls. Bugfixes: SMTChecker: Fix internal error when fixed points are used....
+        
+        
+          <a href="/ewasm-portal/2020/05/04/solidity-0.6.7-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/04/17/Solidity-Summit-2020-Goes-Interspace/">
+	  <h2 class="post-title">Solidity Summit 2020 Goes Interspace</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Franziska Heintel on April 17, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/announcements/"
+          class="category-announcements">
+          Announcements
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Tl;dr: As already announced on Twitter, we transformed the Solidity Summit, which was initially planned to be an in-person meeting in Berlin, into an online event. Today, we are excited to share that the summit will be powered by Interspace.Chat. Interspace is a virtual meeting infrastructure based on self-hosted Jitsi video chat rooms. Check out the Solidity Summit’s preliminary event agenda here and make sure to register if you want to partipate!
+
+
+        
+        
+          <a href="/ewasm-portal/2020/04/17/Solidity-Summit-2020-Goes-Interspace/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/04/09/solidity-0.6.6-release-announcement/">
+	  <h2 class="post-title">Solidity 0.6.6 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on April 9, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This is a small bugfix release that solves an issue with certain tuple assignments. Important Bugfixes: Fix tuple assignments with components occupying multiple stack slots and different stack size on left- and right-hand-side. Bugfixes: AST export: Export immutable property in the field mutability. SMTChecker: Fix internal error in the CHC engine when calling inherited functions internally. Type Checker: Error when trying to encode functions with call options gas and value set. A big thank you to all contributors who helped...
+        
+        
+          <a href="/ewasm-portal/2020/04/09/solidity-0.6.6-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/04/06/solidity-0.6.5-release-announcement/">
+	  <h2 class="post-title">Solidity 0.6.5 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on April 6, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Version 0.6.5 of Solidity fixes an important bug and introduces immutable as a major feature. The bug concerns the allocation of dynamic memory arrays using e.g. new uint[](...). The bug is considered to have a severity level of “low” but is present in all prior versions of Solidity. Therefore, please read more about how check if your contract is vulnerable in this blog post. The immutable feature supports setting contract-level variables at construction time if they do not change later...
+        
+        
+          <a href="/ewasm-portal/2020/04/06/solidity-0.6.5-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/04/06/memory-creation-overflow-bug/">
+	  <h2 class="post-title">Solidity Memory Array Creation Overflow Bug</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on April 6, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/security-alerts/"
+          class="category-security-alerts">
+          Security Alerts
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        On the 28th of March, a bug in the Solidity code generator was reported through the
+Ethereum Foundation Bounty program,
+by John Toman of Certora. The bug is fixed with version 0.6.5,
+released on 2020-04-06.
+The bug is present in all prior versions of Solidity.
+
+We assigned a severity level of “low” because we found the bug to be uncommon and at the same time hard to exploit.
+
+
+        
+        
+          <a href="/ewasm-portal/2020/04/06/memory-creation-overflow-bug/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/03/26/fallback-receive-split/">
+	  <h2 class="post-title">Solidity 0.6.x features: fallback and receive functions</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Elena Gesheva on March 26, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/explainers/"
+          class="category-explainers">
+          Explainers
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        In versions of Solidity before 0.6.x, developers typically used the fallback function to handle logic in two scenarios: contract received ether and no data contract received data but no function matched the function called The main use case of the pre-0.6.x fallback function is to receive ether and react to it, a typical pattern used by token-style contracts to reject transfers, emit events or forward the ether. The function executes when a contract is called without any data e.g. via...
+        
+        
+          <a href="/ewasm-portal/2020/03/26/fallback-receive-split/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2020/03/17/solidity-0.5.17-release-announcement/">
+	  <h2 class="post-title">Solidity 0.5.17 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on March 17, 2020</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This maintenance release of the 0.5.x series fixes a bug that was always present in the compiler. Some people do not even consider it a bug, though, which might explain why it was undiscovered for so long: A private function can be overridden in a derived contract by a private function of the same name and types. In other words, the virtual function calling mechanism does not respect visibility. The same applies to two private functions of the same name...
+        
+        
+          <a href="/ewasm-portal/2020/03/17/solidity-0.5.17-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+</div>
+
+
+<ul class="pager main-pager">
+  
+  <li class="previous">
+    <a href="/ewasm-portal/blog/page2/">&larr; Newer Posts</a>
+  </li>
+  
+  
+  <li class="next">
+    <a href="/ewasm-portal/blog/page4/">Older Posts &rarr;</a>
+  </li>
+  
+</ul>
+
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

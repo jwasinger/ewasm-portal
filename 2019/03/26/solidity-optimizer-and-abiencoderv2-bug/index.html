@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity Optimizer and ABIEncoderV2 Bugs | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity Optimizer and ABIEncoderV2 Bugs" />
+  
+
+   
+  <meta property="og:description" content="This post was originally published on the Ethereum blog. Through the Ethereum bug bounty program, we received a report about a flaw within the new experimental ABI encoder (referred to as ABIEncoderV2). Upon investigation, it was found that the component suffers from a few different variations of the same type....">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2019/03/26/solidity-optimizer-and-abiencoderv2-bug/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2019/03/26/solidity-optimizer-and-abiencoderv2-bug/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity Optimizer and ABIEncoderV2 Bugs" />
+  
+
+  
+  <meta name="twitter:description" content="This post was originally published on the Ethereum blog. Through the Ethereum bug bounty program, we received a report about a flaw within the new experimental ABI encoder (referred to as ABIEncoderV2). Upon investigation, it was found that the component suffers from a few different variations of the same type....">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity Optimizer and ABIEncoderV2 Bugs</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity and Security Team on March 26, 2019</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/security-alerts/"
+                    class="category-security-alerts">
+                    Security Alerts
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><em>This post was originally published on the <a href="https://blog.ethereum.org/2019/03/26/solidity-optimizer-and-abiencoderv2-bug/">Ethereum blog</a>.</em></p>
+
+<p>Through the Ethereum bug bounty program, we received a report about a flaw within the new experimental ABI encoder (referred to as ABIEncoderV2). Upon investigation, it was found that the component suffers from a few different variations of the same type. The first part of this announcement explains this bug in detail. The new ABI encoder is still marked as experimental, but we nevertheless think that this deserves a prominent announcement since it is already used on mainnet.</p>
+
+<p>Additionally, two low-impact bugs in the optimizer have been identified over the past two weeks, one of which was fixed with Solidity v0.5.6. Both were introduced with version 0.5.5. See the second part of this announcement for details.</p>
+
+<p>The <a href="https://github.com/ethereum/solidity/releases/tag/v0.5.7">0.5.7 release</a> contains the fixes to all bugs explained in this blog post.</p>
+
+<p>All the bugs mentioned here should be easily visible in tests that touch the relevant code paths, at least when run with all combinations of zero and nonzero values.</p>
+
+<p>Credits to Melonport team (Travis Jacobs &amp; Jenna Zenk) and the Melon Council (Nick Munoz-McDonald, Martin Lundfall, Matt di Ferrante &amp; Adam Kolar), who reported this via the Ethereum bug bounty program!</p>
+
+<h1 id="who-should-be-concerned">Who should be concerned</h1>
+
+<p>If you have deployed contracts which use the experimental ABI encoder V2, then those might be affected. This means that only contracts which use the following directive within the source code can be affected:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pragma experimental ABIEncoderV2;
+</code></pre></div></div>
+
+<p>Additionally, there are a number of requirements for the bug to trigger. See technical details further below for more information.</p>
+
+<p>As far as we can tell, there are about 2500 contracts live on mainnet that use the experimental ABIEncoderV2. It is not clear how many of them contain the bug.</p>
+
+<h1 id="how-to-check-if-contract-is-vulnerable">How to check if contract is vulnerable</h1>
+
+<p>The bug only manifests itself when all of the following conditions are met:</p>
+<ul>
+  <li>Storage data involving arrays or structs is sent directly to an external function call, to <code class="language-plaintext highlighter-rouge">abi.encode</code> or to event data without prior assignment to a local (memory) variable AND</li>
+  <li>there is an array that contains elements with size less than 32 bytes or a struct that has elements that share a storage slot or members of type <code class="language-plaintext highlighter-rouge">bytesNN</code> shorter than 32 bytes.</li>
+</ul>
+
+<p>In addition to that, in the following situations, your code is NOT affected:</p>
+<ul>
+  <li>if all your structs or arrays only use <code class="language-plaintext highlighter-rouge">uint256</code> or <code class="language-plaintext highlighter-rouge">int256</code> types</li>
+  <li>if you only use integer types (that may be shorter) and only encode at most one array at a time</li>
+  <li>if you only return such data and do not use it in <code class="language-plaintext highlighter-rouge">abi.encode</code>, external calls or event data.</li>
+</ul>
+
+<p>If you have a contract that meets these conditions, and want to verify whether the contract is indeed vulnerable, you can reach out to us via security@ethereum.org.</p>
+
+<h1 id="how-to-prevent-these-types-of-flaws-in-the-future">How to prevent these types of flaws in the future</h1>
+
+<p>In order to be conservative about changes, the experimental ABI encoder has been available only when explicitly enabled, to allow people to interact with it and test it without putting too much trust in it before it is considered stable.</p>
+
+<p>We do our best to ensure high quality, and have recently started working on ‘semantic’ fuzzing of certain parts on <a href="https://github.com/google/oss-fuzz">OSS-Fuzz</a> (we have previously crash-fuzzed the compiler, but that did not test compiler correctness).</p>
+
+<p>For developers – bugs within the Solidity compiler are difficult to detect with tools like vulnerability detectors, since tools which operate on source code or AST-representations do not detect flaws that are introduced only into the compiled bytecode.</p>
+
+<p>The best way to protect against these types of flaws is to have a rigorous set of end-to-end tests for your contracts (verifying all code paths), since bugs in a compiler very likely are not “silent” and instead manifest in invalid data.</p>
+
+<h1 id="possible-consequences">Possible consequences</h1>
+
+<p>Naturally, any bug can have wildly varying consequences depending on the program control flow, but we expect that this is more likely to lead to malfunction than exploitability.</p>
+
+<p>The bug, when triggered, will under certain circumstances send corrupt parameters on method invocations to other contracts.</p>
+
+<h1 id="timeline">Timeline</h1>
+
+<h4 id="2019-03-16">2019-03-16:</h4>
+<ul>
+  <li>Report via bug bounty, about corruption caused when reading from arrays of booleans directly from storage into ABI encoder.</li>
+</ul>
+
+<h4 id="2019-03-16-to-2019-03-21">2019-03-16 to 2019-03-21:</h4>
+<ul>
+  <li>Investigation of root cause, analysis of affected contracts. An unexpectedly high count of contracts compiled with the experimental encoder were found deployed on mainnet, many without verified source-code.</li>
+  <li>Investigation of bug found more ways to trigger the bug, e.g. using structs. Furthermore, an array overflow bug was found in the same routine.</li>
+  <li>A handful of contracts found on Github were checked, and none were found to be affected.</li>
+  <li>A bugfix to the ABI encoder was made.</li>
+</ul>
+
+<h4 id="2019-03-20">2019-03-20:</h4>
+<ul>
+  <li>Decision to make information public.</li>
+  <li>Reasoning: It would not be feasible to detect all vulnerable contracts and reach out to all authors in a timely manner, and it would be good to prevent further proliferation of vulnerable contracts on mainnet.</li>
+</ul>
+
+<h4 id="2019-03-26">2019-03-26:</h4>
+<ul>
+  <li>New compiler release, version 0.5.7.</li>
+  <li>This post released.</li>
+</ul>
+
+<h1 id="technical-details">Technical details</h1>
+
+<h2 id="background">Background</h2>
+
+<p>The Contract ABI is a specification how data can be exchanged with contracts from the outside (a Dapp) or when interacting between contracts. It supports a variety of types of data, including simple values like numbers, bytes and strings, as well as more complex data types, including arrays and structs.</p>
+
+<p>When a contract receives input data, it must decode that (this is done by the “ABI decoder”) and prior to returning data or sending data to another contract, it must encode it (this is done by the “ABI encoder”). The Solidity compiler generates these two pieces of code for each defined function in a contract (and also for <code class="language-plaintext highlighter-rouge">abi.encode</code> and <code class="language-plaintext highlighter-rouge">abi.decode</code>). In the Solidity compiler the subsystem generating the encoder and decoder is called the “ABI encoder”.</p>
+
+<p>In mid-2017 the Solidity team started to work on a fresh implementation named “ABI encoder V2” with the goal of having a more flexible, safe, performant and auditable code generator. This experimental code generator, when explicitly enabled, has been offered to users since the end of 2017 with the 0.4.19 release.</p>
+
+<h2 id="the-flaw">The flaw</h2>
+
+<p>The experimental ABI encoder does not handle non-integer values shorter than 32 bytes properly. This applies to <code class="language-plaintext highlighter-rouge">bytesNN</code> types, <code class="language-plaintext highlighter-rouge">bool</code>, <code class="language-plaintext highlighter-rouge">enum</code> and other types when they are part of an array or a struct and encoded directly from storage. This means these storage references have to be used directly inside <code class="language-plaintext highlighter-rouge">abi.encode(...)</code>, as arguments in external function calls or in event data without prior assignment to a local variable. Using <code class="language-plaintext highlighter-rouge">return</code> does not trigger the bug. The types <code class="language-plaintext highlighter-rouge">bytesNN</code> and <code class="language-plaintext highlighter-rouge">bool</code> will result in corrupted data while <code class="language-plaintext highlighter-rouge">enum</code> might lead to an invalid <code class="language-plaintext highlighter-rouge">revert</code>.</p>
+
+<p>Furthermore, arrays with elements shorter than 32 bytes may not be handled correctly even if the base type is an integer type. Encoding such arrays in the way described above can lead to other data in the encoding being overwritten if the number of elements encoded is not a multiple of the number of elements that fit a single slot. If nothing follows the array in the encoding (note that dynamically-sized arrays are always encoded after statically-sized arrays with statically-sized content), or if only a single array is encoded, no other data is overwritten.</p>
+
+<h1 id="two-unrelated-bugs">Two unrelated bugs</h1>
+
+<p>Unrelated to the ABI encoder issue explained above, two bugs have been found in the optimiser. Both have been introduced with 0.5.5 (released on 5th of March). They are unlikely to occur in code generated by the compiler, unless inline assembly is used.</p>
+
+<p>These two bugs have been identified through the recent addition of Solidity to <a href="https://github.com/google/oss-fuzz">OSS-Fuzz</a> - a security toolkit for finding discrepancies or issues in a variety of projects. For Solidity we have included multiple different fuzzers testing different aspects of the compiler.</p>
+
+<ol>
+  <li>The optimizer turns opcode sequences like <code class="language-plaintext highlighter-rouge">((x &lt;&lt; a) &lt;&lt; b))</code>, where <code class="language-plaintext highlighter-rouge">a</code> and <code class="language-plaintext highlighter-rouge">b</code> are compile-time constants, into <code class="language-plaintext highlighter-rouge">(x &lt;&lt; (a + b))</code> while not handling overflow in the addition properly.</li>
+  <li>The optimizer incorrectly handles the <code class="language-plaintext highlighter-rouge">byte</code> opcode if the constant 31 is used as second argument. This can happen when performing index access on <code class="language-plaintext highlighter-rouge">bytesNN</code> types with a compile-time constant value (not index) of 31 or when using the byte opcode in inline assembly.</li>
+</ol>
+
+<p>This post was jointly composed by <a href="https://github.com/axic">@axic</a>, <a href="https://github.com/chriseth">@chriseth</a>, <a href="https://github.com/holiman">@holiman</a>.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2019/03/26/solidity-0.5.7-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.7 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2019/04/29/solidity-0.4.26-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.26 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

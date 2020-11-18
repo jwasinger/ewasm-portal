@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.10 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.10 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="Solidity v0.6.10 fixes an important bug that was introduced in the previous release and adds error codes. Please upgrade if you are using internal library functions with calldata parameters in connection with using for. Important Bugfixes Invalid Access for Calldata Parameters in Internal Library Functions Problem: The previous release, Solidity...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/06/11/Solidity-0610-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/06/11/Solidity-0610-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.10 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="Solidity v0.6.10 fixes an important bug that was introduced in the previous release and adds error codes. Please upgrade if you are using internal library functions with calldata parameters in connection with using for. Important Bugfixes Invalid Access for Calldata Parameters in Internal Library Functions Problem: The previous release, Solidity...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.10 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on June 11, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><a href="https://github.com/ethereum/solidity/releases/tag/v0.6.10">Solidity v0.6.10</a> fixes an important bug that was introduced in the previous release and adds error codes.</p>
+
+<p>Please upgrade if you are using internal library functions with calldata parameters in connection with <code class="language-plaintext highlighter-rouge">using for</code>.</p>
+
+<h2 id="important-bugfixes">Important Bugfixes</h2>
+
+<h3 id="invalid-access-for-calldata-parameters-in-internal-library-functions">Invalid Access for Calldata Parameters in Internal Library Functions</h3>
+
+<p><strong>Problem</strong>: The previous release, <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.9">Solidity 0.6.9</a>, introduced the possibility to use <code class="language-plaintext highlighter-rouge">calldata</code> types in internal and not, as previously, only in external functions.
+This resulted in a bug related to calling library functions with calldata parameters via <code class="language-plaintext highlighter-rouge">using for</code>.
+More specifically, the compiler would copy all calldata arguments to memory first - like done for calls to public library functions.
+The internal library function would then receive the memory pointer but interpret it as a calldata pointer resulting in
+calldata reads at the wrong location and potential stack corruption. The stack corruption is caused by the fact that
+calldata pointers can use two stack slots while memory pointers always only use one stack slot. This can in turn cause
+problems for other variables and a wrong jump at the function return.</p>
+
+<p>We assigned a severity of “very low” due to the fact that the bug was only introduced a week ago
+and is very easy to detect through testing.</p>
+
+<p><strong>Solution</strong>: Upgrade to <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.10">Solidity 0.6.10</a>, which does not perform the copy to memory.</p>
+
+<p><strong>Example of affected code</strong></p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">library</span> <span class="n">L</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">helper</span><span class="p">(</span><span class="kt">bytes</span> <span class="k">calldata</span> <span class="n">_x</span><span class="p">)</span> <span class="k">internal</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">byte</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="n">_x</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">C</span> <span class="p">{</span>
+    <span class="k">using</span> <span class="n">L</span> <span class="k">for</span> <span class="kt">bytes</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">fun</span><span class="p">(</span><span class="kt">bytes</span> <span class="k">calldata</span> <span class="n">_x</span><span class="p">)</span> <span class="k">public</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">byte</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// This would incorrectly copy ``_x`` from calldata
+</span>        <span class="c1">// to memory and then call L.helper with this memory array,
+</span>        <span class="c1">// but the function expects a calldata array and thus
+</span>        <span class="c1">// reads the data from the wrong calldata offset.
+</span>        <span class="k">return</span> <span class="n">_x</span><span class="p">.</span><span class="n">helper</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>We thank Luis from Gelato (<a href="https://github.com/gitpusha">@gitpusha</a>) for reporting the bug!</p>
+
+<h2 id="notable-new-features">Notable New Features</h2>
+
+<h3 id="error-codes">Error Codes</h3>
+
+<p>A notable new feature is the introduction of error codes. In Standard JSON input/output mode
+(<code class="language-plaintext highlighter-rouge">--standard-json</code>) the error codes will always be available under the property <code class="language-plaintext highlighter-rouge">"errorCode"</code>.
+In the command-line interface, you can enable error codes via the switch <code class="language-plaintext highlighter-rouge">--error-codes</code>.</p>
+
+<p>Two errors that are essentially about the same thing but contain different error messages, e.g. when the error concerns two different types, will use the same error code.</p>
+
+<p>Error codes are intended to be reasonably stable across releases.</p>
+
+<p>We hope that this allows improved analysis of smart contracts without complicated and fragile checks on the error message.</p>
+
+<p><strong>Example:</strong></p>
+
+<p>The following source code generates three error messages:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SPDX-License-Identifier: MIT
+</span><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">10</span><span class="p">;</span>
+<span class="k">contract</span> <span class="n">C</span> <span class="p">{</span>
+  <span class="kt">uint8</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+  <span class="k">function</span> <span class="n">f</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_y</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">_y</span><span class="p">;</span>
+    <span class="n">x</span><span class="p">.</span><span class="n">g</span><span class="p">();</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># solc --error-codes c.sol
+Error (7407): Type int_const 1000 is not implicitly convertible to expected type uint8.
+ --&gt; c.sol:5:13:
+  |
+5 |   uint8 x = 1000;
+  |             ^^^^
+Error (7407): Type uint256 is not implicitly convertible to expected type uint8.
+ --&gt; c.sol:7:9:
+  |
+7 |     x = _y;
+  |         ^^
+Error (9582): Member "g" not found or not visible after argument-dependent lookup in uint8.
+ --&gt; c.sol:8:5:
+  |
+8 |     x.g();
+  |     ^^^
+</code></pre></div></div>
+
+<p>Note that the errors concerning invalid type conversions use the same code even though the text is different.
+The error about the missing member uses a different code, though.</p>
+
+<p>We currently do not plan to create a complete list of all error codes. If you would like to look them up, please take a look at the source code of the compiler.</p>
+
+<p>Error codes are currently always four-digit decimals with no structure in the number assignments.</p>
+
+<h2 id="full-changelog">Full Changelog</h2>
+
+<h3 id="new-features">New Features</h3>
+
+<ul>
+  <li><strong>Commandline Interface</strong>: Re-group help screen.</li>
+  <li><strong>Output compilation error codes</strong> in standard-json and when using <code class="language-plaintext highlighter-rouge">--error-codes</code>.</li>
+  <li><strong>Yul</strong>: Raise warning for switch statements that only have a default and no other cases.</li>
+</ul>
+
+<h3 id="bugfixes">Bugfixes</h3>
+
+<ul>
+  <li><strong>SMTChecker</strong>: Fix internal error when encoding tuples of tuples.</li>
+  <li><strong>SMTChecker</strong>: Fix aliasing soundness after pushing to an array pointer.</li>
+  <li><strong>Type system</strong>: Fix internal compiler error on calling externally a function that returns variables with calldata location.</li>
+  <li><strong>Type system</strong>: Fix bug where a bound function was not found if <code class="language-plaintext highlighter-rouge">using for</code> is applied to explicit reference types.</li>
+</ul>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.10">here</a>.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/06/09/solidity-summit-recap/" data-toggle="tooltip" data-placement="top" title="Wrapping up the Virtual Solidity Summit 2020">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/06/18/solidity-0.6-inheritance/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.x features: inheritance">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

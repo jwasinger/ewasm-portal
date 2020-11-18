@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.x features: fallback and receive functions | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.x features: fallback and receive functions" />
+  
+
+   
+  <meta property="og:description" content="In versions of Solidity before 0.6.x, developers typically used the fallback function to handle logic in two scenarios: contract received ether and no data contract received data but no function matched the function called The main use case of the pre-0.6.x fallback function is to receive ether and react to...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/03/26/fallback-receive-split/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/03/26/fallback-receive-split/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.x features: fallback and receive functions" />
+  
+
+  
+  <meta name="twitter:description" content="In versions of Solidity before 0.6.x, developers typically used the fallback function to handle logic in two scenarios: contract received ether and no data contract received data but no function matched the function called The main use case of the pre-0.6.x fallback function is to receive ether and react to...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.x features: fallback and receive functions</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Elena Gesheva on March 26, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/explainers/"
+                    class="category-explainers">
+                    Explainers
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>In versions of Solidity before 0.6.x, developers typically used the <a href="https://solidity.readthedocs.io/en/v0.5.15/contracts.html#fallback-function">fallback function</a> to handle logic in two scenarios:</p>
+
+<ul>
+  <li>contract received ether and no data</li>
+  <li>contract received data but no function matched the function called</li>
+</ul>
+
+<p>The main use case of the pre-0.6.x fallback function is to receive ether and react
+to it, a typical pattern used by token-style contracts to reject transfers, emit
+events or forward the ether. The function executes when a contract is called
+without any data e.g. via <code class="language-plaintext highlighter-rouge">.send()</code> or <code class="language-plaintext highlighter-rouge">.transfer()</code> functions. The 0.5.x
+syntax is:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">contract</span> <span class="n">Charity</span> <span class="p">{</span>
+        <span class="k">function</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="c1">// React to receiving ether
+</span>        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>The second use case was made popular by the “delegate proxy” pattern
+for implementing upgradable contracts. It has a simple Proxy contract that
+only declares a fallback function. The fallback function is invoked when no
+function in the contract matches the function identifier in the call data.
+This permits the “delegate proxy” pattern where functionality is implemented
+outside the called contract. Sample implementation:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">contract</span> <span class="n">DelegateProxy</span> <span class="p">{</span>
+        <span class="kt">address</span> <span class="k">internal</span> <span class="n">implementation</span><span class="p">;</span>
+
+        <span class="k">function</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="kt">address</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">implementation</span><span class="p">;</span>
+
+            <span class="k">assembly</span> <span class="p">{</span>
+                <span class="n">calldatacopy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">calldatasize</span><span class="p">())</span>
+                <span class="kr">let</span> <span class="n">result</span> <span class="o">:=</span> <span class="nb">delegatecall</span><span class="p">(</span><span class="n">gas</span><span class="p">(),</span> <span class="n">addr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">calldatasize</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">returndatacopy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">returndatasize</span><span class="p">())</span>
+                <span class="kr">switch</span> <span class="n">result</span>
+                <span class="kr">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="nb">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">returndatasize</span><span class="p">())</span> <span class="p">}</span>
+                <span class="kr">default</span> <span class="p">{</span> <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">returndatasize</span><span class="p">())</span> <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Calling the contract uses assembly code that we won’t go into detail here,
+but you can read more in <a href="https://docs.openzeppelin.com/upgrades/2.6/proxies">Zeppelin’s documentation</a>.</p>
+
+<h2 id="splitting-the-fallback-function">Splitting the fallback function</h2>
+
+<p>We realised that the dual-purpose of the function confused developers, which
+could lead to potential security problems. For example, a developer typically implements a fallback function, expecting only ether transfers to call it, but
+it is also called when a function is missing from a contract. And confusingly,
+as this was expected behaviour, no error was reported. Example implementation
+demonstrating this confusing behaviour is below.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">contract</span> <span class="n">Charity</span> <span class="p">{</span>
+        <span class="k">mapping</span> <span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint256</span><span class="p">)</span> <span class="k">public</span> <span class="n">donations</span><span class="p">;</span>
+    
+        <span class="k">function</span> <span class="n">processDonation</span><span class="p">(</span><span class="kt">address</span> <span class="n">user</span><span class="p">)</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="n">donations</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">+=</span> <span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">contract</span> <span class="n">Receiver</span> <span class="p">{</span>
+        <span class="k">event</span> <span class="n">ValueReceived</span><span class="p">(</span><span class="kt">address</span> <span class="n">user</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">);</span>
+    
+        <span class="k">function</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="k">emit</span> <span class="n">ValueReceived</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">contract</span> <span class="n">CharitySplitter</span> <span class="p">{</span>
+        <span class="k">function</span> <span class="n">donate</span><span class="p">(</span><span class="n">Charity</span> <span class="n">charity</span><span class="p">)</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="n">charity</span><span class="p">.</span><span class="n">processDonation</span><span class="p">.</span><span class="n">value</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">)(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>When calling <code class="language-plaintext highlighter-rouge">CharitySplitter.donate()</code> with a charity contract address,
+its <code class="language-plaintext highlighter-rouge">processDonation</code> function is correctly invoked to process the donation
+as expected. However if by mistake the <code class="language-plaintext highlighter-rouge">Receiver</code> contract address is passed,
+its fallback function ends up being called, swallowing the sent value.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">const</span> <span class="n">goodCharity</span> <span class="o">=</span> <span class="n">await</span> <span class="n">Charity</span><span class="p">.</span><span class="k">new</span><span class="p">();</span>
+    <span class="n">const</span> <span class="n">receiver</span> <span class="o">=</span> <span class="n">await</span> <span class="n">Receiver</span><span class="p">.</span><span class="k">new</span><span class="p">();</span>
+    <span class="n">const</span> <span class="n">badCharity</span> <span class="o">=</span> <span class="n">await</span> <span class="n">Charity</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">receiver</span><span class="p">.</span><span class="kt">address</span><span class="p">);</span>
+    <span class="n">const</span> <span class="n">charitySplitter</span> <span class="o">=</span> <span class="n">await</span> <span class="n">CharitySplitter</span><span class="p">.</span><span class="k">new</span><span class="p">();</span>
+    <span class="c1">// Charity.processDonation is executed successfully and 10 wei donation is recorded
+</span>    <span class="n">await</span> <span class="n">charitySplitter</span><span class="p">.</span><span class="n">donate</span><span class="p">(</span><span class="n">goodCharity</span><span class="p">,</span> <span class="p">{</span> <span class="n">value</span><span class="o">:</span> <span class="mi">10</span> <span class="p">});</span>
+    <span class="c1">// Triggers the underlying Receiver fallback function
+</span>    <span class="c1">// 10 wei is acquired and ValueReceived event emitted 
+</span>    <span class="n">await</span> <span class="n">charitySplitter</span><span class="p">.</span><span class="n">donate</span><span class="p">(</span><span class="n">badCharity</span><span class="p">,</span> <span class="p">{</span> <span class="n">value</span><span class="o">:</span> <span class="mi">10</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>Since the EVM is untyped, Solidity is unable to check the actual type of a
+contract from its address and has to rely on what the user supplies. The
+function signatures also do not provide a perfect solution against type
+confusion but can work in many cases.</p>
+
+<p>This is why in version 0.6.x, the fallback function was split into two
+separate functions:</p>
+
+<ul>
+  <li><a href="https://solidity.readthedocs.io/en/latest/contracts.html#receive-ether-function">receive()</a> <code class="language-plaintext highlighter-rouge">external payable</code> — for empty calldata (and any value)</li>
+  <li><a href="https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function">fallback()</a> <code class="language-plaintext highlighter-rouge">external payable</code> — when no other function matches (not even the receive function). Optionally <code class="language-plaintext highlighter-rouge">payable</code>.</li>
+</ul>
+
+<p>This separation provides an alternative to the fallback function for
+contracts that want to receive plain ether.</p>
+
+<h3 id="receive">receive()</h3>
+
+<p>A contract can now have only one <code class="language-plaintext highlighter-rouge">receive</code> function, declared with the syntax:
+<code class="language-plaintext highlighter-rouge">receive() external payable {…}</code> (without the <code class="language-plaintext highlighter-rouge">function</code> keyword).</p>
+
+<p>It executes on calls to the contract with no data (<code class="language-plaintext highlighter-rouge">calldata</code>), e.g. calls made
+via <code class="language-plaintext highlighter-rouge">send()</code> or <code class="language-plaintext highlighter-rouge">transfer()</code>.</p>
+
+<p>The function cannot have arguments, cannot return anything and must have
+<code class="language-plaintext highlighter-rouge">external</code> visibility and <code class="language-plaintext highlighter-rouge">payable</code> state mutability. To replicate the example
+above under 0.6.0, use the following code:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">contract</span> <span class="n">Charity</span> <span class="p">{</span>
+        <span class="k">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="c1">// React to receiving ether
+</span>        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="fallback">fallback()</h3>
+
+<p>The fallback function now has a different syntax, declared using
+<code class="language-plaintext highlighter-rouge">fallback() external [payable] {…}</code> (without the <code class="language-plaintext highlighter-rouge">function</code> keyword). This
+function cannot have arguments, cannot return anything and must have
+<code class="language-plaintext highlighter-rouge">external</code> visibility. The fallback function always receives data, but to
+also receive Ether, you should mark it as <code class="language-plaintext highlighter-rouge">payable</code>. To replicate the example
+above under 0.6.0, use the following code:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+
+    <span class="k">contract</span> <span class="n">DelegateProxy</span> <span class="p">{</span>
+        <span class="kt">address</span> <span class="k">internal</span> <span class="n">implementation</span><span class="p">;</span>
+        
+        <span class="k">fallback</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="kt">address</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">implementation</span><span class="p">;</span>
+        
+            <span class="k">assembly</span> <span class="p">{</span>
+                <span class="n">calldatacopy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">calldatasize</span><span class="p">())</span>
+                <span class="kr">let</span> <span class="n">result</span> <span class="o">:=</span> <span class="nb">delegatecall</span><span class="p">(</span><span class="n">gas</span><span class="p">(),</span> <span class="n">addr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">calldatasize</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+                <span class="n">returndatacopy</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">returndatasize</span><span class="p">())</span>
+                <span class="kr">switch</span> <span class="n">result</span>
+                <span class="kr">case</span> <span class="mi">0</span> <span class="p">{</span> <span class="nb">revert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">returndatasize</span><span class="p">())</span> <span class="p">}</span>
+                <span class="kr">default</span> <span class="p">{</span> <span class="k">return</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">returndatasize</span><span class="p">())</span> <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="migrated-and-fixed-sample-contract">Migrated and fixed sample contract</h3>
+
+<p>Thus we translate the problematic contract to v0.6.x , having it declare a
+<code class="language-plaintext highlighter-rouge">receive()</code> function which only accepts incoming ether without data and
+avoids the type confusion that led to the loss of value demonstrated above.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">0</span><span class="p">;</span>
+    <span class="k">contract</span> <span class="n">Charity</span> <span class="p">{</span>
+        <span class="k">mapping</span> <span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint256</span><span class="p">)</span> <span class="k">public</span> <span class="n">donations</span><span class="p">;</span>
+        
+        <span class="k">function</span> <span class="n">processDonation</span><span class="p">(</span><span class="kt">address</span> <span class="n">user</span><span class="p">)</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="n">donations</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">+=</span> <span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">contract</span> <span class="n">Receiver</span> <span class="p">{</span>
+        <span class="k">event</span> <span class="n">ValueReceived</span><span class="p">(</span><span class="kt">address</span> <span class="n">user</span><span class="p">,</span> <span class="kt">uint</span> <span class="n">amount</span><span class="p">);</span>
+        
+        <span class="k">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="k">emit</span> <span class="n">ValueReceived</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">,</span> <span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="k">contract</span> <span class="n">CharitySplitter</span> <span class="p">{</span>
+        <span class="k">function</span> <span class="n">donate</span><span class="p">(</span><span class="n">Charity</span> <span class="n">charity</span><span class="p">)</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+            <span class="n">charity</span><span class="p">.</span><span class="n">processDonation</span><span class="p">{</span><span class="n">value</span><span class="o">:</span><span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">}(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+</code></pre></div></div>
+
+<p>The calls to the fixed contract will now revert when called with the <code class="language-plaintext highlighter-rouge">Receiver</code> contract address fails:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">// The following call now reverts
+</span>    <span class="n">await</span> <span class="n">charitySplitter</span><span class="p">.</span><span class="n">donate</span><span class="p">(</span><span class="n">badCharity</span><span class="p">,</span> <span class="p">{</span> <span class="n">value</span><span class="o">:</span> <span class="mi">10</span> <span class="p">});</span>
+</code></pre></div></div>
+
+<p>We hope you find the logical division of the fallback function clearer for your design, and welcome any feedback you have on the new syntax.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/03/17/solidity-0.5.17-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.17 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/04/06/memory-creation-overflow-bug/" data-toggle="tooltip" data-placement="top" title="Solidity Memory Array Creation Overflow Bug">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

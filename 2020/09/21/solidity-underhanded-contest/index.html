@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>The Solidity Underhanded Contest is back! | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="The Solidity Underhanded Contest is back!" />
+  
+
+   
+  <meta property="og:description" content="We’re excited to share that the Solidity Underhanded Contest is finally back! Inspired by the Underhanded C Contest and the first Underhanded Solidity Contest, organized in 2017 by Nick Johnson, we decided it is time for a much needed revival. The goal of this contest is to write innocent-looking Solidity...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/09/21/solidity-underhanded-contest/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/09/21/solidity-underhanded-contest/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="The Solidity Underhanded Contest is back!" />
+  
+
+  
+  <meta name="twitter:description" content="We’re excited to share that the Solidity Underhanded Contest is finally back! Inspired by the Underhanded C Contest and the first Underhanded Solidity Contest, organized in 2017 by Nick Johnson, we decided it is time for a much needed revival. The goal of this contest is to write innocent-looking Solidity...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>The Solidity Underhanded Contest is back!</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Franziska Heintel on September 21, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/announcements/"
+                    class="category-announcements">
+                    Announcements
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>We’re excited to share that the <a href="https://underhanded.soliditylang.org/">Solidity Underhanded Contest</a> is finally back!</p>
+
+<p>Inspired by the <a href="http://www.underhanded-c.org/">Underhanded C Contest</a> and the first <a href="https://u.solidity.cc/">Underhanded Solidity Contest</a>, organized in 2017 by Nick Johnson, we decided it is time for a much needed revival.</p>
+
+<p><img src="/img/2020/09/Underhanded_Solidity.gif" alt="Solidity Underhanded Contest" /></p>
+
+<p>The goal of this contest is to write innocent-looking Solidity code, which pretends to be clear and straightforward, but actually contains malicious behavior or backdoors.</p>
+
+<p>By hosting such a contest we aim to:</p>
+
+<ul>
+  <li>Raise awareness about smart contract security.</li>
+  <li>Uncover language design flaws.</li>
+  <li>Battle-test recently introduced language features and restrictions.</li>
+  <li>Highlight anti-patterns in smart contact development.</li>
+  <li>Establish new best practices for secure smart contract development.</li>
+</ul>
+
+<h2 id="the-theme-">The Theme 🚪🔑</h2>
+
+<p><strong>This year’s theme is upgradability of contracts, or, more specifically, upgrade mechanisms.</strong></p>
+
+<p>In order to fix bugs in smart contracts, it is often necessary to perform upgrades. The problem with upgrades is that there is no feasible automatic mechanism to control that the new code still does what the old code intended to do. Because of that, upgrade mechanisms are often designed such that a single account has the ability to change the code arbitrarily.</p>
+
+<p>Since a smart contract in which a single account is authorized to arbitrarily change its implementation defeats the idea of decentralization, we would like to use this contest to find mechanisms that are better suited, be it via an opt-out mechanism, a way to split the contract or whatever else you can come up with.</p>
+
+<p>At the same time, this mechanism has to have a flaw or backdoor that is not easy to discover so that in the end, there is still a single account in control, even if it does not seem like it.</p>
+
+<p>Note that <strong>the flaw should be in the upgrade mechanism</strong>, not in the main contract. Hence, the contract that is actually to be upgraded should be very small, e.g. an ERC20 contract or a simple registry. You do not need to come up with a reason to actually upgrade the contract. Of course a little story around your submission is a nice-to-have, but it’s not mandatory.</p>
+
+<h2 id="the-contest-details-">The Contest Details 🧑‍💻</h2>
+
+<p>Submissions are open from 1st of October until the 31st of October 2020. Anybody, with the exception of judges, can participate (for details about submissions and participation please see the <a href="https://underhanded.soliditylang.org/">contest website</a>).</p>
+
+<p>Judges will be presented with anonymised submissions. This year’s submissions will be assessed by:</p>
+
+<ul>
+  <li>Alex Beregszaszi, Solidity Co-Lead at Ethereum Foundation.</li>
+  <li>Austin Williams, Security Researcher at OpenZeppelin.</li>
+  <li>Christian Reitwiessner, Solidity Co-Lead at Ethereum Foundation.</li>
+  <li>Gonçalo Sá, Security Engineer at ConsenSys Diligence.</li>
+  <li>Stefan Beyer, Lead Auditor at Solidified.</li>
+</ul>
+
+<p>Winners will be able to choose a prize of their choice from the prize pool.</p>
+
+<p>The prize pool contains:</p>
+
+<ul>
+  <li>1x Ticket to Devcon6.</li>
+  <li>1x 1-year MythX Pro Plan.</li>
+  <li>1x 1-year MythX Dev Plan.</li>
+  <li>1x Automatic acceptance into Solidified auditor pool &amp; a paid audit with Solidified.</li>
+  <li>1x 1-year subscription to OpenZeppelin’s forthcoming security product.</li>
+</ul>
+
+<p>Furthermore, the winners and all qualified submissions will receive a custom NFT.</p>
+
+<h2 id="judging-criteria-️">Judging Criteria ⚖️</h2>
+
+<p>Consider the following aspects and properties for your submissions:</p>
+
+<ul>
+  <li><strong>Simplicity &amp; Briefness</strong>: Since it’s much easier to hide a vulnerability in complex and poorly written code, short and clean submissions will be scored higher than those that are lengthy and complicated.</li>
+  <li><strong>Plausibility</strong>: Code that drops down to inline assembly without any clear reason why will look immediately suspicious, no matter how cleverly written the assembly-level flaw is.</li>
+  <li><strong>Originality</strong>: Truly original ideas will receive more points than making use of already well known exploit/backdoor mechanisms.</li>
+</ul>
+
+<h2 id="submissions-">Submissions 📩</h2>
+
+<p><strong>License</strong>: The entirety of your submission must be licensed under an open-source license.</p>
+
+<p><strong>Solidity Version</strong>: Please use Solidity v0.7.0 or newer.</p>
+
+<p>Submissions open on 1st of October 2020. Email your submissions before the deadline (2020-10-31) to <code class="language-plaintext highlighter-rouge">sol_underhanded@ethereum.org</code>. Entries should consist of a ZIP file containing a README describing your submission and how it works (spoilers included), and one or more Solidity files. For details of the submission process, please refer to the <a href="https://underhanded.soliditylang.org/">contest website</a>.</p>
+
+<h2 id="thank-you-to-our-supporters-">Thank you to our supporters! 🥰</h2>
+
+<p>We would like to thank ConsenSys Diligence, Solidified, OpenZeppelin, and the Ethereum Foundation for contributing prizes, supporting with judging and all their input and Nick Johnson for initially launching this contest in 2017!</p>
+
+<p>Should you have any questions or encounter problems please feel free to reach out to us via <code class="language-plaintext highlighter-rouge">sol_underhanded@ethereum.org</code> or join the <a href="https://gitter.im/ethereum/solidity">Solidity Gitter channel</a>.</p>
+
+<p><strong>We’re looking forward to receiving many interesting submissions. Have fun!</strong></p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/09/18/meet-the-team/" data-toggle="tooltip" data-placement="top" title="Meet the Solidity team! 🧑‍💻👩‍💻">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/09/28/solidity-0.7.2-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.7.2 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

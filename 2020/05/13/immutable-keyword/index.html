@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.x features: Saving Storage Costs with Immutables | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.x features: Saving Storage Costs with Immutables" />
+  
+
+   
+  <meta property="og:description" content="With version 0.6.5, Solidity introduced the immutable keyword for state variables. Immutable state variables can only be assigned during contract creation, but will remain constant throughout the life-time of a deployed contract. The big advantage of immutables is that reading them is significantly cheaper than reading from regular state variables,...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/05/13/immutable-keyword/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/05/13/immutable-keyword/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.x features: Saving Storage Costs with Immutables" />
+  
+
+  
+  <meta name="twitter:description" content="With version 0.6.5, Solidity introduced the immutable keyword for state variables. Immutable state variables can only be assigned during contract creation, but will remain constant throughout the life-time of a deployed contract. The big advantage of immutables is that reading them is significantly cheaper than reading from regular state variables,...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.x features: Saving Storage Costs with Immutables</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Daniel Kirchner on May 13, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/explainers/"
+                    class="category-explainers">
+                    Explainers
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>With <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.5">version 0.6.5</a>, Solidity introduced the 
+<a href="https://solidity.readthedocs.io/en/v0.6.7/contracts.html?highlight=immutable#constant-and-immutable-state-variables"><code class="language-plaintext highlighter-rouge">immutable</code> keyword</a> 
+for state variables. Immutable state variables can only be assigned during contract creation, but will remain 
+constant throughout the life-time of a deployed contract.
+The big advantage of immutables is that reading them is significantly cheaper than reading from regular state variables, 
+since immutables will not be stored in storage, but their values will be directly inserted into the runtime code.</p>
+
+<h2 id="how-to-use-immutables">How to use Immutables</h2>
+
+<p>Immutable state variables can be declared using the <code class="language-plaintext highlighter-rouge">immutable</code> keyword. They cannot be read during contract creation, 
+but either have to be written to exactly once in the constructor or initialized directly in their declaration. 
+Runtime code can only read immutables, but not write to them.
+Here is an example of <code class="language-plaintext highlighter-rouge">immutable</code> in action:</p>
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">&gt;=</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">5</span><span class="p">;</span>
+<span class="k">contract</span> <span class="n">SimpleDonationManager</span> <span class="p">{</span>
+    <span class="kt">uint256</span> <span class="kr">immutable</span> <span class="n">minDonation</span> <span class="o">=</span> <span class="mi">42</span><span class="p">;</span>
+    <span class="kt">uint256</span> <span class="kr">immutable</span> <span class="n">maxDonation</span> <span class="o">=</span> <span class="n">calcMaxDonation</span><span class="p">();</span>
+    <span class="kt">address</span> <span class="kr">immutable</span> <span class="n">owner</span><span class="p">;</span>
+    <span class="k">constructor</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="n">owner</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">;</span>
+        <span class="c1">// Error: Immutables cannot be read in constructor.
+</span>        <span class="c1">// assert(minDonation &lt;= maxDonation);
+</span>        <span class="c1">// Error: Immutables can only be assigned once.
+</span>        <span class="c1">// owner = address(0);
+</span>    <span class="p">}</span>
+    <span class="k">function</span> <span class="n">withdraw</span><span class="p">(</span><span class="kt">uint256</span> <span class="n">amount</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="nb">require</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span> <span class="o">==</span> <span class="n">owner</span><span class="p">);</span> <span class="c1">// Requires no sload!
+</span>        <span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">.</span><span class="nb">transfer</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">receive</span><span class="p">()</span> <span class="k">external</span> <span class="k">payable</span> <span class="p">{</span>
+        <span class="nb">require</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">value</span> <span class="o">&gt;=</span> <span class="n">minDonation</span> <span class="o">&amp;&amp;</span> <span class="n">msg</span><span class="p">.</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="n">maxDonation</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">function</span> <span class="n">calcMaxDonation</span><span class="p">()</span> <span class="k">internal</span> <span class="k">pure</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint256</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">max</span> <span class="o">=</span> <span class="mi">10000</span> <span class="o">*</span> <span class="mi">42</span><span class="p">;</span>
+        <span class="c1">// Error: Cannot read from Immutables in construction context.
+</span>        <span class="c1">// max = 10000 * minDonation;
+</span>    <span class="p">}</span>
+    <span class="c1">// Error: cannot write to Immutables from runtime context.
+</span>    <span class="c1">// function changeOwner(address newOwner) external {
+</span>    <span class="c1">//     owner = newOwner;
+</span>    <span class="c1">// }
+</span><span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="how-immutables-work">How Immutables Work</h2>
+
+<p>While regular state variables are stored at a fixed offset in storage, this is not the case for immutables. Instead, 
+immutables are stored directly in the deployed bytecode, i.e. the runtime code will contain placeholders for every 
+read of an immutable and the creation code will insert the values of the immutables into these placeholders. 
+Effectively, this means that reading from an immutable at runtime will reduce to a plain <code class="language-plaintext highlighter-rouge">PUSH32</code> opcode.</p>
+
+<p>While this mechanism may change in the future, currently, during contract creation, a dedicated memory area is reserved 
+for the values of immutables. The constructor code can then store the intended values for the immutables in that memory area.
+The compiler-generated part of the creation code that is executed after the constructor and returns the contract’s 
+runtime code will read back the values of the immutables and insert them into all occurrences in the runtime bytecode.</p>
+
+<h2 id="limitations-and-future-plans">Limitations and Future Plans</h2>
+
+<p>So far, only immutables of value types are supported. However, this restriction might be relaxed in the future. 
+This will likely work by storing an offset into the runtime code using the same mechanism as for immutables of value-type 
+and using <code class="language-plaintext highlighter-rouge">codecopy</code> to read the contents of the immutable of reference type to memory.
+Possibly, it may also be allowed to read from immutables in the creation context, in case the compiler can be sure that the 
+immutable will already have been assigned before the read.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/05/04/solidity-0.6.7-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.7 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/05/14/Solidity-068-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.8 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

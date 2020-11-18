@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.x features: Array Slices | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.x features: Array Slices" />
+  
+
+   
+  <meta property="og:description" content="Starting from version 0.6.0, Solidity supports array slices. Array slices are handy when you want to reference a contiguous portion of an array but do not want to perform a full copy of that portion. For now, array slices are only supported for calldata arrays. How to use Array Slices...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/05/26/array-slices/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/05/26/array-slices/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.x features: Array Slices" />
+  
+
+  
+  <meta name="twitter:description" content="Starting from version 0.6.0, Solidity supports array slices. Array slices are handy when you want to reference a contiguous portion of an array but do not want to perform a full copy of that portion. For now, array slices are only supported for calldata arrays. How to use Array Slices...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.x features: Array Slices</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on May 26, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/explainers/"
+                    class="category-explainers">
+                    Explainers
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>Starting from <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.0">version 0.6.0</a>, Solidity supports array slices. 
+<a href="https://solidity.readthedocs.io/en/v0.6.8/types.html#array-slices">Array slices</a> are handy when you want to reference a 
+contiguous portion of an array but do not want to perform a full copy of that portion. For now, array slices are only 
+supported for calldata arrays.</p>
+
+<h2 id="how-to-use-array-slices">How to use Array Slices</h2>
+
+<p>The expression <code class="language-plaintext highlighter-rouge">x[start:end]</code> references a portion of the calldata array <code class="language-plaintext highlighter-rouge">x</code> starting at index <code class="language-plaintext highlighter-rouge">start</code> and ending just 
+before index <code class="language-plaintext highlighter-rouge">end</code>.</p>
+
+<p>Both <code class="language-plaintext highlighter-rouge">start</code> and <code class="language-plaintext highlighter-rouge">end</code> are optional. If not provided, <code class="language-plaintext highlighter-rouge">start</code> defaults to <code class="language-plaintext highlighter-rouge">0</code> and <code class="language-plaintext highlighter-rouge">end</code> defaults to the length of 
+the respective array.</p>
+
+<p>Please note that no copy from calldata to memory is performed.</p>
+
+<p>You can use the slice syntax on variables, but also with <code class="language-plaintext highlighter-rouge">msg.data</code>.</p>
+
+<p>Array slices can be especially useful in combination with <code class="language-plaintext highlighter-rouge">abi.decode</code> in the 
+<a href="https://solidity.ethereum.org/2020/03/26/fallback-receive-split/">fallback function</a>:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">5</span><span class="p">;</span>
+
+<span class="k">interface</span> <span class="n">OtherContract</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">changeOwner</span><span class="p">(</span><span class="kt">address</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">Proxy</span> <span class="p">{</span>
+    <span class="n">OtherContract</span> <span class="n">implementation</span><span class="p">;</span>
+    <span class="kt">address</span> <span class="n">badOwner</span><span class="p">;</span>
+    <span class="k">fallback</span><span class="p">()</span> <span class="k">external</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sig</span> <span class="o">==</span> <span class="n">OtherContract</span><span class="p">.</span><span class="n">changeOwner</span><span class="p">.</span><span class="nb">selector</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// Here, abi.decode directly operates on the calldata array slice.
+</span>            <span class="kt">address</span> <span class="n">newOwner</span> <span class="o">=</span> <span class="n">abi</span><span class="p">.</span><span class="n">decode</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="mi">4</span><span class="o">:</span><span class="p">],</span> <span class="p">(</span><span class="kt">address</span><span class="p">));</span>
+            <span class="nb">require</span><span class="p">(</span><span class="n">newOwner</span> <span class="o">!=</span> <span class="n">badOwner</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="p">(</span><span class="kt">bool</span> <span class="n">success</span><span class="p">,)</span> <span class="o">=</span> <span class="kt">address</span><span class="p">(</span><span class="n">implementation</span><span class="p">).</span><span class="nb">delegatecall</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">data</span><span class="p">);</span>
+        <span class="nb">require</span><span class="p">(</span><span class="n">success</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<h2 id="how-array-slices-work-internally">How Array Slices Work Internally</h2>
+
+<p>Calldata arrays have always been represented by two values: A start pointer and a length value. This is exactly the same 
+representation we use for calldata array slices.</p>
+
+<h2 id="limitations-and-future-plans">Limitations and Future Plans</h2>
+
+<p>Array slices support index access and <code class="language-plaintext highlighter-rouge">.length</code> just like arrays, but do not support most copy operations.</p>
+
+<p>As of now, array slices are only implemented for calldata.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/05/14/Solidity-068-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.8 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/06/02/Sourcify-Towards-Safer-Contract-Interaction-for-Humans/" data-toggle="tooltip" data-placement="top" title="Sourcify: Towards Safer Contract Interaction for Humans">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

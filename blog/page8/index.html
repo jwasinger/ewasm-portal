@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Home | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+  <meta name="description" content="Latest news and announcements">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Home" />
+  
+
+   
+  <meta property="og:description" content="Latest news and announcements">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/blog/page8/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/blog/page8/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Home" />
+  
+
+  
+  <meta name="twitter:description" content="Latest news and announcements">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://ewasm.ethereum.org ">
+	      <img class="avatar-img" src="/ewasm-portal/img/ewasm2d.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="page-heading">
+            <h1>Ewasm Blog</h1>
+            
+              
+                <hr class="small">
+                <span class="page-subheading">Latest news and announcements</span>
+              
+            
+        
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="posts-list">
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2017/07/03/solidity-0.4.12-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.12 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on July 3, 2017</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This release introduces the AST export, solidifies inline assembly, introduces some more warnings and fixes several bugs. Manual jumps in assembly are deprecated in favour of the structured constructs switch, for and function calls also to provide better portability in the future. Features: Assembly: Add CREATE2 (EIP86), STATICCALL (EIP214), RETURNDATASIZE and RETURNDATACOPY (EIP211) instructions. Assembly: Display auxiliary data in the assembly output. Assembly: Renamed SHA3 to KECCAK256. AST: export all attributes to JSON format. C API (jsonCompiler): Use the Standard...
+        
+        
+          <a href="/ewasm-portal/2017/07/03/solidity-0.4.12-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2017/05/03/solidity-optimizer-bug/">
+	  <h2 class="post-title">Solidity Optimizer Bug</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Martin Swende on May 3, 2017</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/security-alerts/"
+          class="category-security-alerts">
+          Security Alerts
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This post was originally published on the Ethereum blog.
+
+A bug in the Solidity optimizer was reported through the Ethereum Foundation Bounty program, by Christoph Jentzsch. This bug is patched as of 2017-05-03, with the release of Solidity 0.4.11.
+
+
+        
+        
+          <a href="/ewasm-portal/2017/05/03/solidity-optimizer-bug/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2017/05/03/solidity-0.4.11-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.11 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on May 3, 2017</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This release fixes a bug in the optimizer (more about this on the blog), introduces the standard JSON interface, adds interface contracts and implements some additional safety checks. The standard JSON interface provides a unified way to invoke the Solidity compiler in order to ease cross-platform adoption and compilation verification. Features: Implement the Standard JSON Input / Output API Support interface contracts. C API (jsonCompiler): Add the compileStandard() method to process a Standard JSON I/O. Commandline interface: Add the standard-json...
+        
+        
+          <a href="/ewasm-portal/2017/05/03/solidity-0.4.11-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2017/03/15/solidity-0.4.10-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.10 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on March 15, 2017</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This release is focused on stability and also introduces some new smart contract safety features: require, assert and transfer. Note that the new revert function will only be gas-efficient starting from homestead. Features: Add assert(condition), which throws if condition is false (meant for internal errors). Add require(condition), which throws if condition is false (meant for invalid input). Commandline interface: Do not overwrite files unless forced. Introduce .transfer(value) for sending Ether. Code generator: Support revert() to abort with rolling back, but...
+        
+        
+          <a href="/ewasm-portal/2017/03/15/solidity-0.4.10-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2017/01/31/solidity-0.4.9-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.9 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on January 31, 2017</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This release fixes quite some bugs and also adds several new features. Things to look out for: To disambiguate contracts and libraries of the same name in different files, everything is now prefixed by “filename:”. This applies to the compiler output, the linker input and other things. Internal exceptions are now thrown by using an invalid opcode (0xfe), manual exceptions still use an invalid jump. Features: Compiler interface: Contracts and libraries can be referenced with a file: prefix to make...
+        
+        
+          <a href="/ewasm-portal/2017/01/31/solidity-0.4.9-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2017/01/13/solidity-0.4.8-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.8 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on January 13, 2017</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Features: Optimiser: Performance improvements. Output: Print assembly in new standardized Solidity assembly format. Bugfixes: Remappings: Prefer longer context over longer prefix. Type checker, code generator: enable access to events of base contracts’ names. Imports: import &quot;.dir/a&quot; is not a relative path. Relative paths begin with directory . or ... Type checker: disallow inheritances of different kinds (e.g. a function and a modifier) of members of the same name A big thank you to all contributors who helped make this release...
+        
+        
+          <a href="/ewasm-portal/2017/01/13/solidity-0.4.8-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/12/15/solidity-0.4.7-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.7 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on December 15, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Features: Bitshift operators. Type checker: Warn when msg.value is used in non-payable function. Code generator: Inject the Swarm hash of a metadata file into the bytecode. Code generator: Replace expensive memcpy precompile by simple assembly loop. Optimizer: Some dead code elimination. Bugfixes: Code generator: throw if calling the identity precompile failed during memory (array) copying. Type checker: string literals that are not valid UTF-8 cannot be converted to string type Code generator: any non-zero value given as a boolean argument...
+        
+        
+          <a href="/ewasm-portal/2016/12/15/solidity-0.4.7-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/11/22/solidity-0.4.6-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.6 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on November 22, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Bugfixes:
+
+  Optimizer: Knowledge about state was not correctly cleared for JUMPDESTs
+
+
+Swarm hash of js compiler: bzzr:/b873fa122233c91b1531527c390f6ca49df4d2a2c5f75706f4b612a0c813cb6a
+
+A big thank you to all contributors who helped make this release possible!
+
+Download the new version of Solidity here.
+
+
+        
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/11/21/solidity-0.4.5-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.5 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on November 21, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This Solidity release adds function types. Use-cases include supplying callbacks for asynchronous or off-chain operations or generic library features (for example map-reduce-style programming). This release also improves the safety of enums and sending Ether to a contract constructor. Features: Function types Do-while loops: support for a do &amp;lt;block&amp;gt; while (&amp;lt;expr&amp;gt;); control structure Inline assembly: support invalidJumpLabel as a jump label. Type checker: now more eagerly searches for a common type of an inline array with mixed types Code generator: generates...
+        
+        
+          <a href="/ewasm-portal/2016/11/21/solidity-0.4.5-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/11/09/analysis-storage-corruption-bug/">
+	  <h2 class="post-title">Analysis of Storage Corruption Bug</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Christian Reitwiessner on November 9, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/security-alerts/"
+          class="category-security-alerts">
+          Security Alerts
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This post was originally published on the Ethereum blog. This blog post provides an update on our findings following the discovery of the storage corruption bug last week. In summary, the bug was much less severe than we initially thought. The small number of affected contracts we found is either only exploitable by the owner, or the exploit can only cause a disruption in the user interface and not in the actual contract logic. All exploitable contracts/dapps we reviewed can...
+        
+        
+          <a href="/ewasm-portal/2016/11/09/analysis-storage-corruption-bug/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+</div>
+
+
+<ul class="pager main-pager">
+  
+  <li class="previous">
+    <a href="/ewasm-portal/blog/page7/">&larr; Newer Posts</a>
+  </li>
+  
+  
+  <li class="next">
+    <a href="/ewasm-portal/blog/page9/">Older Posts &rarr;</a>
+  </li>
+  
+</ul>
+
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

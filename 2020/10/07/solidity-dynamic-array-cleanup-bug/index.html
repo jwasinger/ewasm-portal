@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity Dynamic Array Cleanup Bug | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity Dynamic Array Cleanup Bug" />
+  
+
+   
+  <meta property="og:description" content="On September 17, 2020, a bug in the Solidity code generator was found. The bug is fixed with version 0.7.3 released on October 7, 2020. The bug is present in all prior versions of Solidity. We assigned the bug a severity level of “medium”. Technical Details of the Bug Summary:...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/10/07/solidity-dynamic-array-cleanup-bug/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/10/07/solidity-dynamic-array-cleanup-bug/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity Dynamic Array Cleanup Bug" />
+  
+
+  
+  <meta name="twitter:description" content="On September 17, 2020, a bug in the Solidity code generator was found. The bug is fixed with version 0.7.3 released on October 7, 2020. The bug is present in all prior versions of Solidity. We assigned the bug a severity level of “medium”. Technical Details of the Bug Summary:...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity Dynamic Array Cleanup Bug</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on October 7, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/security-alerts/"
+                    class="category-security-alerts">
+                    Security Alerts
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>On September 17, 2020, a bug in the Solidity code generator was found. The bug is fixed with <a href="https://github.com/ethereum/solidity/releases/tag/v0.7.3">version 0.7.3</a>
+released on October 7, 2020. <strong>The bug is present in all prior versions of Solidity.</strong></p>
+
+<p>We assigned the bug a severity level of “medium”.</p>
+
+<h2 id="technical-details-of-the-bug">Technical Details of the Bug</h2>
+<p><strong>Summary</strong>: For a dynamically-sized storage-array with types of size at most 16 bytes,
+assignments that require deleting slots did not zero out the deleted slots properly.</p>
+
+<p>Consider a dynamically-sized array in storage whose base-type is small enough such that multiple
+values can be packed into a single slot, such as <code class="language-plaintext highlighter-rouge">uint128[]</code>. Let us define its length to be <code class="language-plaintext highlighter-rouge">l</code>.
+When this array gets assigned from another array with a smaller length, say <code class="language-plaintext highlighter-rouge">m</code>, the slots between
+elements <code class="language-plaintext highlighter-rouge">m</code> and <code class="language-plaintext highlighter-rouge">l</code> have to be cleaned by zeroing them out. However, this cleaning was not
+performed properly. Specifically, after the slot corresponding to <code class="language-plaintext highlighter-rouge">m</code>, only the first packed value
+was cleaned up. If this array gets resized to a length larger than <code class="language-plaintext highlighter-rouge">m</code>, the indices corresponding to
+the unclean parts of the slot contained the original value, instead of 0. The resizing here is
+performed by assigning to the array <code class="language-plaintext highlighter-rouge">length</code>, by a <code class="language-plaintext highlighter-rouge">push()</code> or via inline assembly.</p>
+
+<p>An example of the bug is the following:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SPDX-License-Identifier: GPL-3.0
+// The bug is present in all versions of solidity prior to 0.7.3
+</span><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">&gt;=</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">0</span> <span class="o">&lt;</span><span class="mf">0.7</span><span class="p">.</span><span class="mi">3</span><span class="p">;</span>
+<span class="k">contract</span> <span class="n">C</span> <span class="p">{</span>
+    <span class="kt">uint128</span><span class="p">[]</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">f</span><span class="p">()</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="n">x</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="n">x</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="n">x</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span> <span class="n">x</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span>
+        <span class="kt">uint128</span><span class="p">[]</span> <span class="k">memory</span> <span class="n">y</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">uint128</span><span class="p">[](</span><span class="mi">1</span><span class="p">);</span>
+        <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">23</span><span class="p">;</span>
+        <span class="c1">// This will shrink the array x to one element.
+</span>        <span class="n">x</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+        <span class="c1">// Resizing the array to length 4.
+</span>        <span class="n">x</span><span class="p">.</span><span class="n">push</span><span class="p">();</span> <span class="n">x</span><span class="p">.</span><span class="n">push</span><span class="p">();</span> <span class="n">x</span><span class="p">.</span><span class="n">push</span><span class="p">();</span>
+        <span class="c1">// After resizing the array, its contents are [23, 0, 0, 42],
+</span>        <span class="c1">// instead of [23, 0, 0, 0]. Resizing can be also be done by
+</span>        <span class="c1">// assigning to `.length` or by assigning to the `slot` member
+</span>        <span class="c1">// inside inline assembly.
+</span>    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="how-to-check-if-contract-is-vulnerable">How to check if contract is vulnerable</h2>
+
+<p>If your contract does all of the following, try to run tests to see if your contract was relying on having elements in the resized part to be zero.</p>
+<ol>
+  <li>The contract has a dynamically-sized array in storage whose base-type is of size at most 16 bytes.</li>
+  <li>You perform an assignment to the aforementioned array by another array of smaller
+length (from either memory, storage or calldata).</li>
+  <li>You increase the length of the aforementioned array without assigning a value to the new elements.</li>
+  <li>You read from one of the new elements before assigning a new value.</li>
+</ol>
+
+<p>Your contracts are not affected if you are only using <code class="language-plaintext highlighter-rouge">.push(&lt;arg&gt;)</code> or if you assign a value (even zero) to
+the new elements after increasing the length of the array.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/10/07/solidity-0.7.3-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.7.3 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/10/16/evm384-update3/" data-toggle="tooltip" data-placement="top" title="EVM384 - Update 3">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

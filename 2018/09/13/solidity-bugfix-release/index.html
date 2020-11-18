@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity Bugfix Release | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity Bugfix Release" />
+  
+
+   
+  <meta property="og:description" content="This post was originally published on the Ethereum blog. The latest version 0.4.25 release of Solidity fixes two important bugs. Another important bug has already been fixed in version 0.4.22 but it was only discovered recently that the bug existed. Note that the Ethereum Foundation runs a bounty program for...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2018/09/13/solidity-bugfix-release/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2018/09/13/solidity-bugfix-release/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity Bugfix Release" />
+  
+
+  
+  <meta name="twitter:description" content="This post was originally published on the Ethereum blog. The latest version 0.4.25 release of Solidity fixes two important bugs. Another important bug has already been fixed in version 0.4.22 but it was only discovered recently that the bug existed. Note that the Ethereum Foundation runs a bounty program for...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity Bugfix Release</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on September 13, 2018</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/security-alerts/"
+                    class="category-security-alerts">
+                    Security Alerts
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><em>This post was originally published on the <a href="https://blog.ethereum.org/2018/09/13/solidity-bugfix-release/">Ethereum blog</a>.</em></p>
+
+<p>The latest <a href="https://github.com/ethereum/solidity/releases/tag/v0.4.25">version 0.4.25 release of Solidity</a> fixes
+two important bugs.
+Another important bug has already been fixed in version 0.4.22 but it was only discovered recently that the bug existed.</p>
+
+<p>Note that the Ethereum Foundation runs a <a href="https://bounty.ethereum.org/">bounty program</a> for the code generator part of Solidity.</p>
+
+<h2 id="cleanup-of-exponent-in-exponentiation">Cleanup of Exponent in Exponentiation</h2>
+
+<ul>
+  <li>Likelihood of occurrence: very low</li>
+  <li>Exploitability: high</li>
+  <li>Discoverability by tests: low</li>
+  <li>Fixed in version: 0.4.25</li>
+</ul>
+
+<p><strong>Summary:</strong> Using short types in the exponent of an exponentiation operation can lead to invalid results.</p>
+
+<p>The Solidity language allows integer types that are shorter than 256 bits, even though the Ethereum Virtual Machine
+only knows types of exactly 256 bits. Because of that, higher order bits need to be set to zero from time to time.
+For many operations, it is not relevant whether those bits are set to zero or not (addition is one example).
+Because of that, the Solidity compiler delays this cleanup until it is needed in order to save gas.</p>
+
+<p>In the very special circumstance that the exponent of the <code class="language-plaintext highlighter-rouge">**</code> operator has a type that is shorter
+than 256 bits, but not shorter than the type of the base and contains dirty higher order bits,
+this can lead to an incorrect result. Note that literal exponents like in <code class="language-plaintext highlighter-rouge">x ** 2</code> as well as
+the case where the type of the base is <code class="language-plaintext highlighter-rouge">uint256</code> or <code class="language-plaintext highlighter-rouge">int256</code> are unaffected.</p>
+
+<p>Note that a function parameter can have dirty higher order bits if called by a malicious entity,
+and the same is true for data returned from functions of contracts deployed by malicious entities.</p>
+
+<p>After having screened a large number of contracts, we deem this bug to affect only a very tiny number of
+smart contracts, if any at all, because the regular uses of the exponentiation operator do not lead to the bug.</p>
+
+<p>This bug was found by <a href="https://github.com/nweller">@nweller</a>.</p>
+
+<h2 id="memory-corruption-in-multi-dimensional-array-decoder">Memory Corruption in Multi-Dimensional Array Decoder</h2>
+
+<ul>
+  <li>Likelihood of occurrence: low</li>
+  <li>Exploitability: medium</li>
+  <li>Discoverability by tests: high</li>
+  <li>Introduced in version: 0.1.4</li>
+  <li>Fixed in version: 0.4.22</li>
+</ul>
+
+<p><strong>Summary:</strong> Calling functions of other contracts that return multi-dimensional fixed-size arrays results in memory corruption.</p>
+
+<p>If Solidity code calls a function that returns a multi-dimensional fixed-size array,
+the returned ABI-encoded data has to be converted to Solidity’s internal representation
+of arrays. In Solidity, multi-dimensional arrays are implemented as arrays of
+memory pointers, while in the ABI, the data is encoded inline.
+The decoder did not take this difference into account with the result that the returned
+elements are interpreted as memory pointers and thus can cause memory
+corruption if the return values are accessed. Calling functions with multi-dimensional
+fixed-size array arguments is unaffected as is returning fixed-size arrays from function calls
+if they are not used in a Solidity contract.
+The bug is only in the component that decodes a multi-dimensional fixed-size array
+that is returned from a function call from Solidity.</p>
+
+<p>This bug was found by <a href="https://github.com/jmahhh">@jmahhh</a>.</p>
+
+<h2 id="invalid-encoding-of-structs-in-events">Invalid Encoding of Structs in Events</h2>
+
+<ul>
+  <li>Likelihood of occurrence: low</li>
+  <li>Exploitability: low</li>
+  <li>Discoverability by tests: high</li>
+  <li>Introduced in version: 0.4.17</li>
+  <li>Fixed in version: 0.4.25</li>
+</ul>
+
+<p><strong>Summary:</strong> Structs as event parameters are not handled properly.</p>
+
+<p>Structs were not meant to be supported as event parameters without the new ABI encoder.
+The compiler did accept them nevertheless, but encoded their memory address instead of their actual value.
+Even with the new ABI encoder, structs cannot be <code class="language-plaintext highlighter-rouge">indexed</code> event parameters.</p>
+
+<p>Now, structs are properly disallowed for the old encoder and if they are indexed also for the new encoder.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2018/09/13/solidity-0.4.25-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.25 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2018/11/13/solidity-0.5.0-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.5.0 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

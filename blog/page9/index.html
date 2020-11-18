@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Home | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+  <meta name="description" content="Latest news and announcements">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Home" />
+  
+
+   
+  <meta property="og:description" content="Latest news and announcements">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/blog/page9/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/blog/page9/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Home" />
+  
+
+  
+  <meta name="twitter:description" content="Latest news and announcements">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://ewasm.ethereum.org ">
+	      <img class="avatar-img" src="/ewasm-portal/img/ewasm2d.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="page-heading">
+            <h1>Ewasm Blog</h1>
+            
+              
+                <hr class="small">
+                <span class="page-subheading">Latest news and announcements</span>
+              
+            
+        
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <div class="posts-list">
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/11/01/solidity-0.4.4-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.4 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on November 1, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This is a bugfix release that fixes a storage corruption that appears when multiple variables are stored in the same slot (details).
+
+Bugfixes:
+
+  Type checker: forbid signed exponential that led to an incorrect use of EXP opcode.
+  Code generator: properly clean higher order bytes before storing in storage.
+
+
+A big thank you to all contributors who helped make this release possible!
+
+Download the new version of Solidity here.
+
+
+        
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/11/01/security-alert-solidity-variables-can-overwritten-storage/">
+	  <h2 class="post-title">Security Alert: Variables can be overwritten in storage</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Christian Reitwiessner on November 1, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/security-alerts/"
+          class="category-security-alerts">
+          Security Alerts
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This post was originally published on the Ethereum blog. Summary: In some situations, variables can overwrite other variables in storage. **Affected Solidity compiler versions: **0.1.6 to 0.4.3 (including 0.4.4 pre-release versions) Detailed description: Storage variables that are smaller than 256 bits are packed together into the same 256 bit slot if they can fit. If a value larger than what is allowed by the type is assigned to the first variable, that value will overwrite the second variable. This means...
+        
+        
+          <a href="/ewasm-portal/2016/11/01/security-alert-solidity-variables-can-overwritten-storage/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/10/25/solidity-0.4.3-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.3 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on October 25, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This is a real bugfix release as you can see from the changelog below. The most important fix concerns the optimizer which generated invalid code connected to the SHA3 opcode in certain situations. Features: Inline assembly: support both suicide and selfdestruct opcodes (note: suicide is deprecated). Inline assembly: issue warning if stack is not balanced after block. Include keccak256() as an alias to sha3(). Support shifting constant numbers. Bugfixes: Commandline interface: Disallow unknown options in solc. Name resolver: Allow inheritance...
+        
+        
+          <a href="/ewasm-portal/2016/10/25/solidity-0.4.3-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/09/17/solidity-0.4.2-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.2 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on September 17, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Bugfixes:
+
+  Code Generator: Fix library functions being called from payable functions.
+  Type Checker: Fixed a crash about invalid array types.
+  Code Generator: Fixed a call gas bug that became visible after
+version 0.4.0 for calls where the output is larger than the input.
+
+
+A big thank you to all contributors who helped make this release possible!
+
+Download the new version of Solidity here.
+
+
+        
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/09/09/solidity-0.4.1-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.1 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on September 9, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This is a bugfix release that fixes an error when compiling libraries with the latest version 0.4.0.
+
+A big thank you to all contributors who helped make this release possible!
+
+Download the new version of Solidity here.
+
+
+        
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/09/08/solidity-0.4.0-release-announcement/">
+	  <h2 class="post-title">Solidity 0.4.0 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on September 8, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Note: Version 0.4.0 is unable to compile libraries. Please upgrade to 0.4.1. This release deliberately breaks backwards compatibility mostly to enforce some safety features. The most important change is that you have to explicitly specify if functions can receive ether via the payable modifier. Furthermore, more situations cause exceptions to be thrown. Minimal changes to be made for upgrade: Add payable to all functions that want to receive Ether (including the constructor and the fallback function). Change _ to _;...
+        
+        
+          <a href="/ewasm-portal/2016/09/08/solidity-0.4.0-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/09/01/formal-methods-roadmap/">
+	  <h2 class="post-title">Dev Update: Formal Methods</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Christian Reitwiessner on September 1, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/announcements/"
+          class="category-announcements">
+          Announcements
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This post was originally published on the Ethereum blog. Today, I am delighted to announce that Yoichi Hirai (@pirapira on github) is joining the Ethereum project as a formal verification engineer. He holds a PhD from the University of Tokyo on the topic of formalizing communicating parallel processes and created formal verification tools for Ethereum in his spare time. In his own words: I’m joining Ethereum as a formal verification engineer. My reasoning: formal verification makes sense as a profession...
+        
+        
+          <a href="/ewasm-portal/2016/09/01/formal-methods-roadmap/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/08/10/solidity-0.3.6-release-announcement/">
+	  <h2 class="post-title">Solidity 0.3.6 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on August 10, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This is the first release from the new “solidity-standalone” repository. It does not have dependencies to cpp-ethereum anymore and can be built just from the solidity github repository. Note that the optimizer was disabled in some situations which could lead to larger (but correcter) code. Features: Formal verification: Take external effects on a contract into account. Type Checker: Warning about unused return value of low-level calls and send. Output: Source location and node id as part of AST output Output:...
+        
+        
+          <a href="/ewasm-portal/2016/08/10/solidity-0.3.6-release-announcement/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/06/10/solidity-0.3.5-release-announcement/">
+	  <h2 class="post-title">Solidity 0.3.5 Release Announcement</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Solidity Team on June 10, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/releases/"
+          class="category-releases">
+          Releases
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        Features:
+
+  Context-dependent path remappings (different modules can use the same library in different versions)
+
+
+Bugfixes:
+
+  Type Checking: Dynamic return types were removed when fetching data from external calls, now they are replaced by an “unusable” type.
+  Type Checking: Overrides by constructors were considered making a function non-abstract.
+
+
+A big thank you to all contributors who helped make this release possible!
+
+Download the new version of Solidity here.
+
+
+        
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+    <article class="post-preview">
+    <a href="/ewasm-portal/2016/06/10/smart-contract-security/">
+	  <h2 class="post-title">Smart Contract Security</h2>
+
+	  
+    </a>
+
+    <span class="post-meta">Posted by Christian Reitwiessner on June 10, 2016</span>
+    <ul class="post-category-list">
+      
+      <li>
+        <a
+          href="/ewasm-portal/category/security-alerts/"
+          class="category-security-alerts">
+          Security Alerts
+        </a>
+      </li>
+      
+    </ul>
+
+    <div class="post-entry-container">
+      
+      <div class="post-entry">
+        This post was originally published on the Ethereum blog. Solidity was started in October 2014 when neither the Ethereum network nor the virtual machine had any real-world testing, the gas costs at that time were even drastically different from what they are now. Furthermore, some of the early design decisions were taken over from Serpent. During the last couple of months, examples and patterns that were initially considered best-practice were exposed to reality and some of them actually turned out...
+        
+        
+          <a href="/ewasm-portal/2016/06/10/smart-contract-security/" class="post-read-more">[Read&nbsp;More]</a>
+        
+      </div>
+    </div>
+
+    
+
+</article>
+  
+</div>
+
+
+<ul class="pager main-pager">
+  
+  <li class="previous">
+    <a href="/ewasm-portal/blog/page8/">&larr; Newer Posts</a>
+  </li>
+  
+  
+  <li class="next">
+    <a href="/ewasm-portal/blog/page10/">Older Posts &rarr;</a>
+  </li>
+  
+</ul>
+
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Smart Contract Security | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Smart Contract Security" />
+  
+
+   
+  <meta property="og:description" content="This post was originally published on the Ethereum blog. Solidity was started in October 2014 when neither the Ethereum network nor the virtual machine had any real-world testing, the gas costs at that time were even drastically different from what they are now. Furthermore, some of the early design decisions...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2016/06/10/smart-contract-security/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2016/06/10/smart-contract-security/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Smart Contract Security" />
+  
+
+  
+  <meta name="twitter:description" content="This post was originally published on the Ethereum blog. Solidity was started in October 2014 when neither the Ethereum network nor the virtual machine had any real-world testing, the gas costs at that time were even drastically different from what they are now. Furthermore, some of the early design decisions...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Smart Contract Security</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Christian Reitwiessner on June 10, 2016</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/security-alerts/"
+                    class="category-security-alerts">
+                    Security Alerts
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><em>This post was originally published on the <a href="https://blog.ethereum.org/2016/06/10/smart-contract-security/">Ethereum blog</a>.</em></p>
+
+<p>Solidity was started in October 2014 when neither the Ethereum network nor the virtual machine had any real-world testing, the gas costs at that time were even drastically different from what they are now. Furthermore, some of the early design decisions were taken over from Serpent. During the last couple of months, examples and patterns that were initially considered best-practice were exposed to reality and some of them actually turned out to be anti-patterns. Due to that, we recently updated some of the <a href="https://solidity.readthedocs.org">Solidity documentation</a>, but as most people probably do not follow the stream of github commits to that repository, I would like to highlight some of the findings here.</p>
+
+<p>I will not talk about the minor issues here, please read up on them in the <a href="http://solidity.readthedocs.io/en/latest/miscellaneous.html#pitfalls">documentation</a>.</p>
+
+<h2 id="sending-ether">Sending Ether</h2>
+
+<p>Sending Ether is supposed to be one of the simplest things in Solidity, but it turns out to have some subtleties most people do not realise.</p>
+
+<p>It is important that at best, the recipient of the ether initiates the payout. The following is a <strong>BAD</strong> example of an auction contract:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// THIS IS A NEGATIVE EXAMPLE! DO NOT USE!
+</span><span class="k">contract</span> <span class="n">auction</span> <span class="p">{</span>
+  <span class="kt">address</span> <span class="n">highestBidder</span><span class="p">;</span>
+  <span class="kt">uint</span> <span class="n">highestBid</span><span class="p">;</span>
+  <span class="k">function</span> <span class="n">bid</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">highestBid</span><span class="p">)</span> <span class="k">throw</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">highestBidder</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">highestBidder</span><span class="p">.</span><span class="nb">send</span><span class="p">(</span><span class="n">highestBid</span><span class="p">);</span> <span class="c1">// refund previous bidder
+</span>    <span class="n">highestBidder</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">;</span>
+    <span class="n">highestBid</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Because of the maximal stack depth of 1024 the new bidder can always increase the stack size to 1023 and then call <code class="language-plaintext highlighter-rouge">bid()</code> which will cause the <code class="language-plaintext highlighter-rouge">send(highestBid)</code> call to silently fail (i.e. the previous bidder will not receive the refund), but the new bidder will still be highest bidder. One way to check whether <code class="language-plaintext highlighter-rouge">send</code> was successful is to check its return value:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">/// THIS IS STILL A NEGATIVE EXAMPLE! DO NOT USE!
+</span><span class="k">if</span> <span class="p">(</span><span class="n">highestBidder</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">highestBidder</span><span class="p">.</span><span class="nb">send</span><span class="p">(</span><span class="n">highestBid</span><span class="p">))</span>
+    <span class="k">throw</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">throw</code> statement causes the current call to be reverted. This is a bad idea, because the recipient, e.g. by implementing the fallback function as <code class="language-plaintext highlighter-rouge">function() { throw; }</code> can always force the Ether transfer to fail and this would have the effect that nobody can overbid her.</p>
+
+<p>The only way to prevent both situations is to convert the sending pattern into a withdrawing pattern by giving the recipient control over the transfer:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">/// THIS IS STILL A NEGATIVE EXAMPLE! DO NOT USE!
+</span><span class="k">contract</span> <span class="n">auction</span> <span class="p">{</span>
+  <span class="kt">address</span> <span class="n">highestBidder</span><span class="p">;</span>
+  <span class="kt">uint</span> <span class="n">highestBid</span><span class="p">;</span>
+  <span class="k">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="n">refunds</span><span class="p">;</span>
+  <span class="k">function</span> <span class="n">bid</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">highestBid</span><span class="p">)</span> <span class="k">throw</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">highestBidder</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">refunds</span><span class="p">[</span><span class="n">highestBidder</span><span class="p">]</span> <span class="o">+=</span> <span class="n">highestBid</span><span class="p">;</span>
+    <span class="n">highestBidder</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">;</span>
+    <span class="n">highestBid</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">function</span> <span class="n">withdrawRefund</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">.</span><span class="nb">send</span><span class="p">(</span><span class="n">refunds</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]))</span>
+      <span class="n">refunds</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Why does it still say “negative example” above the contract? Because of gas mechanics, the contract is actually fine, but it is still not a good example. The reason is that it is impossible to prevent code execution at the recipient as part of a send. This means that while the send function is still in progress, the recipient can call back into withdrawRefund. At that point, the refund amount is still the same and thus they would get the amount again and so on. In this specific example, it does not work, because the recipient only gets the gas stipend (2100 gas) and it is impossible to perform another send with this amount of gas. The following code, though, is vulnerable to this attack: <code class="language-plaintext highlighter-rouge">msg.sender.call.value(refunds[msg.sender])()</code>.</p>
+
+<p>Having considered all this, the following code should be fine (of course it is still not a complete example of an auction contract):</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">contract</span> <span class="n">auction</span> <span class="p">{</span>
+  <span class="kt">address</span> <span class="n">highestBidder</span><span class="p">;</span>
+  <span class="kt">uint</span> <span class="n">highestBid</span><span class="p">;</span>
+  <span class="k">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="n">refunds</span><span class="p">;</span>
+  <span class="k">function</span> <span class="n">bid</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">highestBid</span><span class="p">)</span> <span class="k">throw</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">highestBidder</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">refunds</span><span class="p">[</span><span class="n">highestBidder</span><span class="p">]</span> <span class="o">+=</span> <span class="n">highestBid</span><span class="p">;</span>
+    <span class="n">highestBidder</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">;</span>
+    <span class="n">highestBid</span> <span class="o">=</span> <span class="n">msg</span><span class="p">.</span><span class="n">value</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">function</span> <span class="n">withdrawRefund</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="n">refund</span> <span class="o">=</span> <span class="n">refunds</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">];</span>
+    <span class="n">refunds</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">.</span><span class="nb">send</span><span class="p">(</span><span class="n">refund</span><span class="p">))</span>
+     <span class="n">refunds</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="n">refund</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Note that we did not use throw on a failed send because we are able to revert all state changes manually and not using throw has a lot less side-effects.</p>
+
+<h2 id="using-throw">Using Throw</h2>
+
+<p>The throw statement is often quite convenient to revert any changes made to the state as part of the call (or whole transaction depending on how the function is called). You have to be aware, though, that it also causes all gas to be spent and is thus expensive and will potentially stall calls into the current function. Because of that, I would like to recommend to use it <strong>only</strong> in the following situations:</p>
+
+<h4 id="1-revert-ether-transfer-to-the-current-function">1. Revert Ether transfer to the current function</h4>
+
+<p>If a function is not meant to receive Ether or not in the current state or with the current arguments, you should use throw to reject the Ether. Using throw is the only way to reliably send back Ether because of gas and stack depth issues: The recipient might have an error in the fallback function that takes too much gas and thus cannot receive the Ether or the function might have been called in a malicious context with too high stack depth (perhaps even preceding the calling function).</p>
+
+<p>Note that accidentally sending Ether to a contract is not always a UX failure: You can never predict in which order or at which time transactions are added to a block. If the contract is written to only accept the first transaction, the Ether included in the other transactions has to be rejected.</p>
+
+<h4 id="2-revert-effects-of-called-functions">2. Revert effects of called functions</h4>
+
+<p>If you call functions on other contracts, you can never know how they are implemented. This means that the effects of these calls are also not know and thus the only way to revert these effects is to use throw. Of course you should always write your contract to not call these functions in the first place, if you know you will have to revert the effects, but there are some use-cases where you only know that after the fact.</p>
+
+<h2 id="loops-and-the-block-gas-limit">Loops and the Block Gas Limit</h2>
+
+<p>There is a limit of how much gas can be spent in a single block. This limit is flexible, but it is quite hard to increase it. This means that every single function in your contract should stay below a certain amount of gas in all (reasonable) situations. The following is a BAD example of a voting contract:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">/// THIS IS STILL A NEGATIVE EXAMPLE! DO NOT USE!
+</span><span class="k">contract</span> <span class="n">Voting</span> <span class="p">{</span>
+  <span class="k">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">uint</span><span class="p">)</span> <span class="n">voteWeight</span><span class="p">;</span>
+  <span class="kt">address</span><span class="p">[]</span> <span class="n">yesVotes</span><span class="p">;</span>
+  <span class="kt">uint</span> <span class="n">requiredWeight</span><span class="p">;</span>
+  <span class="kt">address</span> <span class="n">beneficiary</span><span class="p">;</span>
+  <span class="kt">uint</span> <span class="n">amount</span><span class="p">;</span>
+  <span class="k">function</span> <span class="n">voteYes</span><span class="p">()</span> <span class="p">{</span> <span class="n">yesVotes</span><span class="p">.</span><span class="n">push</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">);</span> <span class="p">}</span>
+  <span class="k">function</span> <span class="n">tallyVotes</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="n">yesVotes</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">uint</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">yesVotes</span><span class="p">.</span><span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+      <span class="n">yesVotes</span> <span class="o">+=</span> <span class="n">voteWeight</span><span class="p">[</span><span class="n">yesVotes</span><span class="p">[</span><span class="n">i</span><span class="p">]];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">yesVotes</span> <span class="o">&gt;</span> <span class="n">requiredWeight</span><span class="p">)</span>
+      <span class="n">beneficiary</span><span class="p">.</span><span class="nb">send</span><span class="p">(</span><span class="n">amount</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The contract actually has several issues, but the one I would like to highlight here is the problem of the loop: Assume that vote weights are transferrable and splittable like tokens (think of the DAO tokens as an example). This means that you can create an arbitrary number of clones of yourself. Creating such clones will increase the length of the loop in the tallyVotes function until it takes more gas than is available inside a single block.</p>
+
+<p>This applies to anything that uses loops, also where loops are not explicitly visible in the contract, for example when you copy arrays or strings inside storage. Again, it is fine to have arbitrary-length loops if the length of the loop is controlled by the caller, for example if you iterate over an array that was passed as a function argument. But <strong>never</strong> create a situation where the loop length is controlled by a party that would not be the only one suffering from its failure.</p>
+
+<p>As a side note, this was one reason why we now have the concept of blocked accounts inside the DAO contract: Vote weight is counted at the point where the vote is cast, to prevent the fact that the loop gets stuck, and if the vote weight would not be fixed until the end of the voting period, you could cast a second vote by just transferring your tokens and then voting again.</p>
+
+<h2 id="receiving-ether--the-fallback-function">Receiving Ether / the fallback function</h2>
+
+<p>If you want your contract to receive Ether via the regular send() call, you have to make its fallback function cheap. It can only use 2300, gas which neither allows any storage write nor function calls that send along Ether. Basically the only thing you should do inside the fallback function is log an event so that external processes can react on the fact. Of course any function of a contract can receive ether and is not tied to that gas restriction. Functions actually have to reject Ether sent to them if they do not want to receive any, but we are thinking about potentially inverting this behaviour in some future release.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2016/05/31/solidity-0.3.4-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.3.4 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2016/06/10/solidity-0.3.5-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.3.5 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

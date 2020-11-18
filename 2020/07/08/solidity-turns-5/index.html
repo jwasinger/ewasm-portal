@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity v0.1.0 turns 5! A walk down memory lane... | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity v0.1.0 turns 5! A walk down memory lane..." />
+  
+
+   
+  <meta property="og:description" content="With happiness and a tad of nostalgia, we’d like to share that Solidity v0.1.0 turns 5 years old today! (To be fair, v0.1.0 wasn’t an actual release, but it marks the time where the Solidity team started appointing version numbers.) We are puzzled over how fast time flew by. We’d...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/07/08/solidity-turns-5/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/07/08/solidity-turns-5/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity v0.1.0 turns 5! A walk down memory lane..." />
+  
+
+  
+  <meta name="twitter:description" content="With happiness and a tad of nostalgia, we’d like to share that Solidity v0.1.0 turns 5 years old today! (To be fair, v0.1.0 wasn’t an actual release, but it marks the time where the Solidity team started appointing version numbers.) We are puzzled over how fast time flew by. We’d...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity v0.1.0 turns 5! A walk down memory lane...</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Franziska Heintel on July 8, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/announcements/"
+                    class="category-announcements">
+                    Announcements
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><img src="/img/2020/07/solidity_turns_5.jpg" alt="Solidity v0.1.0 turns 5" /></p>
+
+<p>With happiness and a tad of nostalgia, we’d like to share that <a href="https://github.com/ethereum/solidity/commits/15dc5954c3a2e2a9ce96f2f77d41adef98a4cced">Solidity v0.1.0</a> turns 5 years old today! (To be fair, v0.1.0 wasn’t an <em>actual</em> release, but it marks the time where the Solidity team started appointing version numbers.) We are puzzled over how fast time flew by. We’d like to use this opportunity to take a look back and walk down the Solidity memory lane together with you.</p>
+
+<p><strong>In short:</strong> The Solidity language evolved rapidly, the ecosystem went through highs and lows, contributors came and went (but luckily most of them stuck around!) and we’re still out here, still learning, still trying to push Solidity to the next, better stages.</p>
+
+<p>Read on for a retrospective of the last five years of language development, thoughts on the language design process, an overview of the people behind Solidity, and a short interview with Chris on the past, the present and the future of Solidity.</p>
+
+<h2 id="thoughts-on-5-years-of-language-design">Thoughts on 5+ years of language design</h2>
+
+<p><em>Trivia, important milestones and views on the language development process from 5+ years of Solidity development, courtesy of Alex’ recent <a href="https://axic.github.io/notes/summit/musings_on_language/#/">Solidity Summit talk</a>. Thank you!</em></p>
+
+<p>Developing a language when everything around you is moving can be quite challenging. Here’s our view on why Solidity used to and still needs to evolve rapidly - and why this is a good thing.</p>
+
+<h3 id="1-goals-and-value-proposition-of-a-programming-language">1. Goals and value proposition of a programming language</h3>
+
+<p>Solidity’s initial goal was to become a friendly, easy-to-use language with the aim to attract developers and make the entry barrier to Ethereum development as low as possible.</p>
+
+<p>That implied aspects like:</p>
+<ul>
+  <li>JavaScript-like syntax.</li>
+  <li>Allowing some weird implicit things.</li>
+  <li>Lacking features, but being easy to learn.</li>
+</ul>
+
+<p>Over the years, the goal changed. While still trying to stay as user-friendly as possible, the additional focus now rather lays on developing a much safer language.</p>
+
+<p>For Solidity, that means:</p>
+<ul>
+  <li>Solidity is verbose.</li>
+  <li>Solidity is explicit.</li>
+  <li>Solidity tries to highlight “risky” constructs (gas usage).</li>
+</ul>
+
+<h3 id="2-embedding-solidity-as-a-valuable-and-practicable-language-into-the-ethereum-ecosystem">2. Embedding Solidity as a valuable and practicable language into the Ethereum ecosystem</h3>
+
+<p>The ecosystem we develop in was and continues to be a moving target. This isn’t necessarily a bad thing, however, it requires some additional flexibility and adaptability:</p>
+<ul>
+  <li><strong>Ethereum</strong> in itself is constantly evolving and learning. Protocol and EVM developers are busy coming up with new features, new restrictions, repricings, even new protocols (Eth 2.0); most of which has an impact on the Solidity language design.</li>
+  <li><strong>Developers</strong> are still learning and frankly, sometimes trying all sorts of things. Here, from a language perspective, it’s important to find the delicate balance between allowing too much, or too little.</li>
+  <li><strong>The security community</strong> developed and matured alongside with Ethereum and it took some time for it to reach a healthy size and to build the necessary tools supporting their work.</li>
+</ul>
+
+<p>To summarize: Building Ethereum is a (learning) journey. And so is building Solidity. Together with the broader Solidity community we’re continuing to figure out:</p>
+
+<ul>
+  <li>what features are needed or are bad.</li>
+  <li>what is good or bad syntax.</li>
+  <li>what is not enough or too much verbosity.</li>
+  <li>how to deliver changes quickly to developers.</li>
+</ul>
+
+<h3 id="3-steadily-adjusting-and-improving-the-language-design-process">3. Steadily adjusting and improving the language design process</h3>
+
+<p>So far, questions around new features and implementation details have mostly been discussed in <a href="https://github.com/ethereum/solidity/issues">Github issues</a>, the solidity-dev <a href="https://gitter.im/ethereum/solidity-dev">Gitter channel</a>, and during the public Solidity development team meetings.</p>
+
+<p>The first <a href="https://solidity.ethereum.org/2020/06/09/solidity-summit-recap/">Solidity Summit</a>, which was held virtually in May this year, was the next step to further expand the language design discussions and invite and engage a broader circle of experts, ranging from tool developers to Solidity power users, contributors, security researchers and auditors.</p>
+
+<p>Currently, we’re exploring more ways to interact with the aforementioned groups and include them better into the language design process.</p>
+<ul>
+  <li>We revived the solidity-users forum, where proposals for new language features and qualities of existing aspects of the language can be discussed.</li>
+  <li>We’re sharing (feature) feedback surveys on a semi-regular basis.</li>
+  <li>We are regularly hosting dedicated language design discussion calls, where one topic/issue/feature implementation is debated per call.</li>
+</ul>
+
+<p>For the future, we could imagine evaluating a more structured process for proposals, similar to Python Enhancement Proposals (PEPs) or Vyper Improvement Proposals (VIPs), which could be introduced step-by-step. However, we think it might be a bit too early for that at this point in time.</p>
+
+<p>In any case, we’re happy to hear your thoughts on how we can improve the language design process to be more collaborative. If you’d like to get involved and share your ideas, feel free to join the <a href="https://groups.google.com/g/solidity-users">solidity-user forum</a>!</p>
+
+<h2 id="highlights-and-milestones-from-v010---v0610">Highlights and milestones from v0.1.0 - v0.6.10</h2>
+
+<p>For a collection of notable Solidity events throughout the last years check out the roadmap below!</p>
+
+<p><img src="/img/2020/07/solidity_roadmap_1.png" alt="Solidity Roadmap Part 1" /></p>
+
+<p><img src="/img/2020/07/solidity_roadmap_2.png" alt="Solidity Roadmap Part 2" /></p>
+
+<p><img src="/img/2020/07/solidity_roadmap_3.png" alt="Solidity Roadmap Part 3" /></p>
+
+<h2 id="the-people-behind-solidity">The people behind Solidity</h2>
+
+<p>A programming language is nothing without its community, its maintainers and developers building cool stuff with it! That’s why we would like to thank the core team and more importantly the community contributors for their continued support over all these years.</p>
+
+<h3 id="the-core-team">The core team</h3>
+
+<p>The Solidity programming language is an open-source, community project mainly developed and maintained by a core team. The core team is sponsored by the Ethereum Foundation.</p>
+
+<p>This team currently consists of <a href="https://github.com/a3d4">@a3d4</a>, <a href="https://github.com/aarlt">@aarlt</a>, <a href="https://github.com/axic">@axic</a>, <a href="https://github.com/bshastry">@bshastry</a>, <a href="https://github.com/cameel">@cameel</a>, <a href="https://github.com/chriseth">@chriseth</a>, <a href="https://github.com/christianparpart">@christianparpart</a>, <a href="https://github.com/ekpyron">@ekpyron</a>, <a href="https://github.com/franzihei">@franzihei</a>, <a href="https://github.com/hrkrshnn">@hrkrshnn</a>, <a href="https://github.com/leonardoalt">@leonardoalt</a>, <a href="https://github.com/marenz">@marenz</a>, and <a href="https://github.com/mijovic">@mijovic</a>.</p>
+
+<h3 id="the-wider-community--contributors">The wider community &amp; contributors</h3>
+
+<p>We are incredibly grateful for all community contributions, not only via commits but also via participation in Github issues, by filing bug reports or in other community functions. Also a shout-out to our former team members!</p>
+
+<p>We’d especially like to thank (in alphabetical order) <a href="https://github.com/arkpar">@arkpar</a>, <a href="https://github.com/asinyagin">@asinyagin</a>, <a href="https://github.com/benjaminion">@benjaminion</a>, <a href="https://github.com/bobsummerwill">@bobsummerwill</a>, <a href="https://github.com/chfast">@chfast</a>, <a href="https://github.com/ChrisChinchilla">@ChrisChinchilla</a>, <a href="https://github.com/Denton-L">@Denton-L</a>, <a href="https://github.com/djudjuu">@djudjuu</a>, <a href="https://github.com/elopio">@elopio</a>, <a href="https://github.com/erak">@erak</a>, <a href="https://github.com/ethers">@ethers</a>, <a href="https://github.com/federicobond">@federicobond</a>, <a href="https://github.com/fulldecent">@fulldecent</a>, <a href="https://github.com/gavofyork">@gavofyork</a>, <a href="https://github.com/ghallak">@ghallak</a>, <a href="https://github.com/guanqun">@guanqun</a>, <a href="https://github.com/jamesray1">@jamesray1</a>, <a href="https://github.com/jvmaia">@jvmaia</a>, <a href="https://github.com/LefterisJP">@LefterisJP</a>, <a href="https://github.com/liangdzou">@liangdzou</a>, <a href="https://github.com/LianaHus">@LianaHus</a>, <a href="https://github.com/mocamircea">@mocamircea</a>, <a href="https://github.com/NicolaiSoeborg">@NicolaiSoeborg</a>, <a href="https://github.com/pirapira">@pirapira</a>, <a href="https://github.com/random-internet-cat">@random-internet-cat</a>, <a href="https://github.com/roadriverrail">@roadriverrail</a>, <a href="https://github.com/sifmelcara">@sifmelcara</a>, <a href="https://github.com/VoR0220">@VoR0220</a>, <a href="https://github.com/winsvega">@winsvega</a>.</p>
+
+<p>Note that this is a non-exhaustive list. There are certainly many more great contributors, however, listing all of them would go beyond the scope of this article. 😊</p>
+
+<h2 id="the-past-the-present-and-the-future-of-solidity-interview-with-christian-reitwiessner">The past, the present and the future of Solidity: Interview with Christian Reitwiessner</h2>
+
+<p><strong>Can you tell us a bit about the beginnings of Solidity? What changed most about your work on Solidity between now and then?</strong></p>
+
+<p><em>The biggest difference between now and then is that back in the days you basically did not know if somebody would ever use what we are building. Of course we maybe had the feeling it is going to be something big, but we did not know for sure. Now, Solidity is a product which we are continuing to improve while it is out there in production, being used, holding incredible amounts of value and powering some really cool decentralized applications.</em></p>
+
+<p><em>Another difference is that in the beginnings, it seemed easier to get feedback. Maybe this was due to the fact that the community was much smaller. The conversations seemed more technical in a way. Now, the community became bigger and more diverse (which is a great thing!). With that it became a bit more complex in terms of collaboration and feedback especially on technical implementation details.</em></p>
+
+<p><strong>Looking back, what was your most memorable moment of the past 5 years of Solidity development?</strong></p>
+
+<p><em>There were many - people using the compiler before it even had a command line interface, people happily picking up the newest features, seeing the ecosystem grow and especially finally meeting people in real life you have been working with for so long.</em></p>
+
+<p><strong>What is your favorite aspect about Solidity?</strong></p>
+
+<p><em>Solidity looks rather high-level but is still very close to the EVM. At the same time, people with some background in programming usually understand what Solidity code is about.</em></p>
+
+<p><strong>Where do you think Solidity needs to improve the most?</strong></p>
+
+<p><em>It needs to be even easier to write safe smart contracts. This means we need to work on our SMTChecker, debuggers, IDEs, templates, libraries and so on.</em></p>
+
+<p><strong>What does Eth2 mean for Solidity?</strong></p>
+
+<p><em>On the technical level, it means we have to focus more on the Ewasm backend of Solidity, but this is a relatively straightforward task. On the conceptual level, on the other hand, it means that smart contracts will be asynchronous, which is a big challenge for everyone. The atomicity of the EVM makes many things very easy: If something is odd, just revert. Solidity needs to find a good language construct that makes the danger of asynchrony visible but also helps avoiding some pitfalls and allows the “common use-case” to be easy to write.</em></p>
+
+<p><strong>Anything else you would like to say?</strong></p>
+
+<p><em>Let’s continue our journey to make smart contracts as safe and accessible to everyone as possible!</em></p>
+
+<p>With that being said, we’d like to wrap this little birthday celebration up and close with a virtual toast:</p>
+
+<h3 id="to-all-the-contributors-over-the-last-years-your-input-dedication-and-work-has-been-incredible-thank-you-to-the-next-5-years-">To all the contributors over the last years: Your input, dedication and work has been incredible. THANK YOU. To the next 5 years! 🍾</h3>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/07/07/Solidity-0611-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.11 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/07/22/Solidity-0612-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.12 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

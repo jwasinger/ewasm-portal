@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.8 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.8 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="Solidity v0.6.8 fixes three important bugs in the code generator and introduces a recommendation to use SPDX license identifiers. Furthermore, support for WebAssembly has been extended and it is now possible to access the min and max values of an integer type directly. Please upgrade if you are using array...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/05/14/Solidity-068-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/05/14/Solidity-068-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.8 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="Solidity v0.6.8 fixes three important bugs in the code generator and introduces a recommendation to use SPDX license identifiers. Furthermore, support for WebAssembly has been extended and it is now possible to access the min and max values of an integer type directly. Please upgrade if you are using array...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.8 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on May 14, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><a href="https://github.com/ethereum/solidity/releases/tag/v0.6.8">Solidity v0.6.8</a> fixes three important bugs in the code generator and introduces a recommendation to use <a href="https://spdx.dev/ids/#how">SPDX license identifiers</a>. Furthermore, support for WebAssembly has been extended and it is now possible to access the <code class="language-plaintext highlighter-rouge">min</code> and <code class="language-plaintext highlighter-rouge">max</code> values of an integer type directly.</p>
+
+<p>Please upgrade if you are using array slices, backslashes in string literals for ABIEncoderV2 or are concerned about non-payable constructors.</p>
+
+<h2 id="important-bugfixes">Important Bugfixes</h2>
+
+<p>Please note that the three bugs outlined below have all been rated with a severity level of “very low”.</p>
+
+<h3 id="incorrect-internal-escaping-of-string-literals">Incorrect Internal Escaping of String Literals</h3>
+
+<p><strong>Problem</strong>: When ABIEncoderV2 is enabled, string literals passed directly to encoding functions or external function calls are stored as strings in the intermediate code. Characters outside the printable range are handled correctly, but backslashes are not escaped in this procedure. This leads to double backslashes being reduced to single backslashes and consequently re-interpreted as escapes potentially resulting in a different string being encoded.</p>
+
+<p><strong>Solution</strong>: String literals containing backslash characters are now properly escaped.</p>
+
+<p><strong>Example of affected code</strong></p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">experimental</span> <span class="n">ABIEncoderV2</span><span class="p">;</span>
+<span class="k">contract</span> <span class="n">C</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">f</span><span class="p">()</span> <span class="k">public</span> <span class="k">payable</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">bytes</span> <span class="k">memory</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// The reason string should contain two backslashes,
+</span>        <span class="c1">// but during compilation, only a single backslash
+</span>        <span class="c1">// ends up in the message.
+</span>        <span class="nb">require</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"back</span><span class="se">\\\\</span><span class="s">slash"</span><span class="p">);</span>
+        <span class="c1">// This string literal is not directly passed to
+</span>        <span class="c1">// an encoding function and is properly escaped.
+</span>        <span class="k">return</span> <span class="s">"back</span><span class="se">\\\\</span><span class="s">slash"</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>We especially thank Alex Groce (<a href="https://github.com/agroce">@agroce</a>) who found the bug through fuzzing!</p>
+
+<h3 id="array-slice-dynamically-encoded-base-type-bug">Array Slice Dynamically Encoded Base Type Bug</h3>
+
+<p><strong>Problem</strong>: For arrays with dynamically sized base types, index range accesses that use a start expression that is non-zero will result in invalid array slices. Any index access to such array slices will result in data being read from incorrect calldata offsets. Array slices are only supported for dynamic calldata types and all problematic types require ABIEncoderV2 to be enabled.</p>
+
+<p><strong>Solution</strong>: Disallow array slices of arrays with dynamically encoded base types.</p>
+
+<p><strong>Example of affected code</strong></p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">experimental</span> <span class="n">ABIEncoderV2</span><span class="p">;</span>
+<span class="k">struct</span> <span class="n">S</span> <span class="p">{</span> <span class="kt">uint</span><span class="p">[]</span> <span class="n">data</span><span class="p">;</span> <span class="p">}</span>
+<span class="k">contract</span> <span class="n">C</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">f</span><span class="p">(</span>
+        <span class="n">S</span><span class="p">[]</span> <span class="k">calldata</span> <span class="n">arrayOfStructs</span><span class="p">,</span>
+        <span class="kt">uint</span><span class="p">[][]</span> <span class="k">calldata</span> <span class="n">arrayOfArrays</span>
+    <span class="p">)</span> <span class="k">external</span> <span class="k">pure</span> <span class="p">{</span>
+        <span class="c1">// These two do not result in the correct value.
+</span>        <span class="c1">// Both expressions are disallowed now.
+</span>        <span class="n">arrayOfStructs</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="p">];</span>
+        <span class="n">arrayOfArrays</span><span class="p">[</span><span class="mi">1</span><span class="o">:</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h3 id="implicit-constructor-callvalue-check-bug">Implicit Constructor Callvalue Check Bug</h3>
+
+<p><strong>Problem</strong>: Starting from Solidity 0.4.5, the creation code of contracts without explicit payable constructor is supposed to contain a callvalue check that results in contract creation reverting, if non-zero value is passed. However, this check was missing in case no explicit constructor was defined in a contract at all, but the contract has a base that does define a constructor. In these cases it is possible to send value in a contract creation transaction or using inline assembly without revert, even though the creation code is supposed to be non-payable.</p>
+
+<p><strong>Solution</strong>: We added a callvalue check to the creation code of a contract which does not define a constructor but has a base that does define a constructor.</p>
+
+<p><strong>Code example</strong></p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">contract</span> <span class="n">Base</span> <span class="p">{</span>
+    <span class="k">constructor</span><span class="p">()</span> <span class="k">public</span> <span class="k">payable</span> <span class="p">{}</span>
+<span class="p">}</span>
+<span class="k">contract</span> <span class="n">Derived</span> <span class="k">is</span> <span class="n">Base</span> <span class="p">{</span>
+    <span class="c1">// No constructor defined
+</span><span class="p">}</span>
+</code></pre></div></div>
+
+<p>Before 0.6.8, it was possible to send Ether together with the creation
+transaction of an instance of <code class="language-plaintext highlighter-rouge">Derived</code>. At the same time - confusingly -
+the compiler did now allow Solidity-based creation of the form
+<code class="language-plaintext highlighter-rouge">new Derived{value: 1}()</code>. We solved this discrepancy by reverting
+during the constructor of <code class="language-plaintext highlighter-rouge">Derived</code> if Ether was provided with the creation.</p>
+
+<p>To replicate the old behaviour, you can add a payable constructor to the most
+derived contract.</p>
+
+<h2 id="other-bugfixes">Other Bugfixes</h2>
+
+<ul>
+  <li><strong>ABI</strong>: Skip <code class="language-plaintext highlighter-rouge">private</code> or <code class="language-plaintext highlighter-rouge">internal</code> constructors.</li>
+  <li><strong>Code Generator</strong>: Fixed an “Assembly Exception in Bytecode” error where requested functions were generated twice.</li>
+  <li><strong>Natspec</strong>: Fixed a bug that ignored <code class="language-plaintext highlighter-rouge">@return</code> tag when no other developer-documentation tags were present.</li>
+  <li><strong>Type Checker</strong>: Checks if a literal exponent in the <code class="language-plaintext highlighter-rouge">**</code> operation is too large or fractional.</li>
+  <li><strong>Type Checker</strong>: Disallow accessing <code class="language-plaintext highlighter-rouge">runtimeCode</code> for contract types that contain immutable state variables.</li>
+  <li><strong>Yul Assembler</strong>: Fix source location of variable declarations without value.</li>
+</ul>
+
+<h2 id="new-features">New Features</h2>
+
+<h3 id="language-features">Language Features</h3>
+<ul>
+  <li>Implemented <code class="language-plaintext highlighter-rouge">type(T).min</code> and <code class="language-plaintext highlighter-rouge">type(T).max</code> for every integer type T that returns the smallest and largest value representable by the type.</li>
+</ul>
+
+<h3 id="compiler-features">Compiler Features</h3>
+<ul>
+  <li><strong>Commandline Interface</strong>: Don’t ignore <code class="language-plaintext highlighter-rouge">--yul-optimizations</code> in assembly mode.</li>
+  <li><strong>ABI</strong>: Allow using abi encoding functions for calldata array slices without explicit casts.</li>
+  <li><strong>Wasm binary output</strong>: Implement <code class="language-plaintext highlighter-rouge">br</code> and <code class="language-plaintext highlighter-rouge">br_if</code>.</li>
+</ul>
+
+<p>A big thank you to all contributors who helped  make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.8">here</a>.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/05/13/immutable-keyword/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.x features: Saving Storage Costs with Immutables">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/05/26/array-slices/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.x features: Array Slices">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

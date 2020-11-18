@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity Summit 2020 Goes Interspace | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity Summit 2020 Goes Interspace" />
+  
+
+   
+  <meta property="og:description" content="Tl;dr: As already announced on Twitter, we transformed the Solidity Summit, which was initially planned to be an in-person meeting in Berlin, into an online event. Today, we are excited to share that the summit will be powered by Interspace.Chat. Interspace is a virtual meeting infrastructure based on self-hosted Jitsi...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/04/17/Solidity-Summit-2020-Goes-Interspace/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/04/17/Solidity-Summit-2020-Goes-Interspace/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity Summit 2020 Goes Interspace" />
+  
+
+  
+  <meta name="twitter:description" content="Tl;dr: As already announced on Twitter, we transformed the Solidity Summit, which was initially planned to be an in-person meeting in Berlin, into an online event. Today, we are excited to share that the summit will be powered by Interspace.Chat. Interspace is a virtual meeting infrastructure based on self-hosted Jitsi...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity Summit 2020 Goes Interspace</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Franziska Heintel on April 17, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/announcements/"
+                    class="category-announcements">
+                    Announcements
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><strong>Tl;dr:</strong> As already <a href="https://twitter.com/solidity_lang/status/1244645576735690752?s=20">announced on Twitter</a>, we transformed the Solidity Summit, which was initially planned to be an in-person meeting in Berlin, into an online event. Today, we are excited to share that the summit will be powered by <a href="https://github.com/interspacechat/interspace.chat">Interspace.Chat</a>. Interspace is a virtual meeting infrastructure based on self-hosted <a href="https://jitsi.org/">Jitsi</a> video chat rooms. Check out the Solidity Summit’s preliminary event agenda <a href="https://docs.google.com/spreadsheets/d/1ylkaTYKx9TbAifCgyH2jN9SKJKrYfzab9zzTZgSL44g/edit#gid=2065734219">here</a> and make sure to <a href="https://solidity-summit.ethereum.org/">register</a> if you want to partipate!</p>
+
+<h2 id="what-is-the-solidity-summit">What is the Solidity Summit?</h2>
+<p>The Solidity Summit is a free interactive forum with discussions and talks on Solidity, Yul, language design and tooling. It will take place on April 29-30.</p>
+
+<p>We aim to</p>
+<ul>
+  <li>have useful (language design related) discussions that result in improvement proposals, leading to actual implementations</li>
+  <li>foster communication between teams working on similar topics</li>
+  <li>identify needs for the smart contract ecosystem for Ethereum</li>
+</ul>
+
+<p>We will discuss</p>
+<ul>
+  <li>Change proposals and analysis around Solidity and Yul</li>
+  <li>Debuggers</li>
+  <li>Source verification</li>
+  <li>Upgradable contracts &amp; libraries</li>
+  <li>NatSpec</li>
+  <li>Metadata / packages</li>
+  <li>Testing for smart contracts</li>
+  <li>Integration into existing “larger ecosystem tools” (e.g. vscode via Language Server, LLVM, DWARF)</li>
+  <li>Mechanisms / programming patterns (on the EVM) like mutexes, state machines, create2, etc.</li>
+</ul>
+
+<p>…and more!</p>
+
+<p>For a sneak peak of the full agenda, click <strong><a href="https://docs.google.com/spreadsheets/d/1ylkaTYKx9TbAifCgyH2jN9SKJKrYfzab9zzTZgSL44g/edit?usp=sharing">here</a></strong>.</p>
+
+<h2 id="how-can-you-participate">How can you participate?</h2>
+<p>If you’d like to participate, please make sure to register upfront via the application form on the <a href="https://solidity-summit.ethereum.org/">Solidity Summit website</a>.</p>
+
+<p>We would like to stress that this summit will be focusing especially on language design and tools/ecosystem and aims to collect community feedback on how to improve Solidity and the compiler. While developers writing Solidity contracts are very welcome to share their experience during the summit, this is probably <strong>not</strong> the conference where you’ll learn “how to develop dapps on Ethereum using Solidity”.</p>
+
+<p>There are two options how you can participate during the summit:</p>
+<ol>
+  <li><strong>Join the Jitsi video conference.</strong> This option is recommended for speakers and people that would like to actively participate in the open discussion sessions.</li>
+  <li><strong>Watch the livestream.</strong> This option is recommended for attendees that would rather just listen in and allows to do other things at the same time (not recommended ;))/ saves CPU. Asking questions during Q&amp;A will be possible using the chat.</li>
+</ol>
+
+<p>Unless you actively want to participate/ talk/ present during the respective session, we recommend using the livestream option to ensure a smooth experience for everyone.</p>
+
+<p>Once we’re live, you’ll be able to find all links you need in one place:</p>
+<ul>
+  <li>YouTube livestream</li>
+  <li>Jitsi lobby room</li>
+  <li>Jitsi main conference room</li>
+  <li>Option to create Jitsi breakout rooms</li>
+  <li>Chat</li>
+  <li>Conference agenda</li>
+  <li>POAP badge claim</li>
+</ul>
+
+<p>To not miss any update on the Solidity Summit, follow us on <a href="https://twitter.com/solidity_lang">Twitter</a>.</p>
+
+<p><strong>Can’t wait to see you in(ter)space soon!</strong></p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/04/09/solidity-0.6.6-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.6 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/05/04/solidity-0.6.7-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.7 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

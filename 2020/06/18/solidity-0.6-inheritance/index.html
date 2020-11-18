@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.x features: inheritance | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.x features: inheritance" />
+  
+
+   
+  <meta property="og:description" content="Similar to object-oriented programming in Solidity - a contract-oriented language - the inheritance and polymorphism features are as widely adopted and critical for the language evolution. There is hardly any Solidity developer who hasn’t used these language features in their contracts to decouple logic and increase code reuse. With version...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/06/18/solidity-0.6-inheritance/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/06/18/solidity-0.6-inheritance/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.x features: inheritance" />
+  
+
+  
+  <meta name="twitter:description" content="Similar to object-oriented programming in Solidity - a contract-oriented language - the inheritance and polymorphism features are as widely adopted and critical for the language evolution. There is hardly any Solidity developer who hasn’t used these language features in their contracts to decouple logic and increase code reuse. With version...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.x features: inheritance</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Elena Gesheva on June 18, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/explainers/"
+                    class="category-explainers">
+                    Explainers
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>Similar to object-oriented programming in Solidity - a contract-oriented language - the inheritance and polymorphism features are as widely adopted and critical for the language evolution. There is hardly any Solidity developer who hasn’t used these language features in their contracts to decouple logic and increase code reuse. With version 0.6 of the language the main improvements introduced are to make existing rules explicit in addition to introducing interface inheritance and disallowing the dangerous state variable shadowing. The compiler continues to use C3 Linearization, see <a href="https://solidity.readthedocs.io/en/latest/contracts.html?#inheritance">Solidity documentation</a> for inheritance.</p>
+
+<h2 id="explicit-virtual-and-override">Explicit <code class="language-plaintext highlighter-rouge">virtual</code> and <code class="language-plaintext highlighter-rouge">override</code></h2>
+<p>Functions are no longer virtual by default. This means that a call to a non-virtual function will always execute that function regardless of any other contract in the inheritance hierarchy. This reduces ambiguity that exists in version 0.5 where all functions are implicitly virtual, allowing to be overridden further down the inheritance structure. This is especially dangerous in big inheritance graphs where this ambiguity can lead to unintended behaviour and bugs.</p>
+
+<p>For example in contract <code class="language-plaintext highlighter-rouge">C</code> below calling <code class="language-plaintext highlighter-rouge">setValue</code> calls the most derived implementation which is from contract <code class="language-plaintext highlighter-rouge">B</code>. However this is non-obvious from the implementation.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">17</span><span class="p">;</span>
+<span class="k">contract</span> <span class="n">A</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="k">public</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">_x</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">B</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="k">public</span> <span class="n">y</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_y</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">_y</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">C</span> <span class="k">is</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span> <span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>With version 0.6 for the example above the compiler raises a type error: <code class="language-plaintext highlighter-rouge">Derived contract must override function "setValue". Two or more base classes define functions with the same name and parameter types</code>. The above is an example of multiple inheritance where the same function is inherited from multiple base classes - <code class="language-plaintext highlighter-rouge">A</code> and <code class="language-plaintext highlighter-rouge">B</code>. In this case, it has to be overridden and the bases have to be listed in the override specifier. Important to note that the order in <code class="language-plaintext highlighter-rouge">override(A,B)</code> does not matter - specifically it does not change the behaviour of <code class="language-plaintext highlighter-rouge">super</code> - this is still dictated by the C3 linearization of the inheritance graph which is determined by the order in the <code class="language-plaintext highlighter-rouge">contract C is A, B { ... }</code> declaration.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">10</span><span class="p">;</span>
+<span class="k">contract</span> <span class="n">A</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="k">public</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">public</span> <span class="k">virtual</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">_x</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">B</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="k">public</span> <span class="n">y</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_y</span><span class="p">)</span> <span class="k">public</span> <span class="k">virtual</span> <span class="p">{</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">_y</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">C</span> <span class="k">is</span> <span class="n">A</span><span class="p">,</span> <span class="n">B</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">public</span> <span class="k">override</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">A</span><span class="p">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">_x</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Note that you can only override functions if they are marked <code class="language-plaintext highlighter-rouge">virtual</code>. Additionally, any overriding function must be marked <code class="language-plaintext highlighter-rouge">override</code>. If that again should be overridable, it has to also be marked <code class="language-plaintext highlighter-rouge">virtual</code>.</p>
+
+<p><code class="language-plaintext highlighter-rouge">interface</code> functions are implicitly <code class="language-plaintext highlighter-rouge">virtual</code> so when implementing an interface you have to explicitly override its functions in the implementation. There is an ongoing discussion on this design <a href="https://github.com/ethereum/solidity/issues/8281">here</a>.</p>
+
+<p>It’s worth noting that the keyword <code class="language-plaintext highlighter-rouge">super</code> works as it did before: It calls the function one level higher up in the flattened inheritance hierarchy. Also unchanged: <code class="language-plaintext highlighter-rouge">super</code> is still not allowed on <code class="language-plaintext highlighter-rouge">external</code> functions.</p>
+
+<h2 id="interfaces-can-inherit">Interfaces can inherit</h2>
+<p>This functionality is new to version 0.6 and allows interface inheritance. The resulting interface is a combination of all inherited interfaces’ functions which the contract has to implement.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">10</span><span class="p">;</span>
+<span class="k">interface</span> <span class="n">X</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">external</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">interface</span> <span class="n">Y</span> <span class="k">is</span> <span class="n">X</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">getValue</span><span class="p">()</span> <span class="k">external</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">Z</span> <span class="k">is</span> <span class="n">Y</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">external</span> <span class="k">override</span> <span class="p">{</span> <span class="n">x</span> <span class="o">=</span> <span class="n">_x</span><span class="p">;</span> <span class="p">}</span>
+    <span class="k">function</span> <span class="n">getValue</span><span class="p">()</span> <span class="k">external</span> <span class="k">override</span> <span class="k">returns</span> <span class="p">(</span><span class="kt">uint</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">x</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Note that if the contract does not implement all functions it has to be marked as <code class="language-plaintext highlighter-rouge">abstract</code>.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">10</span><span class="p">;</span>
+<span class="k">abstract</span> <span class="k">contract</span> <span class="n">Z</span> <span class="k">is</span> <span class="n">Y</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="n">x</span><span class="p">;</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">external</span> <span class="k">override</span> <span class="p">{</span> <span class="n">x</span> <span class="o">=</span> <span class="n">_x</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="abstract-contracts">Abstract contracts</h2>
+<p>With version 0.5 a contract that doesn’t implement all of its functions is implicitly made abstract by the compiler:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">17</span><span class="p">;</span>
+<span class="k">contract</span> <span class="n">X</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">public</span> <span class="k">virtual</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>With 0.6 this differentiation has to be explicit with the compiler generating error <code class="language-plaintext highlighter-rouge">contract X should be made abstract</code> otherwise</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">10</span><span class="p">;</span>
+<span class="k">abstract</span> <span class="k">contract</span> <span class="n">X</span> <span class="p">{</span>
+    <span class="k">function</span> <span class="n">setValue</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">public</span> <span class="k">virtual</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="public-variables-safer-override-for-external-functions">Public variables safer override for external functions</h2>
+<p>Although this feature existed before 0.6 it is now safer with the added checks that the getter function of the variable (generated by the compiler) matches the parameter and return type of the overriden external function. With version 0.5 it is possible these were allowed to differ as shown in the following example:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">17</span><span class="p">;</span>
+<span class="k">interface</span> <span class="n">A</span>
+<span class="p">{</span>
+    <span class="k">function</span> <span class="n">f</span><span class="p">()</span> <span class="k">external</span> <span class="k">pure</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint8</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">B</span> <span class="k">is</span> <span class="n">A</span>
+<span class="p">{</span>
+    <span class="kt">uint256</span> <span class="k">public</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">257</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Contract <code class="language-plaintext highlighter-rouge">A</code>’s call to underlying contract <code class="language-plaintext highlighter-rouge">B</code> would return <code class="language-plaintext highlighter-rouge">1</code> as the <code class="language-plaintext highlighter-rouge">257</code> value overflows when cast to <code class="language-plaintext highlighter-rouge">uint8</code>.</p>
+
+<p>With 0.6 now the above generates <code class="language-plaintext highlighter-rouge">TypeError: Overriding public state variable return types differ</code> forcing us to resolve the type conflict thus avoiding the overflow:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">10</span><span class="p">;</span>
+<span class="k">interface</span> <span class="n">A</span>
+<span class="p">{</span>
+    <span class="k">function</span> <span class="n">f</span><span class="p">()</span> <span class="k">external</span> <span class="k">pure</span> <span class="k">returns</span><span class="p">(</span><span class="kt">uint256</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">B</span> <span class="k">is</span> <span class="n">A</span>
+<span class="p">{</span>
+    <span class="kt">uint256</span> <span class="k">public</span> <span class="k">override</span> <span class="n">f</span> <span class="o">=</span> <span class="mi">257</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Note that <code class="language-plaintext highlighter-rouge">public</code> state variables can only override <code class="language-plaintext highlighter-rouge">external</code> functions and it remains disallowed for variables to override <code class="language-plaintext highlighter-rouge">internal</code> or <code class="language-plaintext highlighter-rouge">public</code> functions.</p>
+
+<h2 id="no-state-variables-shadowing">No state variables shadowing</h2>
+<p>Inheriting visible state variables with the same name in version 0.5 was allowed by the compiler and is only raised as a problem by some static analysis tools. The following example demonstrates the problem with this design:</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.5</span><span class="p">.</span><span class="mi">17</span><span class="p">;</span>
+<span class="k">contract</span> <span class="n">A</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="k">public</span> <span class="n">x</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="n">setValue1</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span> <span class="n">x</span> <span class="o">=</span> <span class="n">_x</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">B</span> <span class="k">is</span> <span class="n">A</span> <span class="p">{</span>
+    <span class="kt">uint</span> <span class="k">public</span> <span class="n">x</span><span class="p">;</span>
+
+    <span class="k">function</span> <span class="n">setValue2</span><span class="p">(</span><span class="kt">uint</span> <span class="n">_x</span><span class="p">)</span> <span class="k">public</span> <span class="p">{</span> <span class="n">x</span> <span class="o">=</span> <span class="n">_x</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>In this context functions in contract <code class="language-plaintext highlighter-rouge">A</code> referencing <code class="language-plaintext highlighter-rouge">x</code> are using its own instance of that state variable - <code class="language-plaintext highlighter-rouge">A.x</code> whereas for <code class="language-plaintext highlighter-rouge">B</code> it’s <code class="language-plaintext highlighter-rouge">B.x</code>. Therefore the result of calling <code class="language-plaintext highlighter-rouge">B.setValue2(100)</code> would be that <code class="language-plaintext highlighter-rouge">B.x</code> will be set to <code class="language-plaintext highlighter-rouge">100</code> while calling <code class="language-plaintext highlighter-rouge">B.setValue1(200)</code> will set <code class="language-plaintext highlighter-rouge">A.x</code> to <code class="language-plaintext highlighter-rouge">200</code>.</p>
+
+<p>With 0.6 this is now prohibited and raises a compiler <code class="language-plaintext highlighter-rouge">DeclarationError: Identifier already declared</code> error.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/06/11/Solidity-0610-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.10 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/06/25/sourcify-faq/" data-toggle="tooltip" data-placement="top" title="All you need to know about Sourcify">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

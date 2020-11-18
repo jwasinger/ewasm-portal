@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Analysis of Storage Corruption Bug | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Analysis of Storage Corruption Bug" />
+  
+
+   
+  <meta property="og:description" content="This post was originally published on the Ethereum blog. This blog post provides an update on our findings following the discovery of the storage corruption bug last week. In summary, the bug was much less severe than we initially thought. The small number of affected contracts we found is either...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2016/11/09/analysis-storage-corruption-bug/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2016/11/09/analysis-storage-corruption-bug/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Analysis of Storage Corruption Bug" />
+  
+
+  
+  <meta name="twitter:description" content="This post was originally published on the Ethereum blog. This blog post provides an update on our findings following the discovery of the storage corruption bug last week. In summary, the bug was much less severe than we initially thought. The small number of affected contracts we found is either...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Analysis of Storage Corruption Bug</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Christian Reitwiessner on November 9, 2016</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/security-alerts/"
+                    class="category-security-alerts">
+                    Security Alerts
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><em>This post was originally published on the <a href="https://blog.ethereum.org/2016/11/09/analysis-storage-corruption-bug/">Ethereum blog</a>.</em></p>
+
+<p>This blog post provides an update on our findings following the discovery of the <a href="https://solidity.ethereum.org/2016/11/01/security-alert-solidity-variables-can-overwritten-storage/">storage corruption bug last week</a>. 
+In summary, the bug was much less severe than we initially thought. The small number of affected contracts we found is either only exploitable by the owner, or the exploit can only cause a disruption in the user interface and not in the actual contract logic. All exploitable contracts/dapps we reviewed can be fixed without having to upgrade the contract itself. Of course, please still check your contracts to be safe.</p>
+
+<p>Following the discovery of the storage corruption bug in the Solidity compiler and the realization that it may have serious effects on already-deployed contracts that cannot be updated, we started analyzing how common the bug is and how exploitable contracts can be addressed.</p>
+
+<p>We focused on contracts with source code published on etherscan because important or popular smart contracts usually have their source code published there in order to gain trust from their users, who can then verify the compilation. Furthermore, if the source code is not available, it is also much harder for an attacker to find a suitable exploit. Finally, contracts that are privately used (and thus do not require publishing their source code) usually check that they are called from a certain address, and thus an attacker has no means to write to their storage.</p>
+
+<p>In order to automate the process of checking all contracts on etherscan, we created a modified version of the Solidity compiler that can automatically detect the conditions for triggering the bug. This technique has already reduced the number of potentially vulnerable contracts to 167. We then manually checked those contracts for potential corruption of storage that would make them vulnerable to attacks.</p>
+
+<p>It turns out that only ten contracts were vulnerable, so we were able to contact most of the contract owners/developers. Seven out of ten of those contracts are only exploitable by the owner in that they are allowed to change certain parameters outside their permitted range, or allowed to unlock a previously locked contract. One contract is exploitable by unprivileged users but have other major flaws in its design. The other two contracts found to be exploitable by unprivileged users either provided no advantages if exploited or only affected the user interface.</p>
+
+<h2 id="why-are-only-so-few-contracts-exploitable">Why are only so few contracts exploitable?</h2>
+
+<p>First, let us define what we mean by “exploitable”:</p>
+
+<p>The storage corruption bug is exploitable if it can be used to modify a variable in storage in a way that would not be possible without the bug, and this modification has consequences for the behaviour and use of the smart contract. For example, we do not consider a contract exploitable in the following situations:</p>
+
+<ul>
+  <li>The same account would be able to overwrite the variable in the same state of the contract by regular means.</li>
+  <li>Overwriting can only happen at construction time (note that we did not check whether overwriting occurred at that time).</li>
+  <li>Overwriting is only triggered in unlikely situations where the contract logic was broken anyway (for example, a 32-bit counter that is incremented once per block, oveflows).</li>
+  <li>Variables can be overwritten that are unused in the smart contract and look non-critical, but may be part of the public interface.</li>
+</ul>
+
+<p><strong>Why is this critical bug only exploitable in so few cases?</strong></p>
+
+<p>It is a combination of the following factors that together multiply and dramatically reduce the probability of exploitability.</p>
+
+<ol>
+  <li>Since small types only provide an advantage in very rare cases, they are seldomly used.</li>
+  <li>Small types must be adjacent to each other in storage – a single large type in between them prevents the bug from being triggered.</li>
+  <li>State variables are often assigned one after the other, which removes the corruption at the second assignment.</li>
+  <li>The combination of “address” and “bool” is most common among the cases that are left, but here, the address variable is often an “owner” that is assigned from <code class="language-plaintext highlighter-rouge">msg.sender</code> and thus not exploitable. Even if the owner can be changed, the flag is often a flag that can be still be set by the owner through other means.</li>
+</ol>
+
+<h2 id="how-to-fix-affected-contracts">How to fix affected contracts</h2>
+
+<p>A large majority of the exploitable contracts are only exploitable by the contract owner, administrator or developer, particularly though a single function that allows the owner to be changed. The exploit allows a further escalation of privileges for the owner. In order to prevent the owner from taking advantage of this exploit, a proxy contract can be installed between the owner and the affected contract. This proxy contract forwards calls from the owner, but disallows calling the exploitable functions. If calling the exploitable functions is still necessary, the proxy contract can prevent malicious data from being forwarded to the contract.</p>
+
+<p>If you have specific questions or concerns regarding your contracts, please contact us on <a href="https://gitter.im/ethereum/solidity">Gitter</a>.</p>
+
+<hr />
+
+<p><strong>A FRIENDLY IMPORTANT NOTE FROM LEGAL</strong></p>
+
+<p>The statements in this post are recommendations to address the storage corruption bug in the Solidity compiler. As you know, we are working in an emergent and evolving technical space. The same elements that make this work exciting – the innovation, the impact, the growing understanding of how contracts function – are the same ones that make it risky. If you choose to implement the recommendations in this post and continue to participate, you should make sure you understand how it impacts your specific contract and you should understand that there are risks involved. By choosing to implement these recommendations, you alone assume the risks of the consequences.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2016/11/01/solidity-0.4.4-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.4 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2016/11/21/solidity-0.4.5-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.5 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

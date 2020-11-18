@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.4.21 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.4.21 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="We again introduced several changes that are scheduled for version 0.5.0 and can be activated using pragma experimental &quot;v0.5.0&quot;;. In this release, this pragma does not generate a warning anymore, so you can (and should) use it in production code. In addition to that, you can now specify which EVM...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2018/03/08/solidity-0.4.21-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2018/03/08/solidity-0.4.21-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.4.21 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="We again introduced several changes that are scheduled for version 0.5.0 and can be activated using pragma experimental &quot;v0.5.0&quot;;. In this release, this pragma does not generate a warning anymore, so you can (and should) use it in production code. In addition to that, you can now specify which EVM...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.4.21 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on March 8, 2018</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>We again introduced several changes that are scheduled for version 0.5.0 and can be activated using <code class="language-plaintext highlighter-rouge">pragma experimental "v0.5.0";</code>. In this release, this pragma does not generate a warning anymore, so you can (and should) use it in production code.</p>
+
+<p>In addition to that, you can now specify which EVM version the contract should be compiled for. Valid values are “homestead”, “tangerineWhistle”, “spuriousDragon”, “byzantium” (the default) and “constantinople”. Depending on this setting, different opcodes will be used in some cases. The only place where this is currently used by default is that all gas is forwarded with calls starting from “tangerineWhistle” (in homestead, some gas has to be retained for the <code class="language-plaintext highlighter-rouge">call</code> opcode itself). Also, the gas estimator reports different costs for the opcodes depending on the version and thus the optimizer might generate different code.</p>
+
+<p>The new “0.5.0” features are explained in more detail below the list of features and bugfixes.</p>
+
+<p><strong>Features:</strong></p>
+
+<ul>
+  <li>Code Generator: Assert that <code class="language-plaintext highlighter-rouge">k != 0</code> for <code class="language-plaintext highlighter-rouge">mulmod(a, b, k)</code> and <code class="language-plaintext highlighter-rouge">addmod(a, b, k)</code> as experimental 0.5.0 feature.</li>
+  <li>Code Generator: Do not retain any gas in calls (except if EVM version is set to homestead).</li>
+  <li>Code Generator: Use <code class="language-plaintext highlighter-rouge">STATICCALL</code> opcode for calling <code class="language-plaintext highlighter-rouge">view</code> and <code class="language-plaintext highlighter-rouge">pure</code> functions as experimenal 0.5.0 feature.</li>
+  <li>General: C99/C++-style scoping rules (instead of JavaScript function scoping) take effect as experimental v0.5.0 feature.</li>
+  <li>General: Improved messaging when error spans multiple lines of a sourcefile</li>
+  <li>General: Support and recommend using <code class="language-plaintext highlighter-rouge">emit EventName();</code> to call events explicitly.</li>
+  <li>Inline Assembly: Enforce strict mode as experimental 0.5.0 feature.</li>
+  <li>Interface: Provide ability to select target EVM version (homestead or byzantium, with byzantium being the default).</li>
+  <li>Standard JSON: Reject badly formatted invalid JSON inputs.</li>
+  <li>Type Checker: Disallow uninitialized storage pointers as experimental 0.5.0 feature.</li>
+  <li>Syntax Analyser: Do not warn about experimental features if they do not concern code generation.</li>
+  <li>Syntax Analyser: Do not warn about <code class="language-plaintext highlighter-rouge">pragma experimental "v0.5.0"</code> and do not set the experimental flag in the bytecode for this.</li>
+  <li>Syntax Checker: Mark <code class="language-plaintext highlighter-rouge">throw</code> as an error as experimental 0.5.0 feature.</li>
+  <li>Syntax Checker: Issue error if no visibility is specified on contract functions as experimental 0.5.0 feature.</li>
+  <li>Syntax Checker: Issue warning when using overloads of <code class="language-plaintext highlighter-rouge">address</code> on contract instances.</li>
+  <li>Type Checker: disallow combining hex numbers and unit denominations as experimental 0.5.0 feature.</li>
+</ul>
+
+<p><strong>Bugfixes:</strong></p>
+
+<ul>
+  <li>Assembly: Raise error on oversized number literals in assembly.</li>
+  <li>JSON-AST: Add “documentation” property to function, event and modifier definition.</li>
+  <li>Resolver: Properly determine shadowing for imports with aliases.</li>
+  <li>Standalone Assembly: Do not ignore input after closing brace of top level block.</li>
+  <li>Standard JSON: Catch errors properly when invalid “sources” are passed.</li>
+  <li>Standard JSON: Ensure that library addresses supplied are of correct length and hex prefixed.</li>
+  <li>Type Checker: Properly detect which array and struct types are unsupported by the old ABI encoder.</li>
+  <li>Type Checker: Properly warn when using <code class="language-plaintext highlighter-rouge">_offset</code> and <code class="language-plaintext highlighter-rouge">_slot</code> for constants in inline assembly.</li>
+  <li>Commandline interface: throw error if option is unknown</li>
+</ul>
+
+<p><strong>Details:</strong></p>
+
+<ul>
+  <li>Code Generator: Use <code class="language-plaintext highlighter-rouge">STATICCALL</code> opcode for calling <code class="language-plaintext highlighter-rouge">view</code> and <code class="language-plaintext highlighter-rouge">pure</code> functions as experimenal 0.5.0 feature.</li>
+</ul>
+
+<p>This ensures that functions marked as <code class="language-plaintext highlighter-rouge">view</code> or <code class="language-plaintext highlighter-rouge">pure</code> (previously <code class="language-plaintext highlighter-rouge">constant</code>) cannot modify the state. This is especially important if you call unknown code via a generic interface and you cannot be sure whether the function modifies the state or not. This way, <code class="language-plaintext highlighter-rouge">view</code> and <code class="language-plaintext highlighter-rouge">pure</code> functions cannot have reentrancy effects.</p>
+
+<ul>
+  <li>General: C99/C++-style scoping rules (instead of JavaScript function scoping) take effect as experimental v0.5.0 feature.</li>
+</ul>
+
+<p>Variables are no longer valid in the whole function and even before they were declared as in JavaScript, but instead only in the <code class="language-plaintext highlighter-rouge">{</code>/<code class="language-plaintext highlighter-rouge">}</code>-enclosed block where they are declared and only starting after their declaration. These are the rules also used by C++ or Java. There is a common exception where variables declared in the initializing part of the <code class="language-plaintext highlighter-rouge">for</code> header are also valid in the rest of the <code class="language-plaintext highlighter-rouge">for</code> loop construct which we also use in Solidity. Currently, the stack slot reserved for the variable still spans the whole function, but this is planned to be improved for the next release.</p>
+
+<ul>
+  <li>General: Support and recommend using <code class="language-plaintext highlighter-rouge">emit EventName();</code> to call events explicitly.</li>
+</ul>
+
+<p>In order to make events stand out with regards to regular function calls, <code class="language-plaintext highlighter-rouge">emit EventName()</code> as opposed to just <code class="language-plaintext highlighter-rouge">EventName()</code> should now be used to “call” events.</p>
+
+<ul>
+  <li>Inline Assembly: Enforce strict mode as experimental 0.5.0 feature.</li>
+</ul>
+
+<p>Strict mode disallows labels, jumps and opcodes that directly modify the stack. It is much safer than non-strict mode, since you do not have to keep track of the current state of the stack. Furthermore, it allows an optimizer stage (to be finished soon) to be created much more easily. Because of that, the optimizer will refuse to work on non-strict assembly.</p>
+
+<ul>
+  <li>Type Checker: Disallow uninitialized storage pointers as experimental 0.5.0 feature.</li>
+</ul>
+
+<p>Storage pointers (e.g. <code class="language-plaintext highlighter-rouge">StructType storage x;</code>) can lead to severe storage corruption if used without being assigned. In 0.5.0 it will be illegal to declare a storage pointer without directly initializing it.</p>
+
+<ul>
+  <li>Syntax Checker: Mark <code class="language-plaintext highlighter-rouge">throw</code> as an error as experimental 0.5.0 feature.</li>
+</ul>
+
+<p>The <code class="language-plaintext highlighter-rouge">throw</code> keyword creates the impression that exceptions are a feature of Solidity, while in reality, it only supports state-reversion that can soon also include error data. Because of that, <code class="language-plaintext highlighter-rouge">throw</code> is deprecated.</p>
+
+<ul>
+  <li>Syntax Checker: Issue error if no visibility is specified on contract functions as experimental 0.5.0 feature.</li>
+</ul>
+
+<p>Since there were bugs where people did not realize that the default visibility of functions is <code class="language-plaintext highlighter-rouge">public</code>, specifying a visibility was made mandatory.</p>
+
+<ul>
+  <li>Syntax Checker: Issue warning when using overloads of <code class="language-plaintext highlighter-rouge">address</code> on contract instances.</li>
+</ul>
+
+<p>Collisions between native members of the <code class="language-plaintext highlighter-rouge">address</code> type and user-defined members of contracts can easily deceive users. Because of that, address members are no longer available in contracts. If you want to use an address member (<code class="language-plaintext highlighter-rouge">transfer</code> is one of them!), then convert it to address: <code class="language-plaintext highlighter-rouge">address(contractInstance).transfer(2 wei)</code>.</p>
+
+<ul>
+  <li>Type Checker: disallow combining hex numbers and unit denominations as experimental 0.5.0 feature.</li>
+</ul>
+
+<p>We could not think of any situation where unit denominations like <code class="language-plaintext highlighter-rouge">seconds</code> or <code class="language-plaintext highlighter-rouge">ether</code> combined with hexadecimal literals would be meaningful (<code class="language-plaintext highlighter-rouge">0x1234 ether</code> or <code class="language-plaintext highlighter-rouge">0x20 minutes</code>) and thus deprecated this combination.</p>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.4.21">here</a>.</p>
+
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2018/02/14/solidity-0.4.20-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.20 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2018/04/17/solidity-0.4.22-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.22 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

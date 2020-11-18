@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.4.17 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.4.17 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="As we are getting closer to the next breaking release, we want to give everyone a heads up by introducing pragma experimental &quot;v0.5.0&quot; which already enables some of the new safety features of the 0.5.0 release. Furthermore, this release finally checks the modifiers view (used to be named constant) and...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2017/09/21/solidity-0.4.17-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2017/09/21/solidity-0.4.17-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.4.17 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="As we are getting closer to the next breaking release, we want to give everyone a heads up by introducing pragma experimental &quot;v0.5.0&quot; which already enables some of the new safety features of the 0.5.0 release. Furthermore, this release finally checks the modifiers view (used to be named constant) and...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.4.17 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on September 21, 2017</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>As we are getting closer to the next breaking release, we want to give everyone a heads up by introducing <code class="language-plaintext highlighter-rouge">pragma experimental "v0.5.0"</code> which already enables some of the new safety features of the 0.5.0 release.</p>
+
+<p>Furthermore, this release finally checks the modifiers <code class="language-plaintext highlighter-rouge">view</code> (used to be named <code class="language-plaintext highlighter-rouge">constant</code>) and <code class="language-plaintext highlighter-rouge">pure</code> on functions. As a rule of thumb, use <code class="language-plaintext highlighter-rouge">view</code> if your function does not modify storage and <code class="language-plaintext highlighter-rouge">pure</code> if it does not even read any state information - but the compiler will also suggest the tightest restriction itself.</p>
+
+<p>We also worked further on the new ABI encoder: Functions can now return structs. Switch it on using <code class="language-plaintext highlighter-rouge">pragma experimental ABIEncoderV2</code>. It should already work, but still generates more expensive code.</p>
+
+<p>Finally, many new warnings were introduced and error messages improved.</p>
+
+<p><strong>Features:</strong></p>
+<ul>
+  <li>Assembly Parser: Support multiple assignment (<code class="language-plaintext highlighter-rouge">x, y := f()</code>).</li>
+  <li>Code Generator: Keep a single copy of encoding functions when using the experimental “ABIEncoderV2”.</li>
+  <li>Code Generator: Partial support for passing <code class="language-plaintext highlighter-rouge">structs</code> as arguments and return parameters (requires <code class="language-plaintext highlighter-rouge">pragma experimental ABIEncoderV2;</code> for now).</li>
+  <li>General: Support <code class="language-plaintext highlighter-rouge">pragma experimental "v0.5.0";</code> to activate upcoming breaking changes.</li>
+  <li>General: Added <code class="language-plaintext highlighter-rouge">.selector</code> member on external function types to retrieve their signature.</li>
+  <li>Optimizer: Add new optimization step to remove unused <code class="language-plaintext highlighter-rouge">JUMPDEST</code>s.</li>
+  <li>Static Analyzer: Warn when using deprecated builtins <code class="language-plaintext highlighter-rouge">sha3</code> and <code class="language-plaintext highlighter-rouge">suicide</code>
+(replaced by <code class="language-plaintext highlighter-rouge">keccak256</code> and <code class="language-plaintext highlighter-rouge">selfdestruct</code>, introduced in 0.4.2 and 0.2.0, respectively).</li>
+  <li>Syntax Checker: Warn if no visibility is specified on contract functions.</li>
+  <li>Type Checker: Display helpful warning for unused function arguments/return parameters.</li>
+  <li>Type Checker: Do not show the same error multiple times for events.</li>
+  <li>Type Checker: Greatly reduce the number of duplicate errors shown for duplicate constructors and functions.</li>
+  <li>Type Checker: Warn on using literals as tight packing parameters in <code class="language-plaintext highlighter-rouge">keccak256</code>, <code class="language-plaintext highlighter-rouge">sha3</code>, <code class="language-plaintext highlighter-rouge">sha256</code> and <code class="language-plaintext highlighter-rouge">ripemd160</code>.</li>
+  <li>Type Checker: Enforce <code class="language-plaintext highlighter-rouge">view</code> and <code class="language-plaintext highlighter-rouge">pure</code>.</li>
+  <li>Type Checker: Enforce <code class="language-plaintext highlighter-rouge">view</code> / <code class="language-plaintext highlighter-rouge">constant</code> with error as experimental 0.5.0 feature.</li>
+  <li>Type Checker: Enforce fallback functions to be <code class="language-plaintext highlighter-rouge">external</code> as experimental 0.5.0 feature.</li>
+</ul>
+
+<p><strong>Bugfixes:</strong></p>
+<ul>
+  <li>ABI JSON: Include all overloaded events.</li>
+  <li>Parser: Crash fix related to parseTypeName.</li>
+  <li>Type Checker: Allow constant byte arrays.</li>
+</ul>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.4.17">here</a>.</p>
+
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2017/08/24/solidity-0.4.16-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.16 Release Announcement">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2017/10/18/solidity-0.4.18-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.18 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

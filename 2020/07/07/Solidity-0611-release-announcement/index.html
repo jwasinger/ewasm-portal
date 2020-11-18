@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.6.11 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.6.11 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="Solidity v0.6.11 adds inheritance to NatSpec comments, improves debugging data output and fixes some minor issues with opening up calldata for non-external functions. Notable New Features NatSpec Inheritance and on Events NatSpec comments are a way to describe the behaviour of a function to end-users. It also allows to provide...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/07/07/Solidity-0611-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/07/07/Solidity-0611-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.6.11 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="Solidity v0.6.11 adds inheritance to NatSpec comments, improves debugging data output and fixes some minor issues with opening up calldata for non-external functions. Notable New Features NatSpec Inheritance and on Events NatSpec comments are a way to describe the behaviour of a function to end-users. It also allows to provide...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.6.11 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on July 7, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><a href="https://github.com/ethereum/solidity/releases/tag/v0.6.11">Solidity v0.6.11</a> adds inheritance to NatSpec comments,
+improves debugging data output and fixes some minor issues with opening up <code class="language-plaintext highlighter-rouge">calldata</code> for non-external functions.</p>
+
+<h2 id="notable-new-features">Notable New Features</h2>
+
+<h3 id="natspec-inheritance-and-on-events">NatSpec Inheritance and on Events</h3>
+
+<p>NatSpec comments are a way to describe the behaviour of a function to end-users. It also allows
+to provide more detailed information to developers.</p>
+
+<p>One regular use-case is that you document the behaviour of an interface and then implement
+the interface in a derived contract. Previously, you had to repeat the documentation in the derived
+contract. This is now obsolete: The compiler will automatically inherit the documentation of
+the base function if the derived function does not provide any NatSpec tag.</p>
+
+<p>If you provide any of the tags (<code class="language-plaintext highlighter-rouge">@param</code>, <code class="language-plaintext highlighter-rouge">@dev</code>, …), then nothing will be inherited.
+The next release will provide a feature to explicitly inherit from a certain base also in that case,
+so stay tuned!</p>
+
+<p>Furhermore, NatSpec is now supported on events.</p>
+
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// SPDX-License-Identifier: MIT
+</span><span class="k">pragma</span> <span class="n">solidity</span> <span class="o">^</span><span class="mf">0.6</span><span class="p">.</span><span class="mi">11</span><span class="p">;</span>
+<span class="k">interface</span> <span class="n">Gathering</span> <span class="p">{</span>
+  <span class="c1">/// The address `participant` just registered for the gathering.
+</span>  <span class="k">event</span> <span class="n">Registered</span><span class="p">(</span><span class="kt">address</span> <span class="n">participant</span><span class="p">);</span>
+
+  <span class="c1">/// Registers `msg.sender` to take part in the gathering.
+</span>  <span class="k">function</span> <span class="n">register</span><span class="p">()</span> <span class="k">external</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">contract</span> <span class="n">MyGathering</span> <span class="k">is</span> <span class="n">Gathering</span> <span class="p">{</span>
+  <span class="k">mapping</span><span class="p">(</span><span class="kt">address</span> <span class="o">=&gt;</span> <span class="kt">bool</span><span class="p">)</span> <span class="k">public</span> <span class="n">participants</span><span class="p">;</span>
+
+  <span class="k">function</span> <span class="n">register</span><span class="p">()</span> <span class="k">public</span> <span class="k">override</span> <span class="p">{</span>
+    <span class="n">participants</span><span class="p">[</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">]</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">emit</span> <span class="n">Registered</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">sender</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The derived contract <code class="language-plaintext highlighter-rouge">MyGathering</code> in the example code above will produce the following userdoc:</p>
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+    </span><span class="nl">"events"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"Registered(address)"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"notice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The address `participant` just registered for the gathering."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"kind"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"methods"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"register()"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"notice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Registers `msg.sender` to take part in the gathering."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h3 id="unit-denomination-gwei">Unit Denomination <code class="language-plaintext highlighter-rouge">gwei</code></h3>
+
+<p>You can now use <code class="language-plaintext highlighter-rouge">gwei</code> as a unit denomination alongside <code class="language-plaintext highlighter-rouge">wei</code>, <code class="language-plaintext highlighter-rouge">szabo</code>, <code class="language-plaintext highlighter-rouge">finney</code> and <code class="language-plaintext highlighter-rouge">ether</code>:</p>
+<div class="language-solidity highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">reqire</span><span class="p">(</span><span class="n">msg</span><span class="p">.</span><span class="n">value</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="n">gwei</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="full-changelog">Full Changelog</h2>
+
+<h3 id="language-features">Language Features:</h3>
+<ul>
+  <li>General: Add unit denomination <code class="language-plaintext highlighter-rouge">gwei</code></li>
+  <li>Yul: Support <code class="language-plaintext highlighter-rouge">linkersymbol</code> builtin in standalone assembly mode to refer to library addresses.</li>
+  <li>Yul: Support using string literals exceeding 32 bytes as literal arguments for builtins.</li>
+</ul>
+
+<h3 id="compiler-features">Compiler Features:</h3>
+<ul>
+  <li>NatSpec: Add fields <code class="language-plaintext highlighter-rouge">kind</code> and <code class="language-plaintext highlighter-rouge">version</code> to the JSON output.</li>
+  <li>NatSpec: Inherit tags from unique base functions if derived function does not provide any.</li>
+  <li>Commandline Interface: Prevent some incompatible commandline options from being used together.</li>
+  <li>NatSpec: Support NatSpec comments on events.</li>
+  <li>Yul Optimizer: Store knowledge about storage / memory after <code class="language-plaintext highlighter-rouge">a := sload(x)</code> / <code class="language-plaintext highlighter-rouge">a := mload(x)</code>.</li>
+  <li>SMTChecker: Support external calls to unknown code.</li>
+  <li>Source Maps: Also tag jumps into and out of Yul functions as jumps into and out of functions.</li>
+</ul>
+
+<h3 id="bugfixes">Bugfixes:</h3>
+<ul>
+  <li>NatSpec: Do not consider <code class="language-plaintext highlighter-rouge">////</code> and <code class="language-plaintext highlighter-rouge">/***</code> as NatSpec comments.</li>
+  <li>Type Checker: Disallow constructor parameters with <code class="language-plaintext highlighter-rouge">calldata</code> data location.</li>
+  <li>Type Checker: Do not disallow assigning to calldata variables.</li>
+  <li>Type Checker: Fix internal error related to <code class="language-plaintext highlighter-rouge">using for</code> applied to non-libraries.</li>
+  <li>Wasm backend: Fix code generation for for-loops with pre statements.</li>
+  <li>Wasm backend: Properly support both <code class="language-plaintext highlighter-rouge">i32.drop</code> and <code class="language-plaintext highlighter-rouge">i64.drop</code>, and remove <code class="language-plaintext highlighter-rouge">drop</code>.</li>
+  <li>Yul: Disallow the same variable to occur multiple times on the left-hand side of an assignment.</li>
+  <li>Yul: Fix source location of variable multi-assignment.</li>
+</ul>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.11">here</a>.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/06/25/sourcify-faq/" data-toggle="tooltip" data-placement="top" title="All you need to know about Sourcify">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/07/08/solidity-turns-5/" data-toggle="tooltip" data-placement="top" title="Solidity v0.1.0 turns 5! A walk down memory lane...">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

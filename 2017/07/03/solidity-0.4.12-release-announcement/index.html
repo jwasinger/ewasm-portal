@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.4.12 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.4.12 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="This release introduces the AST export, solidifies inline assembly, introduces some more warnings and fixes several bugs. Manual jumps in assembly are deprecated in favour of the structured constructs switch, for and function calls also to provide better portability in the future. Features: Assembly: Add CREATE2 (EIP86), STATICCALL (EIP214), RETURNDATASIZE...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2017/07/03/solidity-0.4.12-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2017/07/03/solidity-0.4.12-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.4.12 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="This release introduces the AST export, solidifies inline assembly, introduces some more warnings and fixes several bugs. Manual jumps in assembly are deprecated in favour of the structured constructs switch, for and function calls also to provide better portability in the future. Features: Assembly: Add CREATE2 (EIP86), STATICCALL (EIP214), RETURNDATASIZE...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.4.12 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on July 3, 2017</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>This release introduces the AST export, solidifies inline assembly, introduces some more warnings and fixes several bugs.</p>
+
+<p>Manual jumps in assembly are deprecated in favour of the structured constructs <code class="language-plaintext highlighter-rouge">switch</code>, <code class="language-plaintext highlighter-rouge">for</code> and function calls also to provide better portability in the future.</p>
+
+<p><strong>Features:</strong></p>
+<ul>
+  <li>Assembly: Add <code class="language-plaintext highlighter-rouge">CREATE2</code> (EIP86), <code class="language-plaintext highlighter-rouge">STATICCALL</code> (EIP214), <code class="language-plaintext highlighter-rouge">RETURNDATASIZE</code> and <code class="language-plaintext highlighter-rouge">RETURNDATACOPY</code> (EIP211) instructions.</li>
+  <li>Assembly: Display auxiliary data in the assembly output.</li>
+  <li>Assembly: Renamed <code class="language-plaintext highlighter-rouge">SHA3</code> to <code class="language-plaintext highlighter-rouge">KECCAK256</code>.</li>
+  <li>AST: export all attributes to JSON format.</li>
+  <li>C API (<code class="language-plaintext highlighter-rouge">jsonCompiler</code>): Use the Standard JSON I/O internally.</li>
+  <li>Code Generator: Added the Whiskers template system.</li>
+  <li>Inline Assembly: <code class="language-plaintext highlighter-rouge">for</code> and <code class="language-plaintext highlighter-rouge">switch</code> statements.</li>
+  <li>Inline Assembly: Function definitions and function calls.</li>
+  <li>Inline Assembly: Introduce <code class="language-plaintext highlighter-rouge">keccak256</code> as an opcode. <code class="language-plaintext highlighter-rouge">sha3</code> is still a valid alias.</li>
+  <li>Inline Assembly: Present proper error message when not supplying enough arguments to a functional
+instruction.</li>
+  <li>Inline Assembly: Warn when instructions shadow Solidity variables.</li>
+  <li>Inline Assembly: Warn when using <code class="language-plaintext highlighter-rouge">jump</code>s.</li>
+  <li>Remove obsolete Why3 output.</li>
+  <li>Type Checker: Enforce strict UTF-8 validation.</li>
+  <li>Type Checker: Warn about copies in storage that might overwrite unexpectedly.</li>
+  <li>Type Checker: Warn about type inference from literal numbers.</li>
+  <li>Static Analyzer: Warn about deprecation of <code class="language-plaintext highlighter-rouge">callcode</code>.</li>
+</ul>
+
+<p><strong>Bugfixes:</strong></p>
+<ul>
+  <li>Assembly: mark <code class="language-plaintext highlighter-rouge">MLOAD</code> to have side effects in the optimiser.</li>
+  <li>Code Generator: Fix ABI encoding of empty literal string.</li>
+  <li>Code Generator: Fix negative stack size checks.</li>
+  <li>Code generator: Use <code class="language-plaintext highlighter-rouge">REVERT</code> instead of <code class="language-plaintext highlighter-rouge">INVALID</code> for generated input validation routines.</li>
+  <li>Inline Assembly: Enforce function arguments when parsing functional instructions.</li>
+  <li>Optimizer: Disallow optimizations involving <code class="language-plaintext highlighter-rouge">MLOAD</code> because it changes <code class="language-plaintext highlighter-rouge">MSIZE</code>.</li>
+  <li>Static Analyzer: Unused variable warnings no longer issued for variables used inside inline assembly.</li>
+  <li>Type Checker: Fix address literals not being treated as compile-time constants.</li>
+  <li>Type Checker: Fixed crash concerning non-callable types.</li>
+  <li>Type Checker: Fixed segfault with constant function parameters</li>
+  <li>Type Checker: Disallow comparisons between mapping and non-internal function types.</li>
+  <li>Type Checker: Disallow invoking the same modifier multiple times.</li>
+  <li>Type Checker: Do not treat strings that look like addresses as addresses.</li>
+  <li>Type Checker: Support valid, but incorrectly rejected UTF-8 sequences.</li>
+</ul>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.4.12">here</a>.</p>
+
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2017/05/03/solidity-optimizer-bug/" data-toggle="tooltip" data-placement="top" title="Solidity Optimizer Bug">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2017/07/06/solidity-0.4.13-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.13 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

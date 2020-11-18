@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Sourcify: Towards Safer Contract Interaction for Humans | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Sourcify: Towards Safer Contract Interaction for Humans" />
+  
+
+   
+  <meta property="og:description" content="tl;dr: Building sensible blockchain applications for humans is hard. You can enhance the user experience of your dapp today by leveraging the power of open source. Increase awareness and give more transparency on what users are actually doing when interacting with your code on the blockchain, i.e. when signing a...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/06/02/Sourcify-Towards-Safer-Contract-Interaction-for-Humans/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/06/02/Sourcify-Towards-Safer-Contract-Interaction-for-Humans/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Sourcify: Towards Safer Contract Interaction for Humans" />
+  
+
+  
+  <meta name="twitter:description" content="tl;dr: Building sensible blockchain applications for humans is hard. You can enhance the user experience of your dapp today by leveraging the power of open source. Increase awareness and give more transparency on what users are actually doing when interacting with your code on the blockchain, i.e. when signing a...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Sourcify: Towards Safer Contract Interaction for Humans</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Edi Sinovčić, Franziska Heintel on June 2, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/announcements/"
+                    class="category-announcements">
+                    Announcements
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><strong>tl;dr</strong>: Building sensible blockchain applications for humans is <strong>hard</strong>. You can enhance the user experience of 
+your dapp today by leveraging the power of open source. Increase awareness and give more transparency on what users 
+are <em>actually</em> doing when interacting with your code on the blockchain, i.e. when signing a transaction, by publishing 
+the source code to this decentralized repository and using metadata files, which translate “random” hex strings into 
+human-readable language. Sourcify is a tool to help you do exactly that. If you want to upload your source code, either visit <a href="https://verification.komputing.org/">verification.komputing.org</a>, the <a href="https://github.com/ethereum/sourcify">Sourcify Github repo</a> or use the Sourcify 
+plugin in Remix. And, to learn how Sourcify works and why it matters, simply keep on reading.</p>
+
+<p>You might already know Sourcify under the name “Source-Verify”/ ”Source-Verifier” - don’t despair, we just decided to give 
+it a nicer name!</p>
+
+<h2 id="yolo-signing---one-of-todays-everyday-problems-in-ethereum-ux-">YOLO Signing - One of Today’s Everyday Problems in Ethereum UX 🙈📝🧨</h2>
+
+<p>Think about the following: How many developers of the dapps you are using do you know personally?</p>
+
+<p>Let’s imagine you want to interact with a dapp using MetaMask and it shows you this dialogue:</p>
+
+<p><img src="/img/2020/05/MetaMask_Yolosign.png" alt="Yolo Signing" /></p>
+
+<p><em>You Only Live Once (YOLO)  Signing - confirm at your peril</em></p>
+
+<p>What does all that hex data mean? You basically have no idea what you are agreeing to  - but you only live once, right? 
+Do you reject or confirm? If you go ahead and sign, you are <strong>YOLO signing</strong>. YOLO signing is bad because even if you only 
+live once, you can probably regret some stuff forever! ;)</p>
+
+<p>By confirming, you blindly trust the developers of this dapp that it will do what they promised. And while it’s great to 
+have faith in humanity, it’s even greater to have the option to verify what is happening and take an informed decision.</p>
+
+<h2 id="source-verification--natspec-to-the-rescue">Source Verification &amp; NatSpec to the Rescue</h2>
+
+<p>To prevent your users from having to blindly trust you and YOLO sign, you, as a dapp developer, can verify your code.</p>
+
+<p>By verifying and uploading your code, you allow any other developer to recompile the source code and check it for themselves.</p>
+
+<p>Properly “verifying” your code involves two steps:</p>
+<ol>
+  <li>Commenting the code using <a href="https://solidity.readthedocs.io/en/latest/natspec-format.html">NatSpec</a>. NatSpec is the 
+Ethereum Natural Language Specification Format which describes functions, return values etc. in a friendly way.</li>
+  <li>Publishing the dapp’s source code and its metadata to a decentralized network.</li>
+</ol>
+
+<h2 id="meet-sourcify-a-decentralized-automated-contract-verifying-service-️">Meet Sourcify, a decentralized automated contract verifying service 📝🔍✔️</h2>
+
+<p>Sourcify tries to make the process of source verification (step 2 in the list above) easy and transparent. There are different ways 
+how you can make use of the tool.</p>
+
+<p>You can either…</p>
+<ul>
+  <li>Use the interface hosted on <a href="https://verification.komputing.org/">verification.komputing.org</a></li>
+  <li>Use <a href="https://remix.ethereum.org/">Remix</a> plugins (we’ll show you a play by play in one of the following posts!)</li>
+  <li>Publish each source code file and the metadata file to <a href="https://docs.ipfs.io/concepts/what-is-ipfs/">IPFS</a> manually 
+(Sourcify will then pick it up automatically around the time of deployment)</li>
+  <li><a href="https://github.com/ethereum/sourcify">Run</a> Sourcify yourself</li>
+</ul>
+
+<h2 id="how-does-sourcify-work-under-the-hood-">How does Sourcify work under the hood? 📖</h2>
+
+<p>Sourcify is a project on the Ethereum blockchain that:</p>
+<ul>
+  <li>Listens for the deployment of smart contracts.</li>
+  <li>Checks to see if their metadata and source code is published on IPFS or Swarm.</li>
+  <li>Recompiles the code.</li>
+  <li>Checks that it is the same as the deployed code.</li>
+  <li>Permanently stores the source code, ABI and other metadata on IPFS.</li>
+</ul>
+
+<p><img src="/img/2020/05/Sourcify_Flowchart.png" alt="Sourcify Flowchart" /></p>
+
+<p><em>Sourcify Verification Flow</em></p>
+
+<p>Sourcify has a monitoring service that listens to new blocks which are mined on an Ethereum blockchain. Currently it is 
+monitoring the Ethereum mainnet and the Rinkeby and Goerli testnets.</p>
+
+<p>It takes the transactions in the blocks, derives their bytecode metadata and tries to find links in the data that go to 
+either IPFS or Swarm for the source contracts and metadata files.</p>
+
+<p>Subsequently, it tries to fetch the files. If that is successful, the retrieved files are sent to the verifier which 
+attempts to recompile the code and checks that it is the same as the deployed code. If everything went well and recompiled 
+metadata and code are a match, all of it gets indexed, pinned and stored (in a public decentralized system, currently IPFS).</p>
+
+<p>And if you’d like to verify the verifier, no problem: Simply take the files from IPFS and recompile them yourself - 
+the necessary compiler options are also stored in the system.</p>
+
+<h2 id="verify-all-the-sources---are-we-there-yet-">Verify all the Sources - Are we there yet? ⛅</h2>
+
+<p><strong>The bad news:</strong> The road towards a more secure, more aware, educated and trustless UX for Ethereum dapps is certainly 
+still long.</p>
+
+<p><strong>The good news:</strong> There are many things we can do <em>right now</em> to contribute towards it!</p>
+
+<p>What dapp developers can do:</p>
+<ul>
+  <li>Use NatSpec to comment your code</li>
+  <li>Upload your source code using Sourcify</li>
+</ul>
+
+<p>What the broader Ethereum community can do:</p>
+<ul>
+  <li>Expand NatSpec</li>
+  <li>Implement NatSpec into wallets</li>
+  <li>Give wallets confidence in the source of the NatSpec (e.g. via Sourcify)</li>
+  <li>Implement wallet support for Sourcify</li>
+  <li>Support dapp devs to use NatSpec, metadata, Sourcify by extending the developer tooling around it (e.g. help with 
+auto-publishing tools)</li>
+</ul>
+
+<p>With <a href="https://github.com/ethereum/solidity/releases/tag/v0.6.8">Version 0.6.8</a>, Solidity added a recommendation to use 
+SPDX license identifiers for all source files, which is also stored in the contract metadata. This change helps tools like 
+Sourcify as well as deployment tools by enabling them to check for open source licenses before uploading the code.</p>
+
+<p>We hope you enjoyed this first high level introduction into why source verification matters and how it could work. Feel 
+free to reach out to us with any question you might have and stay tuned for more content to follow soon.</p>
+
+<hr />
+<p>Follow Sourcify on <a href="https://twitter.com/SourcifyEth">Twitter</a>.</p>
+
+<p>Chat with us on <a href="https://gitter.im/ethereum/source-verify">Gitter</a>.</p>
+
+<p>Check out the Sourcify code on <a href="https://github.com/ethereum/sourcify">Github</a>.</p>
+
+<p>Browse the verified contracts <a href="https://contractrepo.komputing.org/">here</a>.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/05/26/array-slices/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.x features: Array Slices">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/06/05/Solidity-069-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.6.9 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

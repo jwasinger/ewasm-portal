@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.7.2 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.7.2 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="Solidity v0.7.2 fixes a bug in free functions, which had been introduced with v0.7.1, and adds compiler-generated utility file export. Furthermore, it comes with a considerably broadened language support of the SMTChecker. Important Bugfixes Free Function Overloading Checks Free functions were introduced in the previous release (Solidity v0.7.1). It turned...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2020/09/28/solidity-0.7.2-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2020/09/28/solidity-0.7.2-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.7.2 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="Solidity v0.7.2 fixes a bug in free functions, which had been introduced with v0.7.1, and adds compiler-generated utility file export. Furthermore, it comes with a considerably broadened language support of the SMTChecker. Important Bugfixes Free Function Overloading Checks Free functions were introduced in the previous release (Solidity v0.7.1). It turned...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.7.2 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on September 28, 2020</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><a href="https://github.com/ethereum/solidity/releases/tag/v0.7.2">Solidity v0.7.2</a> fixes a bug in free functions, which had been introduced with v0.7.1, and adds compiler-generated utility file export. Furthermore, it comes with a considerably broadened language support of the SMTChecker.</p>
+
+<h2 id="important-bugfixes">Important Bugfixes</h2>
+
+<h3 id="free-function-overloading-checks">Free Function Overloading Checks</h3>
+
+<p>Free functions were introduced in the previous release (<a href="https://github.com/ethereum/solidity/releases/tag/v0.7.1">Solidity v0.7.1</a>). It turned out that it was possible
+to define a function with the same name multiple times, even containing the same parameter types.
+Allowing two functions with the same name, but different parameter types is called “overloading”
+and is useful when essentially the same functionality is implemented for different types.
+However, what should not be possible is allowing two functions with the same name and same parameter types.</p>
+
+<p>In v0.7.1, the compiler would silently generate code that called the first definition.</p>
+
+<p>To fix the bug, the missing check has been added.</p>
+
+<h2 id="notable-new-features">Notable New Features</h2>
+
+<h3 id="utility-file-export">Utility File Export</h3>
+
+<p>For routines like the ABI encoder and decoder, the compiler generates additional code that
+cannot directly be attributed to specific locations in the source code. For a while now,
+these routines are generated as Yul code that is supposed to be readable and auditable.
+Solidity 0.7.2 provides the ability to output the generated code, both in its optimized and
+in its non-optimized form.</p>
+
+<p>The generated files are available in standard-json under the keys
+<code class="language-plaintext highlighter-rouge">evm.bytecode.generatedSources</code> and <code class="language-plaintext highlighter-rouge">evm.deployedBytecode.generatedSources</code>, respectively.
+For now, there is a single file that is always called <code class="language-plaintext highlighter-rouge">#utility.yul</code>, but this can change in the future.</p>
+
+<h2 id="full-changelog">Full Changelog</h2>
+
+<h3 id="important-bugfixes-1">Important Bugfixes</h3>
+<ul>
+  <li>Type Checker: Disallow two or more free functions with identical name (potentially imported and aliased) and parameter types.</li>
+</ul>
+
+<h3 id="compiler-features">Compiler Features</h3>
+<ul>
+  <li>Export compiler-generated utility sources via standard-json or combined-json.</li>
+  <li>Optimizer: Optimize <code class="language-plaintext highlighter-rouge">exp</code> when base is 0, 1 or 2.</li>
+  <li>SMTChecker: Keep knowledge about string literals, even through assignment, and thus support the <code class="language-plaintext highlighter-rouge">.length</code> property properly.</li>
+  <li>SMTChecker: Support <code class="language-plaintext highlighter-rouge">address</code> type conversion with literals, e.g. <code class="language-plaintext highlighter-rouge">address(0)</code>.</li>
+  <li>SMTChecker: Support <code class="language-plaintext highlighter-rouge">revert()</code>.</li>
+  <li>SMTChecker: Support <code class="language-plaintext highlighter-rouge">type(T).min</code>, <code class="language-plaintext highlighter-rouge">type(T).max</code>, and <code class="language-plaintext highlighter-rouge">type(I).interfaceId</code>.</li>
+  <li>SMTChecker: Support compound and, or, and xor operators.</li>
+  <li>SMTChecker: Support events and low-level logs.</li>
+  <li>SMTChecker: Support fixed bytes index access.</li>
+  <li>SMTChecker: Support memory allocation, e.g. <code class="language-plaintext highlighter-rouge">new bytes(123)</code>.</li>
+  <li>SMTChecker: Support shifts.</li>
+  <li>SMTChecker: Support structs.</li>
+  <li>Type Checker: Explain why oversized hex string literals can not be explicitly converted to a shorter <code class="language-plaintext highlighter-rouge">bytesNN</code> type.</li>
+  <li>Type Checker: More detailed error messages why implicit conversions fail.</li>
+  <li>Type Checker: Report position of first invalid UTF-8 sequence in <code class="language-plaintext highlighter-rouge">unicode""</code> literals.</li>
+  <li>Yul IR Generator: Report source locations related to unimplemented features.</li>
+  <li>Yul Optimizer: Inline into functions further down in the call graph first.</li>
+  <li>Yul Optimizer: Prune unused parameters in functions.</li>
+  <li>Yul Optimizer: Try to simplify function names.</li>
+</ul>
+
+<h3 id="bugfixes">Bugfixes</h3>
+<ul>
+  <li>Code generator: Fix internal error on stripping dynamic types from return parameters on EVM versions without <code class="language-plaintext highlighter-rouge">RETURNDATACOPY</code>.</li>
+  <li>Type Checker: Add missing check against nested dynamic arrays in ABI encoding functions when ABIEncoderV2 is disabled.</li>
+  <li>Type Checker: Correct the error message for invalid named parameter in a call to refer to the right argument.</li>
+  <li>Type Checker: Correct the warning for homonymous, but not shadowing declarations.</li>
+  <li>Type Checker: Disallow <code class="language-plaintext highlighter-rouge">virtual</code> for modifiers in libraries.</li>
+  <li>Type system: Fix internal error on implicit conversion of contract instance to the type of its <code class="language-plaintext highlighter-rouge">super</code>.</li>
+  <li>Type system: Fix internal error on implicit conversion of string literal to a calldata string.</li>
+  <li>Type system: Fix named parameters in overloaded function and event calls being matched incorrectly if the order differs from the declaration.</li>
+  <li>ViewPureChecker: Prevent visibility check on constructors.</li>
+</ul>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.7.2">here</a>.</p>
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2020/09/21/solidity-underhanded-contest/" data-toggle="tooltip" data-placement="top" title="The Solidity Underhanded Contest is back!">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2020/10/07/solidity-0.7.3-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.7.3 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>

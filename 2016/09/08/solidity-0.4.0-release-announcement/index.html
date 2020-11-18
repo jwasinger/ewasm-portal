@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <title>Solidity 0.4.0 Release Announcement | Ewasm</title>
+
+  <meta name="author" content="Ewasm Team" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Ewasm - Collection of articles about the Solidity language and compiler" href="/ewasm-portal/feed.xml" />
+
+  
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/main.css" />
+    
+      <link rel="stylesheet" href="/ewasm-portal/css/search.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Solidity 0.4.0 Release Announcement" />
+  
+
+   
+  <meta property="og:description" content="Note: Version 0.4.0 is unable to compile libraries. Please upgrade to 0.4.1. This release deliberately breaks backwards compatibility mostly to enforce some safety features. The most important change is that you have to explicitly specify if functions can receive ether via the payable modifier. Furthermore, more situations cause exceptions to...">
+  
+
+
+  <meta property="og:type" content="website" />
+
+  
+  <meta property="og:url" content="https://ewasm.ethereum.org/2016/09/08/solidity-0.4.0-release-announcement/" />
+  <link rel="canonical" href="https://ewasm.ethereum.org/2016/09/08/solidity-0.4.0-release-announcement/" />
+  
+
+  
+  <meta property="og:image" content="/img/ewasm2d.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Solidity 0.4.0 Release Announcement" />
+  
+
+  
+  <meta name="twitter:description" content="Note: Version 0.4.0 is unable to compile libraries. Please upgrade to 0.4.1. This release deliberately breaks backwards compatibility mostly to enforce some safety features. The most important change is that you have to explicitly specify if functions can receive ether via the payable modifier. Furthermore, more situations cause exceptions to...">
+  
+
+  
+  <meta name="twitter:image" content="https://ewasm.ethereum.org/favicon.png" />
+  
+
+  
+
+  <link rel="shortcut icon" type="image/png" href="/favicon.png"/>
+
+</head>
+
+
+  <body>
+
+    
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+        <a class="navbar-brand" href="https://ewasm.ethereum.org">Ewasm</a>
+      
+    </div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+      
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/blog/">Blog</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/projects/">Projects</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/publications/">Publications</a>
+
+          </li>
+        
+        
+        
+          <li>
+            
+
+
+
+
+
+
+<a href="/ewasm-portal/faq/">FAQ</a>
+
+          </li>
+        
+        
+      </ul>
+    </div>
+
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+  
+
+  <header class="header-section ">
+  
+
+  <div class="intro-header no-img">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+          <div class="post-heading">
+            <h1>Solidity 0.4.0 Release Announcement</h1>
+            
+        
+            
+              <span class="post-meta">Posted by Solidity Team on September 8, 2016</span>
+              <ul class="post-category-list">
+                
+                <li>
+                  <a
+                    href="/ewasm-portal/category/releases/"
+                    class="category-releases">
+                    Releases
+                  </a>
+                </li>
+                
+              </ul>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </header>
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><strong>Note:</strong> Version 0.4.0 is unable to compile libraries. Please upgrade to 0.4.1.</p>
+
+<p>This release deliberately breaks backwards compatibility mostly to enforce some safety features. The most important change is that you have to explicitly specify if functions can receive ether via the <code class="language-plaintext highlighter-rouge">payable</code> modifier. Furthermore, more situations cause exceptions to be thrown.</p>
+
+<p><strong>Minimal changes to be made for upgrade:</strong></p>
+<ul>
+  <li>Add <code class="language-plaintext highlighter-rouge">payable</code> to all functions that want to receive Ether (including the constructor and the fallback function).</li>
+  <li>Change <code class="language-plaintext highlighter-rouge">_</code> to <code class="language-plaintext highlighter-rouge">_;</code> in modifiers.</li>
+  <li>Add version pragma to each file: <code class="language-plaintext highlighter-rouge">pragma solidity ^0.4.0;</code></li>
+</ul>
+
+<p><strong>Breaking Changes:</strong></p>
+<ul>
+  <li>Source files have to specify the compiler version they are compatible with using e.g. <code class="language-plaintext highlighter-rouge">pragma solidity ^0.4.0;</code> or
+<code class="language-plaintext highlighter-rouge">pragma solidity &gt;=0.4.0 &lt;0.4.8;</code></li>
+  <li>Functions that want to receive Ether have to specify the
+new <code class="language-plaintext highlighter-rouge">payable</code> modifier (otherwise they throw).</li>
+  <li>Contracts that want to receive Ether with a plain “send”
+have to implement a fallback function with the <code class="language-plaintext highlighter-rouge">payable</code>
+modifier. Contracts now throw if no payable fallback
+function is defined and no function matches the signature.</li>
+  <li>Failing contract creation through “new” throws.</li>
+  <li>Division / modulus by zero throws.</li>
+  <li>Function call throws if target contract does not have code</li>
+  <li>Modifiers are required to contain <code class="language-plaintext highlighter-rouge">_</code> (use <code class="language-plaintext highlighter-rouge">if (false) _</code> as a workaround if needed).</li>
+  <li>Modifiers: return does not skip part in modifier after <code class="language-plaintext highlighter-rouge">_</code>.</li>
+  <li>Placeholder statement <code class="language-plaintext highlighter-rouge">_</code> in modifier now requires explicit <code class="language-plaintext highlighter-rouge">;</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">ecrecover</code> now returns zero if the input is malformed (it previously returned garbage).</li>
+  <li>The <code class="language-plaintext highlighter-rouge">constant</code> keyword cannot be used for constructors or the fallback function.</li>
+  <li>Removed <code class="language-plaintext highlighter-rouge">interface</code> (Solidity interface) output option</li>
+  <li>JSON AST: General cleanup, renamed many nodes to match their C++ names.</li>
+  <li>JSON output: <code class="language-plaintext highlighter-rouge">srcmap-runtime</code> renamed to <code class="language-plaintext highlighter-rouge">srcmapRuntime</code>.</li>
+  <li>Moved (and reworked) standard library contracts from inside the compiler to github.com/ethereum/solidity/std
+(<code class="language-plaintext highlighter-rouge">import "std";</code> or <code class="language-plaintext highlighter-rouge">import owned;</code> do not work anymore).</li>
+  <li>Confusing and undocumented keyword <code class="language-plaintext highlighter-rouge">after</code> was removed.</li>
+  <li>New reserved words: <code class="language-plaintext highlighter-rouge">abstract</code>, <code class="language-plaintext highlighter-rouge">hex</code>, <code class="language-plaintext highlighter-rouge">interface</code>, <code class="language-plaintext highlighter-rouge">payable</code>, <code class="language-plaintext highlighter-rouge">pure</code>, <code class="language-plaintext highlighter-rouge">static</code>, <code class="language-plaintext highlighter-rouge">view</code>.</li>
+</ul>
+
+<p><strong>Features:</strong></p>
+<ul>
+  <li>Hexadecimal string literals: <code class="language-plaintext highlighter-rouge">hex"ab1248fe"</code></li>
+  <li>Internal: Inline assembly usable by the code generator.</li>
+  <li>Commandline interface: Using <code class="language-plaintext highlighter-rouge">-</code> as filename allows reading from stdin.</li>
+  <li>Interface JSON: Fallback function is now part of the ABI.</li>
+  <li>Interface: Version string now <em>semver</em> compatible.</li>
+  <li>Code generator: Do not provide “new account gas” if we know the called account exists.</li>
+</ul>
+
+<p><strong>Bugfixes:</strong></p>
+<ul>
+  <li>JSON AST: Nodes were added at wrong parent</li>
+  <li>Why3 translator: Crash fix for exponentiation</li>
+  <li>Commandline Interface: linking libraries with underscores in their name.</li>
+  <li>Type Checker: Fallback function cannot return data anymore.</li>
+  <li>Code Generator: Fix crash when <code class="language-plaintext highlighter-rouge">sha3()</code> was used on unsupported types.</li>
+  <li>Code Generator: Manually set gas stipend for <code class="language-plaintext highlighter-rouge">.send(0)</code>.</li>
+</ul>
+
+<p>Lots of changes to the documentation mainly by voluntary external contributors.</p>
+
+<p>A big thank you to all contributors who helped make this release possible!</p>
+
+<p>Download the new version of Solidity <a href="https://github.com/ethereum/solidity/releases/tag/v0.4.0">here</a>.</p>
+
+
+      </article>
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/ewasm-portal/2016/09/01/formal-methods-roadmap/" data-toggle="tooltip" data-placement="top" title="Dev Update: Formal Methods">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/ewasm-portal/2016/09/09/solidity-0.4.1-release-announcement/" data-toggle="tooltip" data-placement="top" title="Solidity 0.4.1 Release Announcement">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/ewasm-portal/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:solidity@ethereum.org" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/ewasm" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://gitter.im/ethereum/ewasm" title="Gitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-comments fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Gitter</span>
+              </a>
+            </li><li><a href="https://twitter.com/ethereumWasm" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+        Ewasm Team
+        &nbsp;&bull;&nbsp;
+        2020
+
+        
+        &nbsp;&bull;&nbsp;
+        <a href="https://ewasm.ethereum.org">ewasm.ethereum.org</a>
+        
+
+        &nbsp;&bull;&nbsp;
+        <a href="/archive/">Blog Archive</a>
+
+        
+        
+      </p>
+        <!-- Please don't remove this, keep my open source work credited :) -->
+        <p class="theme-by text-muted">
+          Theme by
+          <a href="http://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+      	  document.write('<script src="/ewasm-portal/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/bootstrap.min.js"></script>
+    
+  
+    
+    
+	<script src="/ewasm-portal/js/main.js"></script>
+    
+  
+
+
+
+  
+  </body>
+</html>
